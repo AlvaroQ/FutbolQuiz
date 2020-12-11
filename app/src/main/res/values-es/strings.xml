@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Fútbol quiz</string>
+
+    <string name="locale">es</string>
+    <string name="hi">Hola Álvaro</string>
+    <string name="primera_division">Primera división</string>
+    <string name="flag">flag</string>
+</resources>

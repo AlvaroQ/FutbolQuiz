@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.select.SelectFragment" >
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:src="@drawable/lights_left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:src="@drawable/lights_right"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageManuscript"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:scaleType="centerInside"
+        android:contentDescription="@string/game_title"
+        android:src="@mipmap/ic_launcher_foreground"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/helloText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/hi"
+        android:textAppearance="@style/Bold.TextColorLight.VeryLarge"
+        app:layout_constraintTop_toBottomOf="@+id/imageManuscript" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:cardBackgroundColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/helloText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        android:layout_margin="6dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="16dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp" >
+
+                <ImageView
+                    android:id="@+id/imageSpanishSerieA"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="12dp"
+                    android:src="@drawable/flag_spain"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:contentDescription="@string/flag" />
+
+                <TextView
+                    android:id="@+id/titleFlagsText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/primera_division"
+                    android:textAppearance="@style/Bold.TextColorLight.Medium"
+                    app:layout_constraintTop_toBottomOf="@+id/imageSpanishSerieA"
+                    app:layout_constraintBottom_toTopOf="@+id/imageSpanishSerieA"
+                    app:layout_constraintStart_toEndOf="@+id/imageSpanishSerieA"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layoutFlags"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    app:layout_constraintTop_toBottomOf="@id/titleFlagsText"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <!-- Stadium - Images -->
+                    <com.quiz.futbol.components.TypeGameView
+                        android:id="@+id/cardStartByStadiumImages"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintWidth_percent=".49"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:title="Por imagen"
+                        app:isBlocked="false"
+                        app:stadium="@drawable/stadium_images"/>
+
+                    <!-- Stadium - Names -->
+                    <com.quiz.futbol.components.TypeGameView
+                        android:id="@+id/cardStartByStadiumNames"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintWidth_percent=".49"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:title="Por nombre"
+                        app:isBlocked="true"
+                        app:stadium="@drawable/stadium_name" />
+
+                    <!-- Capacity -->
+                    <com.quiz.futbol.components.TypeGameView
+                        android:id="@+id/cardStartByCapacity"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        app:layout_constraintWidth_percent=".49"
+                        app:layout_constraintTop_toBottomOf="@+id/cardStartByStadiumImages"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:title="Por capacidad"
+                        app:isBlocked="true"
+                        app:stadium="@drawable/stadium_capacity" />
+
+                    <!-- Built year -->
+                    <com.quiz.futbol.components.TypeGameView
+                        android:id="@+id/cardStartByYearBuilt"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        app:layout_constraintWidth_percent=".49"
+                        app:layout_constraintTop_toBottomOf="@+id/cardStartByStadiumImages"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:title="Por año"
+                        app:isBlocked="true"
+                        app:stadium="@drawable/stadium_built" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

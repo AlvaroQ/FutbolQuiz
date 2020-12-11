@@ -1,2 +1,6 @@
 rootProject.name = "FutbolQuiz"
+include ':FutbolQuiz'
 include ':app'
+include ':domain'
+include ':usecases'
+include ':data'

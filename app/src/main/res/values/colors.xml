@@ -1,10 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="colorPrimary">#0E8300</color>
+    <color name="colorPrimaryDark">#034C00</color>
+    <color name="colorSecondary">#7C3925</color>
+    <color name="colorSecondaryDark">#512618</color>
+    <color name="colorPrimaryLight">#AF5E45</color>
+    <color name="colorAccent">#3F51B5</color>
+    <color name="transparent">#00000000</color>
+    <color name="blocked">#FFFFFF</color>
+
+    <color name="responseCorrect">#009E07</color>
+    <color name="responseFail">#CA0000</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="red">#FF0000</color>
+    <color name="yellow">#FF9800</color>
+
+    <color name="textColor">#000000</color>
+    <color name="textColorLight">#9CACFF</color>
+    <color name="textTitleColor">#FFFFFF</color>
+
+    <color name="gradientTop">#0029FF</color>
+    <color name="gradientBottom">#5B7FFF</color>
+    <color name="gradientBlockedTop">#A63A3A3A</color>
+    <color name="gradientBlockedBottom">#A66C6C6C</color>
 </resources>

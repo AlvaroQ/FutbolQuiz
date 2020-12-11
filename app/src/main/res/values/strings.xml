@@ -1,3 +1,41 @@
 <resources>
-    <string name="app_name">FutbolQuiz</string>
+    <string name="app_name">Futbol Quiz</string>
+
+    <string name="locale">en</string>
+
+
+
+
+    <string translatable="false" name="resultado_screen_title">Final result</string>
+    <string translatable="false" name="ranking_screen_title">Ranking</string>
+    <string translatable="false" name="share_message">\nMy score is %d, can you get over me?\n\n</string>
+    <string translatable="false" name="choose_one">Choose:</string>
+    <string translatable="false" name="other_apps">Other applications</string>
+    <string translatable="false" name="life">life</string>
+    <string translatable="false" name="play">Play</string>
+    <string translatable="false" name="play_again">Play again</string>
+    <string translatable="false" name="share">Share</string>
+    <string translatable="false" name="rate_on_play_store">Rate on play store</string>
+    <string translatable="false" name="result">Result: %d</string>
+    <string translatable="false" name="personal_record">Personal record: %s</string>
+    <string translatable="false" name="world_record">World record: %s</string>
+    <string translatable="false" name="best_points">Best scores</string>
+    <string translatable="false" name="dialog_ranking_congratulation">¡Congratulations</string>
+    <string translatable="false" name="dialog_ranking_description">Your score has entered the world ranking</string>
+    <string translatable="false" name="dialog_name">Name</string>
+    <string translatable="false" name="dialog_save">Save</string>
+    <string translatable="false" name="best_score">Best scores</string>
+    <string translatable="false" name="not_exist">Not exist</string>
+    <string translatable="false" name="by_image">By image</string>
+    <string translatable="false" name="by_country">By country</string>
+
+    <!-- content description image -->
+    <string translatable="false" name="game_title">game title</string>
+    <string translatable="false" name="loading_image">loading</string>
+    <string translatable="false" name="back">back</string>
+    <string translatable="false" name="game_image">image to guess</string>
+    <string translatable="false" name="score_image_background">background</string>
+    <string name="hi">Hola Álvaro</string>
+    <string name="primera_division">Primera división</string>
+    <string name="flag">flag</string>
 </resources>
