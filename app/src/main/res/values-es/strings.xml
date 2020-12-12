@@ -1,8 +1,14 @@
 <resources>
     <string name="app_name">Fútbol quiz</string>
+    <string name="hi">Hola Álvaro</string>
+    <string name="select_category">Seleccione una categoría</string>
+    <string name="first_division">Primera división</string>
+    <string name="second_division">Segunda división</string>
+    <string name="by_image">Por imagen</string>
+    <string name="by_name">Por nombre</string>
+    <string name="by_capacity">Por capacidad</string>
+    <string name="by_built">Por año de construcción</string>
 
     <string name="locale">es</string>
-    <string name="hi">Hola Álvaro</string>
-    <string name="primera_division">Primera división</string>
     <string name="flag">flag</string>
 </resources>

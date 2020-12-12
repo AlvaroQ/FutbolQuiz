@@ -19,6 +19,7 @@ import com.quiz.data.repository.RankingRepository
 import com.quiz.usecases.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.quiz.futbol.utils.GetResources
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidContext
@@ -44,6 +45,7 @@ fun Application.initDI() {
 private val appModule = module {
     factory { Firebase.firestore }
     single<CoroutineDispatcher> { Dispatchers.Main }
+    single {GetResources(get())}
     factory<DataBaseSource> { DataBaseSourceImpl() }
     factory<FirestoreDataSource> { FirestoreDataSourceImpl(get()) }
 }
@@ -56,7 +58,7 @@ val dataModule = module {
 
 private val scopesModule = module {
     scope(named<SelectFragment>()) {
-        viewModel { SelectViewModel() }
+        viewModel { SelectViewModel(get()) }
     }
     scope(named<GameFragment>()) {
         viewModel { GameViewModel(get()) }

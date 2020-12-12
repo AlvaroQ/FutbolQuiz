@@ -19,17 +19,17 @@ class TypeGameView @JvmOverloads constructor(
     private var stadium: Drawable
 
     private val nameTypeGame: TextView
-    private val flagsAmericanBlockedLayout: ConstraintLayout
+    private val blockedLayout: ConstraintLayout
     private val imageStadium: ImageView
 
     init {
         val view = LayoutInflater
             .from(context)
-            .inflate(R.layout.view_type_game, this, true)
+            .inflate(R.layout.item_select_type_game, this, true)
 
         nameTypeGame = view.findViewById(R.id.nameTypeGame)
         imageStadium = view.findViewById(R.id.imageStadium)
-        flagsAmericanBlockedLayout = view.findViewById(R.id.flagsAmericanBlockedLayout)
+        blockedLayout = view.findViewById(R.id.blockedLayout)
 
 
         val a = context.obtainStyledAttributes(attrs, R.styleable.TypeGameView)
@@ -40,7 +40,7 @@ class TypeGameView @JvmOverloads constructor(
 
 
         nameTypeGame.text = title
-        if(!isBlocked) flagsAmericanBlockedLayout.visibility = View.GONE
+        if(!isBlocked) blockedLayout.visibility = View.GONE
         imageStadium.background = stadium
     }
 

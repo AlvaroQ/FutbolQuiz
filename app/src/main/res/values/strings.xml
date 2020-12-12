@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">Futbol Quiz</string>
+    <string name="hi">Hola Álvaro</string>
+    <string name="select_category">Select category</string>
+    <string name="first_division">First division</string>
+    <string name="second_division">Second division</string>
+    <string name="by_image">By image</string>
+    <string name="by_name">By name</string>
+    <string name="by_capacity">By capacity</string>
+    <string name="by_built">By built</string>
 
     <string name="locale">en</string>
 
@@ -26,8 +34,6 @@
     <string translatable="false" name="dialog_save">Save</string>
     <string translatable="false" name="best_score">Best scores</string>
     <string translatable="false" name="not_exist">Not exist</string>
-    <string translatable="false" name="by_image">By image</string>
-    <string translatable="false" name="by_country">By country</string>
 
     <!-- content description image -->
     <string translatable="false" name="game_title">game title</string>
@@ -35,7 +41,5 @@
     <string translatable="false" name="back">back</string>
     <string translatable="false" name="game_image">image to guess</string>
     <string translatable="false" name="score_image_background">background</string>
-    <string name="hi">Hola Álvaro</string>
-    <string name="primera_division">Primera división</string>
     <string name="flag">flag</string>
 </resources>
