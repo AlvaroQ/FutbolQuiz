@@ -2,22 +2,22 @@ package com.quiz.futbol.base
 
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
+import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.ktx.Firebase
+import com.quiz.futbol.managers.Analytics
+import com.quiz.futbol.utils.log
+import com.quiz.futbol.utils.screenOrientationPortrait
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlin.coroutines.CoroutineContext
-import android.view.View
-import android.view.WindowManager
-import android.widget.Toast
-import com.quiz.futbol.managers.Analytics
-import com.quiz.futbol.utils.log
-import com.quiz.futbol.utils.screenOrientationPortrait
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 abstract class BaseActivity(var uiContext: CoroutineContext = Dispatchers.Main) :
     AppCompatActivity(),

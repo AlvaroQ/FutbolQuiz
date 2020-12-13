@@ -4,29 +4,20 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
+import com.quiz.domain.User
 import com.quiz.futbol.common.ScopedViewModel
 import com.quiz.futbol.managers.Analytics
 import com.quiz.futbol.utils.Constants.RECORD_PERSONAL
-import com.quiz.domain.App
-import com.quiz.domain.User
-import com.quiz.usecases.GetAppsRecommended
 import com.quiz.usecases.GetRecordScore
 import com.quiz.usecases.SaveTopScore
 import kotlinx.coroutines.launch
 
-class ResultViewModel(private val getAppsRecommended: GetAppsRecommended,
-                      private val saveTopScore: SaveTopScore,
+class ResultViewModel(private val saveTopScore: SaveTopScore,
                       private val getRecordScore: GetRecordScore
 ) : ScopedViewModel() {
 
-    private val _progress = MutableLiveData<UiModel>()
-    val progress: LiveData<UiModel> = _progress
-
     private val _navigation = MutableLiveData<Navigation>()
     val navigation: LiveData<Navigation> = _navigation
-
-    private val _list = MutableLiveData<MutableList<App>>()
-    val list: LiveData<MutableList<App>> = _list
 
     private val _personalRecord = MutableLiveData<String>()
     val personalRecord: LiveData<String> = _personalRecord
@@ -37,15 +28,8 @@ class ResultViewModel(private val getAppsRecommended: GetAppsRecommended,
     init {
         Analytics.analyticsScreenViewed(Analytics.SCREEN_RESULT)
         launch {
-            _progress.value = UiModel.Loading(true)
-            _list.value = appsRecommended()
             _worldRecord.value = getPointsWorldRecord()
-            _progress.value = UiModel.Loading(false)
         }
-    }
-
-    private suspend fun appsRecommended(): MutableList<App> {
-        return getAppsRecommended.invoke()
     }
 
     private suspend fun getPointsWorldRecord(): String {
@@ -88,11 +72,6 @@ class ResultViewModel(private val getAppsRecommended: GetAppsRecommended,
         _navigation.value = Navigation.Dialog(points)
     }
 
-    fun onAppClicked(url: String) {
-        Analytics.analyticsAppRecommendedOpen(url)
-        _navigation.value = Navigation.Open(url)
-    }
-
     fun navigateToGame() {
         Analytics.analyticsClicked(Analytics.BTN_PLAY_AGAIN)
         _navigation.value = Navigation.Game
@@ -120,9 +99,5 @@ class ResultViewModel(private val getAppsRecommended: GetAppsRecommended,
         object Ranking : Navigation()
         data class Dialog(val points : String): Navigation()
         data class Open(val url : String): Navigation()
-    }
-
-    sealed class UiModel {
-        data class Loading(val show: Boolean) : UiModel()
     }
 }

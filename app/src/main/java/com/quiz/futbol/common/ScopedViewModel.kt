@@ -2,7 +2,6 @@ package com.quiz.futbol.common
 
 import androidx.annotation.CallSuper
 import androidx.lifecycle.ViewModel
-import com.quiz.futbol.common.Scope
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 

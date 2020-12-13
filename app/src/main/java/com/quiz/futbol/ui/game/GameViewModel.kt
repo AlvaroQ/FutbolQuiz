@@ -2,10 +2,10 @@ package com.quiz.futbol.ui.game
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.quiz.domain.Stadium
 import com.quiz.futbol.common.ScopedViewModel
 import com.quiz.futbol.managers.Analytics
-import com.quiz.futbol.utils.Constants.TOTAL_COUNTRIES
-import com.quiz.domain.Stadium
+import com.quiz.futbol.utils.Constants.TOTAL_TEAMS_SPAIN_FIRST_DIVISION
 import com.quiz.usecases.GetStadiumById
 import kotlinx.coroutines.launch
 
@@ -35,7 +35,7 @@ class GameViewModel(private val getStadiumById: GetStadiumById) : ScopedViewMode
             _progress.value = UiModel.Loading(true)
 
             /** Generate question */
-            val numRandomMain = generateRandomWithExcusion(0, TOTAL_COUNTRIES, *randomCountries.toIntArray())
+            val numRandomMain = generateRandomWithExcusion(0, TOTAL_TEAMS_SPAIN_FIRST_DIVISION, *randomCountries.toIntArray())
             randomCountries.add(numRandomMain)
 
             stadium = getStadium(numRandomMain)
@@ -43,15 +43,15 @@ class GameViewModel(private val getStadiumById: GetStadiumById) : ScopedViewMode
             /** Generate responses */
             val numRandomMainPosition = generateRandomWithExcusion(0, 3)
 
-            val numRandomOption1 = generateRandomWithExcusion(1, TOTAL_COUNTRIES, numRandomMain)
+            val numRandomOption1 = generateRandomWithExcusion(1, TOTAL_TEAMS_SPAIN_FIRST_DIVISION, numRandomMain)
             val option1: Stadium = getStadium(numRandomOption1)
             val numRandomPosition1 = generateRandomWithExcusion(0, 3, numRandomMainPosition)
 
-            val numRandomOption2 = generateRandomWithExcusion(1, TOTAL_COUNTRIES, numRandomMain, numRandomOption1)
+            val numRandomOption2 = generateRandomWithExcusion(1, TOTAL_TEAMS_SPAIN_FIRST_DIVISION, numRandomMain, numRandomOption1)
             val option2: Stadium = getStadium(numRandomOption2)
             val numRandomPosition2 = generateRandomWithExcusion(0, 3, numRandomMainPosition, numRandomPosition1)
 
-            val numRandomOption3 = generateRandomWithExcusion(1, TOTAL_COUNTRIES, numRandomMain, numRandomOption1, numRandomOption2)
+            val numRandomOption3 = generateRandomWithExcusion(1, TOTAL_TEAMS_SPAIN_FIRST_DIVISION, numRandomMain, numRandomOption1, numRandomOption2)
             val option3: Stadium = getStadium(numRandomOption3)
             val numRandomPosition3 = generateRandomWithExcusion(0, 3, numRandomMainPosition, numRandomPosition1, numRandomPosition2)
 

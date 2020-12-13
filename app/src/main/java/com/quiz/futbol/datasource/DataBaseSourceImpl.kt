@@ -1,25 +1,28 @@
 package com.quiz.futbol.datasource
 
-import com.quiz.futbol.utils.Constants.PATH_REFERENCE_COUNTRIES
-import com.quiz.futbol.utils.Constants.PATH_REFERENCE_APPS
-import com.quiz.data.datasource.DataBaseSource
-import com.quiz.domain.Stadium
-import com.quiz.futbol.utils.log
-import com.quiz.domain.App
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import kotlinx.coroutines.suspendCancellableCoroutine
 import com.google.firebase.database.ktx.getValue
-import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.quiz.data.datasource.DataBaseSource
+import com.quiz.domain.App
+import com.quiz.domain.Stadium
 import com.quiz.futbol.BuildConfig
+import com.quiz.futbol.utils.Constants.PATH_REFERENCE_APPS
+import com.quiz.futbol.utils.Constants.PATH_REFERENCE_FIRST_DIVISION
+import com.quiz.futbol.utils.Constants.PATH_REFERENCE_SPAIN
+import com.quiz.futbol.utils.Constants.PATH_REFERENCE_TEAMS
+import com.quiz.futbol.utils.log
+import kotlinx.coroutines.suspendCancellableCoroutine
 
 class DataBaseSourceImpl : DataBaseSource {
 
     override suspend fun getStadiumById(id: Int): Stadium {
+        log("GET STADIUM ID", PATH_REFERENCE_TEAMS + PATH_REFERENCE_SPAIN + PATH_REFERENCE_FIRST_DIVISION + id)
         return suspendCancellableCoroutine { continuation ->
-            FirebaseDatabase.getInstance().getReference(PATH_REFERENCE_COUNTRIES + id)
+            FirebaseDatabase.getInstance().getReference(PATH_REFERENCE_TEAMS + PATH_REFERENCE_SPAIN + PATH_REFERENCE_FIRST_DIVISION + id)
                 .addValueEventListener(object : ValueEventListener {
 
                     override fun onDataChange(dataSnapshot: DataSnapshot) {

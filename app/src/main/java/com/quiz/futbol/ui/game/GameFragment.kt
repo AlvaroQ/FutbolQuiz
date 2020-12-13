@@ -1,7 +1,5 @@
 package com.quiz.futbol.ui.game
 
-import android.content.Context
-import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,20 +10,20 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.quiz.domain.Stadium
 import com.quiz.futbol.R
 import com.quiz.futbol.common.startActivity
 import com.quiz.futbol.common.traslationAnimation
 import com.quiz.futbol.common.traslationAnimationFadeIn
 import com.quiz.futbol.databinding.GameFragmentBinding
 import com.quiz.futbol.ui.result.ResultActivity
-import com.quiz.futbol.utils.Constants.TYPE_GAME
 import com.quiz.futbol.utils.Constants.POINTS
-import com.quiz.futbol.utils.Constants.TOTAL_COUNTRIES
+import com.quiz.futbol.utils.Constants.TOTAL_TEAMS_SPAIN_FIRST_DIVISION
+import com.quiz.futbol.utils.Constants.TYPE_GAME
 import com.quiz.futbol.utils.Constants.TypeGame
-import com.quiz.futbol.utils.glideLoadBase64
+import com.quiz.futbol.utils.glideLoadURL
 import com.quiz.futbol.utils.glideLoadingGif
 import com.quiz.futbol.utils.setSafeOnClickListener
-import com.quiz.domain.Stadium
 import kotlinx.coroutines.*
 import org.koin.android.scope.lifecycleScope
 import org.koin.android.viewmodel.scope.viewModel
@@ -137,7 +135,7 @@ class GameFragment : Fragment() {
     private fun drawQuestionQuiz(stadium: Stadium) {
         when(typeGame) {
             TypeGame.BY_NAME -> textQuiz.text = Locale(getString(R.string.locale), stadium.name!!).displayCountry
-            TypeGame.BY_IMAGE -> glideLoadBase64(activity as GameActivity, stadium.stadium_image, imageQuiz)
+            TypeGame.BY_IMAGE -> glideLoadURL(activity as GameActivity, stadium.stadium_image, imageQuiz)
         }
     }
 
@@ -308,7 +306,7 @@ class GameFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             delay(TimeUnit.MILLISECONDS.toMillis(1000))
             withContext(Dispatchers.Main) {
-                if(stage > TOTAL_COUNTRIES || life < 1) gameViewModel.navigateToResult(points.toString())
+                if(stage > TOTAL_TEAMS_SPAIN_FIRST_DIVISION || life < 1) gameViewModel.navigateToResult(points.toString())
                 else gameViewModel.generateNewStage()
             }
         }

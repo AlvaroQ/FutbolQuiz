@@ -15,19 +15,15 @@ import android.view.Window
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.quiz.domain.User
 import com.quiz.futbol.BuildConfig
 import com.quiz.futbol.R
 import com.quiz.futbol.common.startActivity
 import com.quiz.futbol.databinding.ResultFragmentBinding
-import com.quiz.futbol.ui.game.GameActivity
 import com.quiz.futbol.ui.ranking.RankingActivity
-import com.quiz.futbol.ui.select.SelectActivity
 import com.quiz.futbol.utils.Constants.POINTS
-import com.quiz.futbol.utils.glideLoadingGif
 import com.quiz.futbol.utils.log
 import com.quiz.futbol.utils.setSafeOnClickListener
-import com.quiz.domain.App
-import com.quiz.domain.User
 import kotlinx.android.synthetic.main.dialog_save_record.*
 import org.koin.android.scope.lifecycleScope
 import org.koin.android.viewmodel.scope.viewModel
@@ -76,8 +72,6 @@ class ResultFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         resultViewModel.navigation.observe(viewLifecycleOwner, Observer(::navigate))
-        resultViewModel.progress.observe(viewLifecycleOwner, Observer(::updateProgress))
-        resultViewModel.list.observe(viewLifecycleOwner, Observer(::fillAppList))
         resultViewModel.personalRecord.observe(viewLifecycleOwner, Observer(::fillPersonalRecord))
         resultViewModel.worldRecord.observe(viewLifecycleOwner, Observer(::fillWorldRecord))
     }
@@ -88,23 +82,6 @@ class ResultFragment : Fragment() {
 
     private fun fillPersonalRecord(points: String) {
         binding.textPersonalRecord.text = resources.getString(R.string.personal_record, points)
-    }
-
-    private fun fillAppList(appList: MutableList<App>) {
-        binding.recyclerviewOtherApps.adapter = AppListAdapter(
-            activity as ResultActivity,
-            appList,
-            resultViewModel::onAppClicked
-        )
-    }
-
-    private fun updateProgress(model: ResultViewModel.UiModel?) {
-        if (model is ResultViewModel.UiModel.Loading && model.show) {
-            glideLoadingGif(activity as ResultActivity, binding.imagenLoading)
-            binding.imagenLoading.visibility = View.VISIBLE
-        } else {
-            binding.imagenLoading.visibility = View.GONE
-        }
     }
 
     private fun navigate(navigation: ResultViewModel.Navigation?) {

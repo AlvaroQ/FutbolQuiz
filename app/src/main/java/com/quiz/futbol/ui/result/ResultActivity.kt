@@ -3,12 +3,10 @@ package com.quiz.futbol.ui.result
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import com.quiz.futbol.BuildConfig
 import com.quiz.futbol.R
 import com.quiz.futbol.base.BaseActivity
 import com.quiz.futbol.common.startActivity
 import com.quiz.futbol.ui.select.SelectActivity
-import com.quiz.futbol.utils.log
 import com.quiz.futbol.utils.setSafeOnClickListener
 import kotlinx.android.synthetic.main.app_bar_layout.*
 

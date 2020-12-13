@@ -10,7 +10,12 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.quiz.futbol.common.startActivity
 import com.quiz.futbol.databinding.SelectFragmentBinding
+import com.quiz.futbol.ui.game.GameActivity
+import com.quiz.futbol.utils.Constants.TYPE_CHAMPIONSHIP
+import com.quiz.futbol.utils.Constants.TYPE_GAME
+import com.quiz.futbol.utils.Constants.TypeGame.*
 import org.koin.android.scope.lifecycleScope
 import org.koin.android.viewmodel.scope.viewModel
 
@@ -62,12 +67,28 @@ class SelectFragment : Fragment() {
     private fun navigate(navigation: SelectViewModel.Navigation?) {
         when (navigation) {
             is SelectViewModel.Navigation.GameByImage -> {
+                activity?.startActivity<GameActivity> {
+                    putExtra(TYPE_GAME, BY_IMAGE)
+                    putExtra(TYPE_CHAMPIONSHIP, navigation.championship)
+                }
             }
             is SelectViewModel.Navigation.GameByName -> {
+                activity?.startActivity<GameActivity> {
+                    putExtra(TYPE_GAME, BY_NAME)
+                    putExtra(TYPE_CHAMPIONSHIP, navigation.championship)
+                }
             }
             is SelectViewModel.Navigation.GameByCapacity -> {
+                activity?.startActivity<GameActivity> {
+                    putExtra(TYPE_GAME, BY_CAPACITY)
+                    putExtra(TYPE_CHAMPIONSHIP, navigation.championship)
+                }
             }
             is SelectViewModel.Navigation.GameByBuilt -> {
+                activity?.startActivity<GameActivity> {
+                    putExtra(TYPE_GAME, BY_BUILT)
+                    putExtra(TYPE_CHAMPIONSHIP, navigation.championship)
+                }
             }
         }
     }

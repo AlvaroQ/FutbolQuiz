@@ -4,19 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.quiz.futbol.R
-import com.quiz.futbol.common.startActivity
-import com.quiz.futbol.databinding.RankingFragmentBinding
-import com.quiz.futbol.ui.game.GameActivity
-import com.quiz.futbol.utils.glideLoadingGif
-import com.quiz.domain.User
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
+import com.quiz.domain.User
+import com.quiz.futbol.R
+import com.quiz.futbol.databinding.RankingFragmentBinding
+import com.quiz.futbol.utils.glideLoadingGif
 import org.koin.android.scope.lifecycleScope
 import org.koin.android.viewmodel.scope.viewModel
 

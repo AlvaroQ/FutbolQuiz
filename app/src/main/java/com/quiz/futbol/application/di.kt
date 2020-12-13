@@ -1,25 +1,25 @@
 package com.quiz.futbol.application
 
-import com.quiz.futbol.datasource.FirestoreDataSourceImpl
-import com.quiz.data.datasource.FirestoreDataSource
 import android.app.Application
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.quiz.data.datasource.DataBaseSource
+import com.quiz.data.datasource.FirestoreDataSource
+import com.quiz.data.repository.AppsRecommendedRepository
+import com.quiz.data.repository.RankingRepository
+import com.quiz.data.repository.StadiumByIdRepository
+import com.quiz.futbol.datasource.DataBaseSourceImpl
+import com.quiz.futbol.datasource.FirestoreDataSourceImpl
 import com.quiz.futbol.ui.game.GameFragment
 import com.quiz.futbol.ui.game.GameViewModel
+import com.quiz.futbol.ui.ranking.RankingFragment
+import com.quiz.futbol.ui.ranking.RankingViewModel
 import com.quiz.futbol.ui.result.ResultFragment
 import com.quiz.futbol.ui.result.ResultViewModel
 import com.quiz.futbol.ui.select.SelectFragment
 import com.quiz.futbol.ui.select.SelectViewModel
-import com.quiz.data.datasource.DataBaseSource
-import com.quiz.futbol.datasource.DataBaseSourceImpl
-import com.quiz.futbol.ui.ranking.RankingFragment
-import com.quiz.futbol.ui.ranking.RankingViewModel
-import com.quiz.data.repository.AppsRecommendedRepository
-import com.quiz.data.repository.StadiumByIdRepository
-import com.quiz.data.repository.RankingRepository
-import com.quiz.usecases.*
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import com.quiz.futbol.utils.GetResources
+import com.quiz.usecases.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidContext
@@ -65,9 +65,8 @@ private val scopesModule = module {
         scoped { GetStadiumById(get()) }
     }
     scope(named<ResultFragment>()) {
-        viewModel { ResultViewModel(get(), get(), get()) }
+        viewModel { ResultViewModel(get(), get()) }
         scoped { GetRecordScore(get()) }
-        scoped { GetAppsRecommended(get()) }
         scoped { SaveTopScore(get()) }
     }
     scope(named<RankingFragment>()) {

@@ -2,9 +2,9 @@ package com.quiz.futbol.ui.ranking
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.quiz.domain.User
 import com.quiz.futbol.common.ScopedViewModel
 import com.quiz.futbol.managers.Analytics
-import com.quiz.domain.User
 import com.quiz.usecases.GetRankingScore
 import kotlinx.coroutines.launch
 

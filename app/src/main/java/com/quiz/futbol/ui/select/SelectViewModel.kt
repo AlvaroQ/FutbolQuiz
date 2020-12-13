@@ -7,10 +7,7 @@ import com.quiz.futbol.common.ScopedViewModel
 import com.quiz.futbol.managers.Analytics
 import com.quiz.futbol.utils.Constants.TypeChampionship
 import com.quiz.futbol.utils.Constants.TypeChampionship.*
-import com.quiz.futbol.utils.Constants.TypeGame.BY_IMAGE
-import com.quiz.futbol.utils.Constants.TypeGame.BY_NAME
-import com.quiz.futbol.utils.Constants.TypeGame.BY_CAPACITY
-import com.quiz.futbol.utils.Constants.TypeGame.BY_BUILT
+import com.quiz.futbol.utils.Constants.TypeGame.*
 import com.quiz.futbol.utils.GetResources
 
 class SelectViewModel(private val getResources: GetResources) : ScopedViewModel() {

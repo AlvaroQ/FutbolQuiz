@@ -1,13 +1,12 @@
 package com.quiz.futbol.ui.ranking
 
-import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.quiz.domain.User
 import com.quiz.futbol.R
 import com.quiz.futbol.common.inflate
-import com.quiz.domain.User
 
 class RankingListAdapter(var rankingList: MutableList<User>,
 ) : RecyclerView.Adapter<RankingListAdapter.RankingListViewHolder>() {

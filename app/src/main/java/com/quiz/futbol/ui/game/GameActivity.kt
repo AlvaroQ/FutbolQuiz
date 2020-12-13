@@ -3,15 +3,14 @@ package com.quiz.futbol.ui.game
 import android.content.Intent
 import android.os.Bundle
 import android.view.animation.AnimationUtils
-import com.quiz.futbol.R
-import com.quiz.futbol.base.BaseActivity
-import com.quiz.futbol.common.startActivity
-import com.quiz.futbol.managers.Analytics
-import com.quiz.futbol.ui.select.SelectActivity
-import com.quiz.futbol.utils.setSafeOnClickListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
+import com.quiz.futbol.R
+import com.quiz.futbol.base.BaseActivity
+import com.quiz.futbol.common.startActivity
+import com.quiz.futbol.ui.select.SelectActivity
+import com.quiz.futbol.utils.setSafeOnClickListener
 import kotlinx.android.synthetic.main.app_bar_layout.*
 import kotlinx.android.synthetic.main.game_activity.*
 

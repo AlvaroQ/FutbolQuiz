@@ -2,9 +2,9 @@ package com.quiz.futbol.managers
 
 import android.content.Context
 import android.os.Bundle
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.quiz.futbol.BuildConfig
 import com.quiz.futbol.base.BaseActivity
-import com.google.firebase.analytics.FirebaseAnalytics
 
 object Analytics {
     lateinit var mFirebase: FirebaseAnalytics

@@ -13,10 +13,7 @@ import com.quiz.futbol.common.inflate
 import com.quiz.futbol.utils.Constants.TypeChampionship
 import com.quiz.futbol.utils.Constants.TypeChampionship.*
 import com.quiz.futbol.utils.Constants.TypeGame
-import com.quiz.futbol.utils.Constants.TypeGame.BY_IMAGE
-import com.quiz.futbol.utils.Constants.TypeGame.BY_NAME
-import com.quiz.futbol.utils.Constants.TypeGame.BY_BUILT
-import com.quiz.futbol.utils.Constants.TypeGame.BY_CAPACITY
+import com.quiz.futbol.utils.Constants.TypeGame.*
 import com.quiz.futbol.utils.setSafeOnClickListener
 
 
