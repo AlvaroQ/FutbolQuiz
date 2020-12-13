@@ -15,56 +15,67 @@ import com.bumptech.glide.request.target.Target
 import com.quiz.futbol.R
 
 private fun initUrlGlide(context: Context, url: String?) =
-    Glide.with(context)
-        .setDefaultRequestOptions(RequestOptions().timeout(30000))
-        .load(url)
-        .error(getCircularProgressDrawable(context))
-        .addListener(object : RequestListener<Drawable> {
-            override fun onLoadFailed(
-                e: GlideException?,
-                model: Any?,
-                target: Target<Drawable>?,
-                isFirstResource: Boolean
-            ): Boolean {
-                log("Glide", "onLoadFailed", e)
-                e?.logRootCauses("GLIDE")
-                return false
-            }
+        Glide.with(context)
+                .setDefaultRequestOptions(RequestOptions().timeout(30000))
+                .load(url)
+                .error(getCircularProgressDrawable(context))
+                .addListener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                            e: GlideException?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            isFirstResource: Boolean
+                    ): Boolean {
+                        log("Glide", "onLoadFailed", e)
+                        e?.logRootCauses("GLIDE")
+                        return false
+                    }
 
-            override fun onResourceReady(
-                resource: Drawable?,
-                model: Any?,
-                target: Target<Drawable>?,
-                dataSource: DataSource?,
-                isFirstResource: Boolean
-            ): Boolean {
-                log("Glide", "onResourceReady")
-                return false
-            }
+                    override fun onResourceReady(
+                            resource: Drawable?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            dataSource: DataSource?,
+                            isFirstResource: Boolean
+                    ): Boolean {
+                        log("Glide", "onResourceReady")
+                        return false
+                    }
 
-        })
+                })
 
 fun glideLoadURL(context: Context, url: String?, where: ImageView) {
     initUrlGlide(context, url)
-        .placeholder(getCircularProgressDrawable(context))
-        .transition(DrawableTransitionOptions.withCrossFade())
-        .into(where)
+            .placeholder(getCircularProgressDrawable(context))
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(where)
 }
 
 fun glideLoadBase64(context: Context, imageBytes: String?, where: ImageView) {
     val imageByteArray: ByteArray = Base64.decode(imageBytes, Base64.DEFAULT)
 
     Glide.with(context)
-        .asBitmap()
-        .load(imageByteArray)
-        .transition(BitmapTransitionOptions.withCrossFade())
-        .into(where)
+            .asBitmap()
+            .load(imageByteArray)
+            .transition(BitmapTransitionOptions.withCrossFade())
+            .into(where)
+}
+
+fun glideCircleLoadBase64(context: Context, imageBytes: String?, where: ImageView) {
+    val imageByteArray: ByteArray = Base64.decode(imageBytes, Base64.DEFAULT)
+
+    Glide.with(context)
+            .asBitmap()
+            .apply(RequestOptions.circleCropTransform())
+            .load(imageByteArray)
+            .transition(BitmapTransitionOptions.withCrossFade())
+            .into(where)
 }
 
 fun glideLoadingGif(context: Context, where: ImageView) {
 
     Glide.with(context)
-        .asGif()
-        .load(R.drawable.ball_loading)
-        .into(where)
+            .asGif()
+            .load(R.drawable.ball_loading)
+            .into(where)
 }

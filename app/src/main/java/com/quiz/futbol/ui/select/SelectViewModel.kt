@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.quiz.futbol.R
 import com.quiz.futbol.common.ScopedViewModel
-import com.quiz.futbol.managers.Analytics
+import com.quiz.futbol.managers.AnalyticsManager
 import com.quiz.futbol.utils.Constants.TypeChampionship
 import com.quiz.futbol.utils.Constants.TypeChampionship.*
 import com.quiz.futbol.utils.Constants.TypeGame.*
@@ -23,7 +23,7 @@ class SelectViewModel(private val getResources: GetResources) : ScopedViewModel(
     val navigation: LiveData<Navigation> = _navigation
 
     init {
-        Analytics.analyticsScreenViewed(Analytics.SCREEN_SELECT_GAME)
+        AnalyticsManager.analyticsScreenViewed(AnalyticsManager.SCREEN_SELECT_GAME)
         refresh()
     }
 

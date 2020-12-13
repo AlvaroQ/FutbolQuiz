@@ -8,7 +8,14 @@
     <string name="by_name">Por nombre</string>
     <string name="by_capacity">Por capacidad</string>
     <string name="by_built">Por año de construcción</string>
+    <string name="share_message_general">\nMe ha gustado mucho esta aplicación.\n\n</string>
+    <string name="successful_stadiums">Ha acertado %d estadios</string>
+    <string name="game_over">Juego terminado</string>
+    <string name="play_again">Jugar de nuevo</string>
+    <string name="share">Compartir</string>
+    <string name="rate_on_play_store">Puntuar en play store</string>
+    <string name="share_message">\nMy score is %d, can you get over me?\n\n</string>
+    <string name="choose_one">Choose:</string>
 
     <string name="locale">es</string>
-    <string name="flag">flag</string>
 </resources>

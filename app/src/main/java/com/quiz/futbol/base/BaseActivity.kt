@@ -11,7 +11,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.ktx.Firebase
-import com.quiz.futbol.managers.Analytics
+import com.quiz.futbol.managers.AnalyticsManager
 import com.quiz.futbol.utils.log
 import com.quiz.futbol.utils.screenOrientationPortrait
 import kotlinx.coroutines.CoroutineScope
@@ -43,7 +43,7 @@ abstract class BaseActivity(var uiContext: CoroutineContext = Dispatchers.Main) 
 
         // Initialize Firebase Auth
         auth = Firebase.auth
-        Analytics.initialize(this)
+        AnalyticsManager.initialize(this)
     }
 
     public override fun onStart() {

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.quiz.domain.Stadium
 import com.quiz.futbol.common.ScopedViewModel
-import com.quiz.futbol.managers.Analytics
+import com.quiz.futbol.managers.AnalyticsManager
 import com.quiz.futbol.utils.Constants.TOTAL_TEAMS_SPAIN_FIRST_DIVISION
 import com.quiz.usecases.GetStadiumById
 import kotlinx.coroutines.launch
@@ -26,7 +26,7 @@ class GameViewModel(private val getStadiumById: GetStadiumById) : ScopedViewMode
     val navigation: LiveData<Navigation> = _navigation
 
     init {
-        Analytics.analyticsScreenViewed(Analytics.SCREEN_GAME)
+        AnalyticsManager.analyticsScreenViewed(AnalyticsManager.SCREEN_GAME)
         generateNewStage()
     }
 
@@ -73,7 +73,7 @@ class GameViewModel(private val getStadiumById: GetStadiumById) : ScopedViewMode
     }
 
     fun navigateToResult(points: String) {
-        Analytics.analyticsGameFinished(points)
+        AnalyticsManager.analyticsGameFinished(points)
         _navigation.value = Navigation.Result
     }
 

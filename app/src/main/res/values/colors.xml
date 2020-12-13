@@ -9,6 +9,7 @@
     <color name="transparent">#00000000</color>
     <color name="blocked">#FFFFFF</color>
 
+    <color name="semitransparent">#4D000000</color>
     <color name="responseCorrect">#009E07</color>
     <color name="responseFail">#CA0000</color>
 
@@ -17,7 +18,7 @@
     <color name="red">#FF0000</color>
     <color name="yellow">#FF9800</color>
 
-    <color name="textColor">#000000</color>
+    <color name="textColor">#FFFFFF</color>
     <color name="textColorLight">#9CACFF</color>
     <color name="textTitleColor">#FFFFFF</color>
 

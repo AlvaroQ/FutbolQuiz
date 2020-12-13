@@ -5,15 +5,16 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.quiz.data.datasource.DataBaseSource
 import com.quiz.data.datasource.FirestoreDataSource
+import com.quiz.data.datasource.SharedPreferencesLocalDataSource
 import com.quiz.data.repository.AppsRecommendedRepository
 import com.quiz.data.repository.RankingRepository
+import com.quiz.data.repository.SharedPreferencesRepository
 import com.quiz.data.repository.StadiumByIdRepository
 import com.quiz.futbol.datasource.DataBaseSourceImpl
 import com.quiz.futbol.datasource.FirestoreDataSourceImpl
+import com.quiz.futbol.managers.SharedPrefsDataSource
 import com.quiz.futbol.ui.game.GameFragment
 import com.quiz.futbol.ui.game.GameViewModel
-import com.quiz.futbol.ui.ranking.RankingFragment
-import com.quiz.futbol.ui.ranking.RankingViewModel
 import com.quiz.futbol.ui.result.ResultFragment
 import com.quiz.futbol.ui.result.ResultViewModel
 import com.quiz.futbol.ui.select.SelectFragment
@@ -48,12 +49,14 @@ private val appModule = module {
     single {GetResources(get())}
     factory<DataBaseSource> { DataBaseSourceImpl() }
     factory<FirestoreDataSource> { FirestoreDataSourceImpl(get()) }
+    factory<SharedPreferencesLocalDataSource> { SharedPrefsDataSource(get()) }
 }
 
 val dataModule = module {
     factory { StadiumByIdRepository(get()) }
     factory { AppsRecommendedRepository(get()) }
     factory { RankingRepository(get()) }
+    factory { SharedPreferencesRepository(get()) }
 }
 
 private val scopesModule = module {
@@ -65,12 +68,7 @@ private val scopesModule = module {
         scoped { GetStadiumById(get()) }
     }
     scope(named<ResultFragment>()) {
-        viewModel { ResultViewModel(get(), get()) }
-        scoped { GetRecordScore(get()) }
-        scoped { SaveTopScore(get()) }
-    }
-    scope(named<RankingFragment>()) {
-        viewModel { RankingViewModel(get()) }
-        scoped { GetRankingScore(get()) }
+        viewModel { ResultViewModel(get()) }
+        scoped { GetPaymentDone(get()) }
     }
 }

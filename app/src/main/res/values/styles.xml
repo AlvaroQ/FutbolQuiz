@@ -8,6 +8,7 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowBackground">@drawable/background</item>
         <item name="android:windowAnimationStyle">@style/ActivityAnimation</item>
+        <item name="android:buttonStyle">@style/futbolButton</item>
     </style>
 
     <style name="SelectGameButton" parent="Bold.TextColor.Medium" >
@@ -18,5 +19,12 @@
     <style name="ActivityAnimation" parent="@android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
         <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
+    </style>
+
+
+    <style name="futbolButton" parent="Bold.TextColor.Medium" >
+        <item name="android:background">@drawable/selector_with_radius_button</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:gravity">center</item>
     </style>
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ripple
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="@color/gradientBottom">
+    android:color="@color/semitransparent">
 
     <item>
         <selector>
@@ -17,7 +17,7 @@
         android:state_pressed="true">
         <shape
             android:shape="rectangle">
-            <corners android:radius="20dp" />
+            <corners android:radius="45dp" />
             <solid android:color="@color/white" />
         </shape>
     </item>

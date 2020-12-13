@@ -17,8 +17,8 @@ class ResultActivity : BaseActivity() {
         setContentView(R.layout.result_activity)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.containerResult, ResultFragment.newInstance())
-                .commitNow()
+                    .replace(R.id.containerResult, ResultFragment.newInstance())
+                    .commitNow()
         }
 
         btnBack.setSafeOnClickListener {
@@ -26,7 +26,7 @@ class ResultActivity : BaseActivity() {
                 flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
             }
         }
-        toolbarTitle.text = getString(R.string.resultado_screen_title)
+        toolbarTitle.text = getString(R.string.game_over)
         layoutLife.visibility = View.GONE
     }
 
