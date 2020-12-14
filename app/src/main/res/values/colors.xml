@@ -6,10 +6,10 @@
     <color name="colorSecondaryDark">#512618</color>
     <color name="colorPrimaryLight">#AF5E45</color>
     <color name="colorAccent">#3F51B5</color>
-    <color name="transparent">#00000000</color>
+    <color name="transparent">#33000000</color>
     <color name="blocked">#FFFFFF</color>
 
-    <color name="semitransparent">#4D000000</color>
+    <color name="semitransparent">#66000000</color>
     <color name="responseCorrect">#009E07</color>
     <color name="responseFail">#CA0000</color>
 

@@ -1,9 +1,13 @@
 <resources>
     <string name="app_name">Futbol Quiz</string>
     <string name="hi">Hola Álvaro</string>
-    <string name="select_category">Select category</string>
-    <string name="first_division">First division</string>
-    <string name="second_division">Second division</string>
+    <string name="trainig_mode">Trainig mode</string>
+    <string name="carrer_mode">Carrer mode</string>
+    <string name="spain_league">Spain league</string>
+    <string name="england_league">England league</string>
+    <string name="italy_league">Italy league</string>
+    <string name="german_league">German league</string>
+    <string name="french_league">French league</string>
     <string name="by_image">By image</string>
     <string name="by_name">By name</string>
     <string name="by_capacity">By capacity</string>

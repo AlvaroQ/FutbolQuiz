@@ -1,6 +1,7 @@
 package com.quiz.futbol.ui.select
 
 import android.os.Bundle
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,12 +11,16 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.quiz.futbol.R
 import com.quiz.futbol.common.startActivity
 import com.quiz.futbol.databinding.SelectFragmentBinding
 import com.quiz.futbol.ui.game.GameActivity
+import com.quiz.futbol.utils.Constants
 import com.quiz.futbol.utils.Constants.TYPE_CHAMPIONSHIP
 import com.quiz.futbol.utils.Constants.TYPE_GAME
 import com.quiz.futbol.utils.Constants.TypeGame.*
+import com.quiz.futbol.utils.setSafeOnClickListener
+import com.quiz.futbol.utils.underline
 import org.koin.android.scope.lifecycleScope
 import org.koin.android.viewmodel.scope.viewModel
 
@@ -33,8 +38,19 @@ class SelectFragment : Fragment() {
         binding = SelectFragmentBinding.inflate(inflater)
         val root = binding.root
 
-        bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet.constraintBottomSheet)
+        binding.helloText.underline()
+        binding.helloText.setSafeOnClickListener {
+            // login or profile
+        }
+        binding.btnStartCareerMode.setSafeOnClickListener {
+            selectViewModel.loadCareerMode()
+        }
+        binding.btnStartTrainingMode.setSafeOnClickListener {
+            selectViewModel.loadTrainingMode()
+        }
 
+        bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet.constraintBottomSheet)
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         return root
     }
 
@@ -47,7 +63,12 @@ class SelectFragment : Fragment() {
 
     private fun updateUi(model: SelectViewModel.UiModel) {
         when (model) {
-            is SelectViewModel.UiModel.Content -> {
+            is SelectViewModel.UiModel.ContentCareerMode -> {
+                binding.bottomSheet.textTitle.text = if(model.mode == Constants.ModeGame.TRAINIG) {
+                    getString(R.string.trainig_mode)
+                } else {
+                    getString(R.string.carrer_mode)
+                }
                 binding.bottomSheet.recyclerCategory.adapter = SelectItemsAdapter(requireContext(), model.items.toMutableList())
 
                 val glm = GridLayoutManager(context, 2)
@@ -56,10 +77,9 @@ class SelectFragment : Fragment() {
                         return if (position % 5 == 0) 2 else 1
                     }
                 }
-
                 binding.bottomSheet.recyclerCategory.layoutManager = glm
                 bottomSheetBehavior.isDraggable = true
-                bottomSheetBehavior.setPeekHeight(BottomSheetBehavior.PEEK_HEIGHT_AUTO, true)
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
             }
         }
     }

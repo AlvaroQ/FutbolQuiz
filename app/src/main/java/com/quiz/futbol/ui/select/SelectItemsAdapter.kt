@@ -18,8 +18,7 @@ import com.quiz.futbol.utils.setSafeOnClickListener
 
 
 class SelectItemsAdapter(private var context: Context,
-                         var items: MutableList<SelectItem>) :
-        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+                         var items: MutableList<SelectItem>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_HEADER) {
@@ -49,12 +48,11 @@ class SelectItemsAdapter(private var context: Context,
             holder.imageChampionship.background = ContextCompat.getDrawable(context,
                     when (item.headerType) {
                         SPAIN_FIRST_DIVISION -> R.drawable.flag_spain
-                        SPAIN_SECOND_DIVISION -> R.drawable.flag_spain
                         ENGLAND_FIRST_DIVISION -> R.drawable.flag_united_kingdom
-                        ENGLAND_SECOND_DIVISION-> R.drawable.flag_united_kingdom
                         ITALY_FIRST_DIVISION -> R.drawable.flag_italy
-                        ITALY_SECOND_DIVISION-> R.drawable.flag_italy
-                        else -> { R.drawable.flag_germany }
+                        GERMAIN_FIRST_DIVISION -> R.drawable.flag_germany
+                        FRENCH_FIRST_DIVISION -> R.drawable.flag_france
+                        else -> { R.drawable.flag_spain }
                     })
         } else {
             (holder as BodyViewHolder).nameTypeGame.text = item.title

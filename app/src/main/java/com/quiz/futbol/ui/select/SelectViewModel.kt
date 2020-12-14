@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import com.quiz.futbol.R
 import com.quiz.futbol.common.ScopedViewModel
 import com.quiz.futbol.managers.AnalyticsManager
+import com.quiz.futbol.utils.Constants.ModeGame
+import com.quiz.futbol.utils.Constants.ModeGame.*
 import com.quiz.futbol.utils.Constants.TypeChampionship
 import com.quiz.futbol.utils.Constants.TypeChampionship.*
 import com.quiz.futbol.utils.Constants.TypeGame.*
@@ -13,115 +15,65 @@ import com.quiz.futbol.utils.GetResources
 class SelectViewModel(private val getResources: GetResources) : ScopedViewModel() {
 
     private val _model = MutableLiveData<UiModel>()
-    val model: LiveData<UiModel>
-        get() {
-            if (_model.value == null) refresh()
-            return _model
-        }
+    val model: LiveData<UiModel> = _model
 
     private val _navigation = MutableLiveData<Navigation>()
     val navigation: LiveData<Navigation> = _navigation
 
     init {
         AnalyticsManager.analyticsScreenViewed(AnalyticsManager.SCREEN_SELECT_GAME)
-        refresh()
     }
 
-    private fun refresh() {
+    fun loadTrainingMode() {
+        _model.value = UiModel.ContentCareerMode(loadSelectAllItems(), TRAINIG)
+    }
 
+    fun loadCareerMode() {
+        _model.value = UiModel.ContentCareerMode(loadSelectAllItems(), CARRER)
+    }
+
+    private fun loadSelectAllItems(): MutableList<SelectItem> {
+        val listOf = mutableListOf<SelectItem>()
+        listOf.addAll(loadSelectItems(SPAIN_FIRST_DIVISION))
+        listOf.addAll(loadSelectItems(ENGLAND_FIRST_DIVISION))
+        listOf.addAll(loadSelectItems(ITALY_FIRST_DIVISION))
+        listOf.addAll(loadSelectItems(GERMAIN_FIRST_DIVISION))
+        listOf.addAll(loadSelectItems(FRENCH_FIRST_DIVISION))
+        return listOf
+    }
+    private fun loadSelectItems(typeChampionship: TypeChampionship): MutableList<SelectItem> {
         val listOf = mutableListOf<SelectItem>()
 
-        // España - Primera
-        val spainFirstHeader = SelectItem(getResources.getString(R.string.first_division), false, null, SPAIN_FIRST_DIVISION) {
-            _navigation.value = Navigation.GameByImage(SPAIN_FIRST_DIVISION)
+        val title = when(typeChampionship) {
+            SPAIN_FIRST_DIVISION -> getResources.getString(R.string.spain_league)
+            ENGLAND_FIRST_DIVISION -> getResources.getString(R.string.england_league)
+            ITALY_FIRST_DIVISION -> getResources.getString(R.string.italy_league)
+            GERMAIN_FIRST_DIVISION -> getResources.getString(R.string.german_league)
+            FRENCH_FIRST_DIVISION -> getResources.getString(R.string.french_league)
+        }
+        val itemHeader = SelectItem(title, false, null, typeChampionship) {
+            _navigation.value = Navigation.GameByImage(typeChampionship)
         }
 
-        val spainFirstSelectImageItem = SelectItem(getResources.getString(R.string.by_image), false, BY_IMAGE) {
-            _navigation.value = Navigation.GameByImage(SPAIN_FIRST_DIVISION)
+        val itemSelectImageItem = SelectItem(getResources.getString(R.string.by_image), false, BY_IMAGE) {
+            _navigation.value = Navigation.GameByImage(typeChampionship)
         }
-        val spainFirstSelectNameItem = SelectItem(getResources.getString(R.string.by_name), true, BY_NAME) {
-            _navigation.value = Navigation.GameByName(SPAIN_FIRST_DIVISION)
+        val itemSelectNameItem = SelectItem(getResources.getString(R.string.by_name), true, BY_NAME) {
+            _navigation.value = Navigation.GameByName(typeChampionship)
         }
-        val spainFirstSelectCapacityItem = SelectItem(getResources.getString(R.string.by_capacity), true, BY_CAPACITY) {
-            _navigation.value = Navigation.GameByCapacity(SPAIN_FIRST_DIVISION)
+        val itemSelectCapacityItem = SelectItem(getResources.getString(R.string.by_capacity), true, BY_CAPACITY) {
+            _navigation.value = Navigation.GameByCapacity(typeChampionship)
         }
-        val spainFirstSelectBuiltItem = SelectItem(getResources.getString(R.string.by_built), true, BY_BUILT) {
-            _navigation.value = Navigation.GameByBuilt(SPAIN_FIRST_DIVISION)
+        val itemSelectBuiltItem = SelectItem(getResources.getString(R.string.by_built), true, BY_BUILT) {
+            _navigation.value = Navigation.GameByBuilt(typeChampionship)
         }
-        listOf.add(spainFirstHeader)
-        listOf.add(spainFirstSelectImageItem)
-        listOf.add(spainFirstSelectNameItem)
-        listOf.add(spainFirstSelectCapacityItem)
-        listOf.add(spainFirstSelectBuiltItem)
+        listOf.add(itemHeader)
+        listOf.add(itemSelectImageItem)
+        listOf.add(itemSelectNameItem)
+        listOf.add(itemSelectCapacityItem)
+        listOf.add(itemSelectBuiltItem)
 
-        // España - Segunda
-        val spainSecondHeader = SelectItem(getResources.getString(R.string.second_division), false, null, SPAIN_FIRST_DIVISION) {
-            _navigation.value = Navigation.GameByImage(SPAIN_FIRST_DIVISION)
-        }
-        val spainSecondSelectImageItem = SelectItem(getResources.getString(R.string.by_image), true, BY_IMAGE) {
-            _navigation.value = Navigation.GameByImage(SPAIN_FIRST_DIVISION)
-        }
-        val spainSecondSelectNameItem = SelectItem(getResources.getString(R.string.by_name), true, BY_NAME) {
-            _navigation.value = Navigation.GameByName(SPAIN_FIRST_DIVISION)
-        }
-        val spainSecondSelectCapacityItem = SelectItem(getResources.getString(R.string.by_capacity), true, BY_CAPACITY) {
-            _navigation.value = Navigation.GameByCapacity(SPAIN_FIRST_DIVISION)
-        }
-        val spainSecondSelectBuiltItem = SelectItem(getResources.getString(R.string.by_built), true, BY_BUILT) {
-            _navigation.value = Navigation.GameByBuilt(SPAIN_FIRST_DIVISION)
-        }
-        listOf.add(spainSecondHeader)
-        listOf.add(spainSecondSelectImageItem)
-        listOf.add(spainSecondSelectNameItem)
-        listOf.add(spainSecondSelectCapacityItem)
-        listOf.add(spainSecondSelectBuiltItem)
-
-
-        // Inglaterra - Primera
-        val englandFirstHeader = SelectItem(getResources.getString(R.string.first_division), false, null, ENGLAND_FIRST_DIVISION) {
-            _navigation.value = Navigation.GameByImage(ENGLAND_FIRST_DIVISION)
-        }
-        val englandFirstSelectImageItem = SelectItem(getResources.getString(R.string.by_image), true, BY_IMAGE) {
-            _navigation.value = Navigation.GameByImage(ENGLAND_FIRST_DIVISION)
-        }
-        val englandFirstSelectNameItem = SelectItem(getResources.getString(R.string.by_name), true, BY_NAME) {
-            _navigation.value = Navigation.GameByName(ENGLAND_FIRST_DIVISION)
-        }
-        val englandFirstSelectCapacityItem = SelectItem(getResources.getString(R.string.by_capacity), true, BY_CAPACITY) {
-            _navigation.value = Navigation.GameByCapacity(ENGLAND_FIRST_DIVISION)
-        }
-        val englandFirstSelectBuiltItem = SelectItem(getResources.getString(R.string.by_built), true, BY_BUILT) {
-            _navigation.value = Navigation.GameByBuilt(ENGLAND_FIRST_DIVISION)
-        }
-        listOf.add(englandFirstHeader)
-        listOf.add(englandFirstSelectImageItem)
-        listOf.add(englandFirstSelectNameItem)
-        listOf.add(englandFirstSelectCapacityItem)
-        listOf.add(englandFirstSelectBuiltItem)
-
-        // Inglaterra - Segunda
-        val englandSecondHeader = SelectItem(getResources.getString(R.string.second_division), false, null, ENGLAND_SECOND_DIVISION) {
-            _navigation.value = Navigation.GameByImage(ENGLAND_SECOND_DIVISION)
-        }
-        val englandSecondSelectImageItem = SelectItem(getResources.getString(R.string.by_image), true, BY_IMAGE) {
-            _navigation.value = Navigation.GameByImage(ENGLAND_SECOND_DIVISION)
-        }
-        val englandSecondSelectNameItem = SelectItem(getResources.getString(R.string.by_name), true, BY_NAME) {
-            _navigation.value = Navigation.GameByName(ENGLAND_SECOND_DIVISION)
-        }
-        val englandSecondSelectCapacityItem = SelectItem(getResources.getString(R.string.by_capacity), true, BY_CAPACITY) {
-            _navigation.value = Navigation.GameByCapacity(ENGLAND_SECOND_DIVISION)
-        }
-        val englandSecondSelectBuiltItem = SelectItem(getResources.getString(R.string.by_built), true, BY_BUILT) {
-            _navigation.value = Navigation.GameByBuilt(ENGLAND_SECOND_DIVISION)
-        }
-        listOf.add(englandSecondHeader)
-        listOf.add(englandSecondSelectImageItem)
-        listOf.add(englandSecondSelectNameItem)
-        listOf.add(englandSecondSelectCapacityItem)
-        listOf.add(englandSecondSelectBuiltItem)
-
-        _model.value = UiModel.Content(listOf)
+        return listOf
     }
 
     sealed class Navigation {
@@ -132,6 +84,6 @@ class SelectViewModel(private val getResources: GetResources) : ScopedViewModel(
     }
 
     sealed class UiModel {
-        data class Content(val items: List<SelectItem>) : UiModel()
+        data class ContentCareerMode(val items: List<SelectItem>, val mode: ModeGame) : UiModel()
     }
 }

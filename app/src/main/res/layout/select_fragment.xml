@@ -36,14 +36,65 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
+        <Button
             android:id="@+id/helloText"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
+            android:theme="@style/HelloButton"
             android:text="@string/hi"
             android:textAppearance="@style/Bold.TextColorLight.VeryLarge"
-            app:layout_constraintTop_toBottomOf="@+id/imageManuscript" />
+            app:layout_constraintTop_toBottomOf="@+id/imageManuscript"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/helloText"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp" >
+
+            <Button
+                android:id="@+id/btnStartCareerMode"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="50dp"
+                android:textAppearance="@style/Bold.TextColorLight.Large"
+                android:text="Modo carrera"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <Button
+                android:id="@+id/btnStartTrainingMode"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="50dp"
+                android:textAppearance="@style/Bold.TextColorLight.Large"
+                android:text="Modo Entrenamiento"
+                app:layout_constraintTop_toBottomOf="@+id/btnStartCareerMode"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <Button
+                android:id="@+id/btnSettings"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="50dp"
+                android:textAppearance="@style/Bold.TextColorLight.Large"
+                android:text="Ajustes"
+                app:layout_constraintTop_toBottomOf="@+id/btnStartTrainingMode"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <include
