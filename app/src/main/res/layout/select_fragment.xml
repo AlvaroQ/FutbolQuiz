@@ -36,21 +36,47 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
-            android:id="@+id/helloText"
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/btnSignInButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:theme="@style/HelloButton"
-            android:text="@string/hi"
-            android:textAppearance="@style/Bold.TextColorLight.VeryLarge"
+            android:layout_margin="@dimen/activity_horizontal_margin"
             app:layout_constraintTop_toBottomOf="@+id/imageManuscript"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            app:layout_constraintTop_toBottomOf="@+id/imageManuscript"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/imageUser"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                tools:src="@android:mipmap/sym_def_app_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+            <TextView
+                android:id="@+id/helloText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="@string/hi"
+                android:textAppearance="@style/Bold.TextColorLight.VeryLarge"
+                android:layout_marginStart="6dp"
+                app:layout_constraintTop_toTopOf="@+id/imageUser"
+                app:layout_constraintBottom_toBottomOf="@+id/imageUser"
+                app:layout_constraintStart_toEndOf="@+id/imageUser"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/helloText"
+            app:layout_constraintTop_toBottomOf="@+id/layoutLogin"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp" >

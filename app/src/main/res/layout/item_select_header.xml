@@ -25,7 +25,7 @@
         tools:text="Primera división"
         android:gravity="center"
         android:layout_marginStart="8dp"
-        android:textAppearance="@style/Regular.TextTitleColor.Medium"
+        android:textAppearance="@style/Regular.TextColor.Medium"
         app:layout_constraintTop_toBottomOf="@+id/imageChampionship"
         app:layout_constraintBottom_toTopOf="@+id/imageChampionship"
         app:layout_constraintStart_toEndOf="@+id/imageChampionship" />

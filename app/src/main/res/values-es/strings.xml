@@ -18,8 +18,12 @@
     <string name="play_again">Jugar de nuevo</string>
     <string name="share">Compartir</string>
     <string name="rate_on_play_store">Puntuar en play store</string>
-    <string name="share_message">\nMy score is %d, can you get over me?\n\n</string>
-    <string name="choose_one">Choose:</string>
+    <string name="share_message">\nMe ha gustado este juego ¡descárgatelo gratis!\n\n</string>
+    <string name="choose_one">Elige:</string>
+    <string name="blocked_level">Nivel bloqueado</string>
+    <string name="blocked_level_description">Necesitas desbloquear el nivel anterior</string>
+    <string name="login_necessary">Login necesario</string>
+    <string name="login_necessary_description">Necesitamos que entres con tu cuenta Google para continuar</string>
 
     <string name="locale">es</string>
 </resources>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginStart="@dimen/activity_horizontal_margin"
+    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+    android:layout_marginBottom="80dp"
+    android:background="@drawable/background_dialog">
+
+    <ImageView
+        android:id="@+id/imageLogin"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:src="@drawable/image_padlock"
+        android:contentDescription="@string/dialog_image"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/blocked_level"
+        style="@style/Bold.TextColorDark.Medium"
+        android:gravity="center"
+        android:layout_marginTop="6dp"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        app:layout_constraintTop_toBottomOf="@+id/imageLogin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/textDecription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/blocked_level_description"
+        style="@style/Regular.TextColorDark.Medium"
+        android:gravity="center"
+        android:layout_marginTop="6dp"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        app:layout_constraintTop_toBottomOf="@+id/textTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/buttonCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.App.Button"
+        android:text="@android:string/ok"
+        android:padding="@dimen/activity_horizontal_margin"
+        app:layout_constraintTop_toBottomOf="@+id/textDecription"
+        app:layout_constraintEnd_toEndOf="parent"  />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

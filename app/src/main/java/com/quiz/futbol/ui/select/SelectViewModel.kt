@@ -11,25 +11,29 @@ import com.quiz.futbol.utils.Constants.TypeChampionship
 import com.quiz.futbol.utils.Constants.TypeChampionship.*
 import com.quiz.futbol.utils.Constants.TypeGame.*
 import com.quiz.futbol.utils.GetResources
+import com.quiz.futbol.utils.log
 
 class SelectViewModel(private val getResources: GetResources) : ScopedViewModel() {
 
-    private val _model = MutableLiveData<UiModel>()
-    val model: LiveData<UiModel> = _model
+    private val _loadBottomSheetData = MutableLiveData<UiModel>()
+    val loadBottomSheetData: LiveData<UiModel> = _loadBottomSheetData
 
     private val _navigation = MutableLiveData<Navigation>()
     val navigation: LiveData<Navigation> = _navigation
+
+    private val _dialog = MutableLiveData<Dialog>()
+    val dialog: LiveData<Dialog> = _dialog
 
     init {
         AnalyticsManager.analyticsScreenViewed(AnalyticsManager.SCREEN_SELECT_GAME)
     }
 
     fun loadTrainingMode() {
-        _model.value = UiModel.ContentCareerMode(loadSelectAllItems(), TRAINIG)
+        _loadBottomSheetData.value = UiModel.ContentCareerMode(loadSelectAllItems(), TRAINIG)
     }
 
     fun loadCareerMode() {
-        _model.value = UiModel.ContentCareerMode(loadSelectAllItems(), CARRER)
+        _loadBottomSheetData.value = UiModel.ContentCareerMode(loadSelectAllItems(), CARRER)
     }
 
     private fun loadSelectAllItems(): MutableList<SelectItem> {
@@ -41,6 +45,7 @@ class SelectViewModel(private val getResources: GetResources) : ScopedViewModel(
         listOf.addAll(loadSelectItems(FRENCH_FIRST_DIVISION))
         return listOf
     }
+
     private fun loadSelectItems(typeChampionship: TypeChampionship): MutableList<SelectItem> {
         val listOf = mutableListOf<SelectItem>()
 
@@ -51,12 +56,14 @@ class SelectViewModel(private val getResources: GetResources) : ScopedViewModel(
             GERMAIN_FIRST_DIVISION -> getResources.getString(R.string.german_league)
             FRENCH_FIRST_DIVISION -> getResources.getString(R.string.french_league)
         }
-        val itemHeader = SelectItem(title, false, null, typeChampionship) {
-            _navigation.value = Navigation.GameByImage(typeChampionship)
-        }
+        val itemHeader = SelectItem(title, false, null, typeChampionship){}
 
         val itemSelectImageItem = SelectItem(getResources.getString(R.string.by_image), false, BY_IMAGE) {
-            _navigation.value = Navigation.GameByImage(typeChampionship)
+            when {
+                //isBlocked -> _dialog.value = Dialog.DialogLevelLock
+                //!isLogged -> _dialog.value = Dialog.DialogSignInWithGoogle
+                else -> _navigation.value = Navigation.GameByImage(typeChampionship)
+            }
         }
         val itemSelectNameItem = SelectItem(getResources.getString(R.string.by_name), true, BY_NAME) {
             _navigation.value = Navigation.GameByName(typeChampionship)
@@ -76,6 +83,10 @@ class SelectViewModel(private val getResources: GetResources) : ScopedViewModel(
         return listOf
     }
 
+    sealed class Dialog {
+        object DialogLevelLock : Dialog()
+        object DialogSignInWithGoogle : Dialog()
+    }
     sealed class Navigation {
         data class GameByImage(val championship: TypeChampionship) : Navigation()
         data class GameByName(val championship: TypeChampionship) : Navigation()
@@ -85,5 +96,9 @@ class SelectViewModel(private val getResources: GetResources) : ScopedViewModel(
 
     sealed class UiModel {
         data class ContentCareerMode(val items: List<SelectItem>, val mode: ModeGame) : UiModel()
+    }
+
+    companion object {
+        private val TAG = SelectViewModel::class.java.simpleName
     }
 }

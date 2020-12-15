@@ -12,45 +12,43 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.quiz.futbol.R
+import com.quiz.futbol.base.BaseActivity
 import com.quiz.futbol.common.startActivity
 import com.quiz.futbol.databinding.SelectFragmentBinding
+import com.quiz.futbol.managers.DialogCustomManager
 import com.quiz.futbol.ui.game.GameActivity
 import com.quiz.futbol.utils.Constants
 import com.quiz.futbol.utils.Constants.TYPE_CHAMPIONSHIP
 import com.quiz.futbol.utils.Constants.TYPE_GAME
 import com.quiz.futbol.utils.Constants.TypeGame.*
+import com.quiz.futbol.utils.log
 import com.quiz.futbol.utils.setSafeOnClickListener
 import com.quiz.futbol.utils.underline
 import org.koin.android.scope.lifecycleScope
 import org.koin.android.viewmodel.scope.viewModel
+import org.koin.core.parameter.parametersOf
 
 class SelectFragment : Fragment() {
     private lateinit var binding: SelectFragmentBinding
     private val selectViewModel: SelectViewModel by lifecycleScope.viewModel(this)
+    private val dialogCustomManager: DialogCustomManager by lifecycleScope.inject { parametersOf(requireActivity()) }
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
-
-    companion object {
-        fun newInstance() = SelectFragment()
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SelectFragmentBinding.inflate(inflater)
         val root = binding.root
 
-        binding.helloText.underline()
-        binding.helloText.setSafeOnClickListener {
-            // login or profile
-        }
-        binding.btnStartCareerMode.setSafeOnClickListener {
-            selectViewModel.loadCareerMode()
-        }
-        binding.btnStartTrainingMode.setSafeOnClickListener {
-            selectViewModel.loadTrainingMode()
-        }
-
         bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet.constraintBottomSheet)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+
+        binding.btnSignInButton.setSafeOnClickListener { signIn() }
+        binding.btnStartCareerMode.setSafeOnClickListener { selectViewModel.loadCareerMode() }
+        binding.btnStartTrainingMode.setSafeOnClickListener { selectViewModel.loadTrainingMode() }
+        binding.helloText.underline()
+        binding.helloText.setSafeOnClickListener {
+            // Profile
+        }
         return root
     }
 
@@ -58,7 +56,8 @@ class SelectFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         selectViewModel.navigation.observe(viewLifecycleOwner, Observer(::navigate))
-        selectViewModel.model.observe(viewLifecycleOwner, Observer(::updateUi))
+        selectViewModel.dialog.observe(viewLifecycleOwner, Observer(::showDialog))
+        selectViewModel.loadBottomSheetData.observe(viewLifecycleOwner, Observer(::updateUi))
     }
 
     private fun updateUi(model: SelectViewModel.UiModel) {
@@ -82,6 +81,22 @@ class SelectFragment : Fragment() {
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
             }
         }
+    }
+
+    private fun showDialog(dialog: SelectViewModel.Dialog?) {
+        when (dialog) {
+            is SelectViewModel.Dialog.DialogLevelLock -> {
+                dialogCustomManager.showDialogLevelLock()
+            }
+            is SelectViewModel.Dialog.DialogSignInWithGoogle -> {
+                dialogCustomManager.showDialogSignInWithGoogle { signIn() }
+            }
+        }
+    }
+
+    private fun signIn(){
+        log(TAG, "Sign in")
+        //(activity as BaseActivity).login()
     }
 
     private fun navigate(navigation: SelectViewModel.Navigation?) {
@@ -111,5 +126,10 @@ class SelectFragment : Fragment() {
                 }
             }
         }
+    }
+
+    companion object {
+        private val TAG = SelectFragment::class.java.simpleName
+        fun newInstance() = SelectFragment()
     }
 }

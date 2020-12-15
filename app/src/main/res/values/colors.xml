@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#0E8300</color>
-    <color name="colorPrimaryDark">#034C00</color>
+    <color name="colorPrimary">#0029FF</color>
+    <color name="colorPrimaryDark">#001581</color>
+    <color name="colorPrimaryLight">#5B7FFF</color>
     <color name="colorSecondary">#7C3925</color>
     <color name="colorSecondaryDark">#512618</color>
-    <color name="colorPrimaryLight">#AF5E45</color>
     <color name="colorAccent">#3F51B5</color>
-    <color name="transparent">#33000000</color>
     <color name="blocked">#FFFFFF</color>
 
+    <color name="transparent">#33000000</color>
     <color name="semitransparent">#66000000</color>
     <color name="responseCorrect">#009E07</color>
     <color name="responseFail">#CA0000</color>
@@ -20,7 +20,7 @@
 
     <color name="textColor">#FFFFFF</color>
     <color name="textColorLight">#9CACFF</color>
-    <color name="textTitleColor">#FFFFFF</color>
+    <color name="textColorDark">#292929</color>
 
     <color name="gradientTop">#0029FF</color>
     <color name="gradientBottom">#5B7FFF</color>

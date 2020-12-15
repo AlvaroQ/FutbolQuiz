@@ -1,5 +1,6 @@
 package com.quiz.futbol.application
 
+import android.app.Activity
 import android.app.Application
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -12,6 +13,7 @@ import com.quiz.data.repository.SharedPreferencesRepository
 import com.quiz.data.repository.StadiumByIdRepository
 import com.quiz.futbol.datasource.DataBaseSourceImpl
 import com.quiz.futbol.datasource.FirestoreDataSourceImpl
+import com.quiz.futbol.managers.DialogCustomManager
 import com.quiz.futbol.managers.SharedPrefsDataSource
 import com.quiz.futbol.ui.game.GameFragment
 import com.quiz.futbol.ui.game.GameViewModel
@@ -47,6 +49,7 @@ private val appModule = module {
     factory { Firebase.firestore }
     single<CoroutineDispatcher> { Dispatchers.Main }
     single {GetResources(get())}
+    factory { (activity: Activity) -> DialogCustomManager(activity)}
     factory<DataBaseSource> { DataBaseSourceImpl() }
     factory<FirestoreDataSource> { FirestoreDataSourceImpl(get()) }
     factory<SharedPreferencesLocalDataSource> { SharedPrefsDataSource(get()) }

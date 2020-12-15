@@ -13,8 +13,8 @@
     <style name="Bold.TextColorLight">
         <item name="android:textColor">@color/textColorLight</item>
     </style>
-    <style name="Bold.TextTitleColor">
-        <item name="android:textColor">@color/textTitleColor</item>
+    <style name="Bold.TextColorDark">
+        <item name="android:textColor">@color/textColorDark</item>
     </style>
 
     <style name="Regular.TextColor">
@@ -23,8 +23,8 @@
     <style name="Regular.TextColorLight">
         <item name="android:textColor">@color/textColorLight</item>
     </style>
-    <style name="Regular.TextTitleColor">
-        <item name="android:textColor">@color/textTitleColor</item>
+    <style name="Regular.TextColorDark">
+        <item name="android:textColor">@color/textColorDark</item>
     </style>
 
     <!-- TextColor -->
@@ -103,13 +103,16 @@
         <item name="android:textSize">@dimen/very_small</item>
     </style>
 
-    <style name="Bold.TextTitleColor.VeryVeryLarge" >
+    <style name="Bold.TextColorDark.VeryVeryLarge" >
         <item name="android:textSize">@dimen/very_very_large</item>
     </style>
-    <style name="Bold.TextTitleColor.Large" >
+    <style name="Bold.TextColorDark.Large" >
         <item name="android:textSize">@dimen/large</item>
     </style>
-    <style name="Regular.TextTitleColor.Medium" >
+    <style name="Bold.TextColorDark.Medium" >
+        <item name="android:textSize">@dimen/medium</item>
+    </style>
+    <style name="Regular.TextColorDark.Medium" >
         <item name="android:textSize">@dimen/medium</item>
     </style>
 </resources>

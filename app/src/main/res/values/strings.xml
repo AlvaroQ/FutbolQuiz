@@ -18,14 +18,19 @@
     <string name="play_again">Play again</string>
     <string name="share">Share</string>
     <string name="rate_on_play_store">Rate on play store</string>
-    <string name="share_message">\nMy score is %d, can you get over me?\n\n</string>
+    <string name="share_message">\nI like this game, download free!\n\n</string>
     <string name="choose_one">Choose:</string>
+    <string name="blocked_level">Blocked</string>
+    <string name="blocked_level_description">Your need unblock previus level</string>
+    <string name="login_necessary">Login necessary</string>
+    <string name="login_necessary_description">You need sign in with google</string>
 
     <!-- content description image -->
     <string translatable="false" name="flag">flag</string>
     <string translatable="false" name="life">life</string>
     <string translatable="false" name="game_title">game title</string>
     <string translatable="false" name="loading_image">loading</string>
+    <string translatable="false" name="dialog_image">image dialog</string>
     <string translatable="false" name="back">back</string>
     <string translatable="false" name="game_image">image to guess</string>
 

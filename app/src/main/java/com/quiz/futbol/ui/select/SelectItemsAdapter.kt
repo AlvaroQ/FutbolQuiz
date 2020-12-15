@@ -64,7 +64,9 @@ class SelectItemsAdapter(private var context: Context,
                         BY_BUILT -> R.drawable.stadium_built
                         else -> R.drawable.stadium_capacity
                     })
-            holder.itemView.setSafeOnClickListener { item.click() }
+            holder.itemView.setSafeOnClickListener {
+                item.click()
+            }
         }
     }
 

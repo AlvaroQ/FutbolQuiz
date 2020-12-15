@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textAppearance="@style/Bold.TextTitleColor.Large"
+            android:textAppearance="@style/Bold.TextColor.Large"
             tools:text="@string/trainig_mode"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             app:layout_constraintTop_toTopOf="parent"

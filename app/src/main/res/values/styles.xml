@@ -28,7 +28,18 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="HelloButton" parent="@style/Widget.MaterialComponents.Button.TextButton" >
-        
+    <style name="Widget.App.Button" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <!-- Animation for Dialog component -->
+    <style name="CustomDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
+    </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_in_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_down</item>
     </style>
 </resources>

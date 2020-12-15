@@ -65,7 +65,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:gravity="center"
-                    android:textAppearance="@style/Bold.TextTitleColor.VeryVeryLarge"
+                    android:textAppearance="@style/Bold.TextColorDark.VeryVeryLarge"
                     tools:text="España" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
