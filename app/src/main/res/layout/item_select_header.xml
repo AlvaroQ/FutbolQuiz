@@ -22,7 +22,7 @@
         android:id="@+id/textChampionship"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:text="Primera división"
+        tools:text="First division"
         android:gravity="center"
         android:layout_marginStart="8dp"
         android:textAppearance="@style/Regular.TextColor.Medium"

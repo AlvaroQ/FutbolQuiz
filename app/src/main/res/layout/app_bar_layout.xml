@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/app_name"
-                android:textAppearance="@style/Regular.TextColor.ToolbatTitle"
+                android:textAppearance="@style/Regular.TextColor.ToolbarTitle"
                 android:layout_marginTop="18dp"
                 android:gravity="center"
                 app:layout_constraintTop_toTopOf="parent"

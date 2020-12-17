@@ -1,8 +1,10 @@
 package com.quiz.domain
 
+import java.io.Serializable
+
 data class User(
-    var name: String? = "",
-    var points: String? = "",
-    var userImage: String? = "",
-    var timestamp: Long? = 0L
-)
+    var uuid: String? = "",
+    var displayName: String? = "",
+    var email: String? = "",
+    var phoneNumber: String? = "",
+    var photoUrl: String? = "") : Serializable

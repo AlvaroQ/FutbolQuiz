@@ -40,7 +40,7 @@
     <style name="Bold.TextColor.Large" >
         <item name="android:textSize">@dimen/large</item>
     </style>
-    <style name="Regular.TextColor.ToolbatTitle" >
+    <style name="Regular.TextColor.ToolbarTitle" >
         <item name="android:textSize">@dimen/title_toolbar</item>
     </style>
     <style name="Regular.TextColor.Large" >

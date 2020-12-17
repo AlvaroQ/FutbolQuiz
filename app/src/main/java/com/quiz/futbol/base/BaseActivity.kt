@@ -4,15 +4,11 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.ktx.Firebase
 import com.quiz.futbol.managers.AnalyticsManager
-import com.quiz.futbol.utils.log
 import com.quiz.futbol.utils.screenOrientationPortrait
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,16 +16,14 @@ import kotlinx.coroutines.Job
 import kotlin.coroutines.CoroutineContext
 
 abstract class BaseActivity(var uiContext: CoroutineContext = Dispatchers.Main) :
-    AppCompatActivity(),
-    CoroutineScope {
-
-    private val tag = "BaseActivity"
-    private lateinit var auth: FirebaseAuth
+    AppCompatActivity(), CoroutineScope {
 
     private lateinit var job: Job
 
     override val coroutineContext: CoroutineContext
         get() = uiContext + job
+
+    lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,53 +36,17 @@ abstract class BaseActivity(var uiContext: CoroutineContext = Dispatchers.Main) 
         }
 
         // Initialize Firebase Auth
+        auth = FirebaseAuth.getInstance()
         auth = Firebase.auth
         AnalyticsManager.initialize(this)
     }
 
-    public override fun onStart() {
-        super.onStart()
-
-        // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = auth.currentUser
-        updateUI(currentUser)
-    }
-
-    private fun signInAnonymously() {
-        auth.signInAnonymously()
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    log(tag, "signInAnonymously:success")
-                    val user = auth.currentUser
-                    updateUI(user)
-                } else {
-                    // If sign in fails, display a message to the user.
-                    log(tag, "signInAnonymously:failure", task.exception)
-                    Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
-                    updateUI(null)
-                }
-            }
-    }
-
-    private fun updateUI(user: FirebaseUser?) {
-        val isSignedIn = user != null
-        log(tag, "updateUI, isSignedON = $isSignedIn")
-
-
-        if (!isSignedIn) {
-            signInAnonymously()
-        } else {
-            FirebaseCrashlytics.getInstance().setUserId(user?.uid!!)
-            log(tag, "updateUI, you are login in")
-        }
-    }
-
     fun getUID(): String {
-        return if (auth.currentUser == null) {
-            ""
-        } else {
-            auth.currentUser?.uid!!
-        }
+        return if (auth.currentUser == null) ""
+        else auth.currentUser?.uid!!
+    }
+
+    companion object {
+        private val TAG = BaseActivity::class.java.simpleName
     }
 }

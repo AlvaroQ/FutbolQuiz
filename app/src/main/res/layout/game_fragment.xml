@@ -44,7 +44,7 @@
                     android:contentDescription="@string/game_image"/>
 
                 <ImageView
-                    android:id="@+id/imagenLoading"
+                    android:id="@+id/imageLoading"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     app:layout_constraintHeight_percent="0.6"
@@ -66,7 +66,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:gravity="center"
                     android:textAppearance="@style/Bold.TextColorDark.VeryVeryLarge"
-                    tools:text="España" />
+                    tools:text="Spain" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -78,7 +78,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" >
                 <ImageView
-                    android:id="@+id/imagenHeader"
+                    android:id="@+id/imageHeader"
                     android:layout_width="match_parent"
                     android:layout_height="90dp"
                     android:src="@drawable/background_game_header"
@@ -90,7 +90,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:background="@drawable/gradient_game"
-                    app:layout_constraintTop_toBottomOf="@id/imagenHeader"
+                    app:layout_constraintTop_toBottomOf="@id/imageHeader"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
@@ -123,7 +123,7 @@
                     app:layout_constraintHeight_percent="0.45"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Alaskan malute" />
+                    tools:text="Option One" />
 
                 <Button
                     android:id="@+id/btnOptionTwo"
@@ -135,7 +135,7 @@
                     app:layout_constraintHeight_percent="0.45"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    tools:text="Braco de pelo largo" />
+                    tools:text="Option Two" />
 
                 <Button
                     android:id="@+id/btnOptionThree"
@@ -148,13 +148,13 @@
                     android:layout_marginTop="@dimen/margin_top_game_buttons"
                     app:layout_constraintTop_toBottomOf="@+id/btnOptionOne"
                     app:layout_constraintStart_toStartOf="parent"
-                    tools:text="Yorkshire Terrier toy" />
+                    tools:text="Option Three" />
 
                 <Button
                     android:id="@+id/btnOptionFour"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    tools:text="Braco aleman"
+                    tools:text="Option Four"
                     android:padding="@dimen/padding_game_buttons"
                     android:maxLines="5"
                     app:layout_constraintWidth_percent="0.49"

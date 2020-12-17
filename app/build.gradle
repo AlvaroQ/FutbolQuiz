@@ -8,7 +8,20 @@ apply plugin: 'com.google.firebase.crashlytics'// Added Firebase Crashlytics plu
 android {
     compileSdkVersion versions.compileSdk
     buildToolsVersion versions.buildtoolsVersion
-
+    signingConfigs {
+        config {
+            keyAlias FUTBOLQUIZ_RELEASE_KEY_ALIAS
+            keyPassword FUTBOLQUIZ_RELEASE_KEY_PASSWORD
+            storeFile file(FUTBOLQUIZ_RELEASE_STORE_FILE)
+            storePassword FUTBOLQUIZ_RELEASE_STORE_PASSWORD
+        }
+        debug {
+            keyAlias FUTBOLQUIZ_RELEASE_KEY_ALIAS
+            keyPassword FUTBOLQUIZ_RELEASE_KEY_PASSWORD
+            storeFile file(FUTBOLQUIZ_RELEASE_STORE_FILE)
+            storePassword FUTBOLQUIZ_RELEASE_STORE_PASSWORD
+        }
+    }
     defaultConfig {
         applicationId names.applicationId
         minSdkVersion versions.minSdk
@@ -20,6 +33,7 @@ android {
 
     buildTypes {
         debug {
+            signingConfig signingConfigs.debug
             jniDebuggable true
             testCoverageEnabled true
             debuggable true
@@ -31,6 +45,7 @@ android {
             resValue 'string', 'BANNER_RANKING', getAdmobBannerTestId()
         }
         release {
+            signingConfig signingConfigs.config
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             debuggable false

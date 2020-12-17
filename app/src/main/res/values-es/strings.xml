@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">Fútbol quiz</string>
     <string name="hi">Hola <u>Álvaro</u></string>
-    <string name="trainig_mode">Modo entrenamiento</string>
+    <string name="settings">Ajustes</string>
+    <string name="training_mode">Modo Entrenamiento</string>
     <string name="carrer_mode">Modo Carrera</string>
     <string name="spain_league">Liga española</string>
     <string name="england_league">Liga inglesa</string>

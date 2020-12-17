@@ -25,7 +25,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:textAppearance="@style/Bold.TextColor.Large"
-            tools:text="@string/trainig_mode"
+            tools:text="@string/training_mode"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

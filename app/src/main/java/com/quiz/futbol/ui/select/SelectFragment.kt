@@ -11,24 +11,24 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.quiz.domain.User
 import com.quiz.futbol.R
 import com.quiz.futbol.base.BaseActivity
 import com.quiz.futbol.common.startActivity
 import com.quiz.futbol.databinding.SelectFragmentBinding
 import com.quiz.futbol.managers.DialogCustomManager
 import com.quiz.futbol.ui.game.GameActivity
-import com.quiz.futbol.utils.Constants
+import com.quiz.futbol.utils.*
 import com.quiz.futbol.utils.Constants.TYPE_CHAMPIONSHIP
 import com.quiz.futbol.utils.Constants.TYPE_GAME
 import com.quiz.futbol.utils.Constants.TypeGame.*
-import com.quiz.futbol.utils.log
-import com.quiz.futbol.utils.setSafeOnClickListener
-import com.quiz.futbol.utils.underline
+import com.quiz.futbol.utils.Constants.User
 import org.koin.android.scope.lifecycleScope
 import org.koin.android.viewmodel.scope.viewModel
 import org.koin.core.parameter.parametersOf
 
 class SelectFragment : Fragment() {
+    lateinit var user: User
     private lateinit var binding: SelectFragmentBinding
     private val selectViewModel: SelectViewModel by lifecycleScope.viewModel(this)
     private val dialogCustomManager: DialogCustomManager by lifecycleScope.inject { parametersOf(requireActivity()) }
@@ -39,10 +39,13 @@ class SelectFragment : Fragment() {
         binding = SelectFragmentBinding.inflate(inflater)
         val root = binding.root
 
+        user = (activity?.intent?.getSerializableExtra(User) as User?)!!
+        binding.helloText.text = "Hola " + user.displayName
+        glideLoadURL(requireContext(), user.photoUrl, binding.imageUser)
+
         bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet.constraintBottomSheet)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
 
-        binding.btnSignInButton.setSafeOnClickListener { signIn() }
         binding.btnStartCareerMode.setSafeOnClickListener { selectViewModel.loadCareerMode() }
         binding.btnStartTrainingMode.setSafeOnClickListener { selectViewModel.loadTrainingMode() }
         binding.helloText.underline()
@@ -64,7 +67,7 @@ class SelectFragment : Fragment() {
         when (model) {
             is SelectViewModel.UiModel.ContentCareerMode -> {
                 binding.bottomSheet.textTitle.text = if(model.mode == Constants.ModeGame.TRAINIG) {
-                    getString(R.string.trainig_mode)
+                    getString(R.string.training_mode)
                 } else {
                     getString(R.string.carrer_mode)
                 }
@@ -88,15 +91,7 @@ class SelectFragment : Fragment() {
             is SelectViewModel.Dialog.DialogLevelLock -> {
                 dialogCustomManager.showDialogLevelLock()
             }
-            is SelectViewModel.Dialog.DialogSignInWithGoogle -> {
-                dialogCustomManager.showDialogSignInWithGoogle { signIn() }
-            }
         }
-    }
-
-    private fun signIn(){
-        log(TAG, "Sign in")
-        //(activity as BaseActivity).login()
     }
 
     private fun navigate(navigation: SelectViewModel.Navigation?) {

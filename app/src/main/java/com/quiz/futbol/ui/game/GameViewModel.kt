@@ -77,7 +77,7 @@ class GameViewModel(private val getStadiumById: GetStadiumById) : ScopedViewMode
         _navigation.value = Navigation.Result
     }
 
-    fun getStadium() : Stadium? {
+    fun getStadium() : Stadium {
         return stadium
     }
 

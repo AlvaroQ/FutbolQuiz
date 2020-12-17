@@ -20,7 +20,7 @@
             android:id="@+id/textResult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Resultado: 0"
+            tools:text="Result: 0"
             android:textAppearance="@style/Bold.TextColor.Large"
             android:gravity="center"
             app:layout_constraintTop_toTopOf="parent"

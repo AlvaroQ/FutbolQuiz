@@ -63,7 +63,7 @@ class GameFragment : Fragment() {
 
         typeGame = (activity?.intent?.getSerializableExtra(TYPE_GAME) as TypeGame?)!!
 
-        imageLoading = root.findViewById(R.id.imagenLoading)
+        imageLoading = root.findViewById(R.id.imageLoading)
         imageQuiz = root.findViewById(R.id.imageQuiz)
         textQuiz = root.findViewById(R.id.textQuiz)
         btnOptionOne = root.findViewById(R.id.btnOptionOne)

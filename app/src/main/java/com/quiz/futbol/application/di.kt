@@ -8,7 +8,6 @@ import com.quiz.data.datasource.DataBaseSource
 import com.quiz.data.datasource.FirestoreDataSource
 import com.quiz.data.datasource.SharedPreferencesLocalDataSource
 import com.quiz.data.repository.AppsRecommendedRepository
-import com.quiz.data.repository.RankingRepository
 import com.quiz.data.repository.SharedPreferencesRepository
 import com.quiz.data.repository.StadiumByIdRepository
 import com.quiz.futbol.datasource.DataBaseSourceImpl
@@ -17,6 +16,8 @@ import com.quiz.futbol.managers.DialogCustomManager
 import com.quiz.futbol.managers.SharedPrefsDataSource
 import com.quiz.futbol.ui.game.GameFragment
 import com.quiz.futbol.ui.game.GameViewModel
+import com.quiz.futbol.ui.login.LoginFragment
+import com.quiz.futbol.ui.login.LoginViewModel
 import com.quiz.futbol.ui.result.ResultFragment
 import com.quiz.futbol.ui.result.ResultViewModel
 import com.quiz.futbol.ui.select.SelectFragment
@@ -58,11 +59,13 @@ private val appModule = module {
 val dataModule = module {
     factory { StadiumByIdRepository(get()) }
     factory { AppsRecommendedRepository(get()) }
-    factory { RankingRepository(get()) }
     factory { SharedPreferencesRepository(get()) }
 }
 
 private val scopesModule = module {
+    scope(named<LoginFragment>()) {
+        viewModel { LoginViewModel() }
+    }
     scope(named<SelectFragment>()) {
         viewModel { SelectViewModel(get()) }
     }

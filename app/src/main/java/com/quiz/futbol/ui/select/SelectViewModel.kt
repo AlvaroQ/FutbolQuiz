@@ -59,14 +59,20 @@ class SelectViewModel(private val getResources: GetResources) : ScopedViewModel(
         val itemHeader = SelectItem(title, false, null, typeChampionship){}
 
         val itemSelectImageItem = SelectItem(getResources.getString(R.string.by_image), false, BY_IMAGE) {
+            val isBlocked = false
+
             when {
-                //isBlocked -> _dialog.value = Dialog.DialogLevelLock
-                //!isLogged -> _dialog.value = Dialog.DialogSignInWithGoogle
+                isBlocked -> _dialog.value = Dialog.DialogLevelLock
                 else -> _navigation.value = Navigation.GameByImage(typeChampionship)
             }
         }
         val itemSelectNameItem = SelectItem(getResources.getString(R.string.by_name), true, BY_NAME) {
-            _navigation.value = Navigation.GameByName(typeChampionship)
+            val isBlocked = true
+
+            when {
+                isBlocked -> _dialog.value = Dialog.DialogLevelLock
+                else -> _navigation.value = Navigation.GameByName(typeChampionship)
+            }
         }
         val itemSelectCapacityItem = SelectItem(getResources.getString(R.string.by_capacity), true, BY_CAPACITY) {
             _navigation.value = Navigation.GameByCapacity(typeChampionship)
@@ -85,7 +91,6 @@ class SelectViewModel(private val getResources: GetResources) : ScopedViewModel(
 
     sealed class Dialog {
         object DialogLevelLock : Dialog()
-        object DialogSignInWithGoogle : Dialog()
     }
     sealed class Navigation {
         data class GameByImage(val championship: TypeChampionship) : Navigation()

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginStart="@dimen/activity_horizontal_margin"
+    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+    android:background="@drawable/background_dialog"
+    tools:context=".ui.login.LoginFragment">
+
+    <ImageView
+        android:id="@+id/imageLogin"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/image_google"
+        android:contentDescription="@string/dialog_image"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/textInfoLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="¡Hola! Necesitamos que hagas login mediante tu cuenta de Google para continuar y llegar a ser un campeón. ¿Aceptas el reto?"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/imageLogin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/btnSignInButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        app:layout_constraintTop_toBottomOf="@+id/textInfoLogin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
