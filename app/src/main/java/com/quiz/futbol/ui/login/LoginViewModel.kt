@@ -2,9 +2,8 @@ package com.quiz.futbol.ui.login
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.quiz.futbol.common.ScopedViewModel
 import com.quiz.domain.User
-import com.quiz.usecases.SetCurrentUser
+import com.quiz.futbol.common.ScopedViewModel
 
 
 class LoginViewModel : ScopedViewModel() {

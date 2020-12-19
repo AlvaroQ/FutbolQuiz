@@ -6,12 +6,12 @@ import com.quiz.futbol.R
 import com.quiz.futbol.common.ScopedViewModel
 import com.quiz.futbol.managers.AnalyticsManager
 import com.quiz.futbol.utils.Constants.ModeGame
-import com.quiz.futbol.utils.Constants.ModeGame.*
+import com.quiz.futbol.utils.Constants.ModeGame.CARRER
+import com.quiz.futbol.utils.Constants.ModeGame.TRAINIG
 import com.quiz.futbol.utils.Constants.TypeChampionship
 import com.quiz.futbol.utils.Constants.TypeChampionship.*
 import com.quiz.futbol.utils.Constants.TypeGame.*
 import com.quiz.futbol.utils.GetResources
-import com.quiz.futbol.utils.log
 
 class SelectViewModel(private val getResources: GetResources) : ScopedViewModel() {
 
@@ -89,6 +89,10 @@ class SelectViewModel(private val getResources: GetResources) : ScopedViewModel(
         return listOf
     }
 
+    fun goToProfile() {
+        _navigation.value = Navigation.Profile
+    }
+
     sealed class Dialog {
         object DialogLevelLock : Dialog()
     }
@@ -97,6 +101,7 @@ class SelectViewModel(private val getResources: GetResources) : ScopedViewModel(
         data class GameByName(val championship: TypeChampionship) : Navigation()
         data class GameByCapacity(val championship: TypeChampionship) : Navigation()
         data class GameByBuilt(val championship: TypeChampionship) : Navigation()
+        object Profile : Navigation()
     }
 
     sealed class UiModel {

@@ -42,7 +42,6 @@ android {
                 mappingFileUploadEnabled false
             }
             resValue 'string', 'BANNER_GAME', getAdmobBannerTestId()
-            resValue 'string', 'BANNER_RANKING', getAdmobBannerTestId()
         }
         release {
             signingConfig signingConfigs.config
@@ -53,7 +52,6 @@ android {
                 mappingFileUploadEnabled true
             }
             resValue 'string', 'BANNER_GAME', getAdmobBannerGameId()
-            resValue 'string', 'BANNER_RANKING', getAdmobBannerRankingId()
         }
     }
     compileOptions {
@@ -89,15 +87,6 @@ def getAdmobBannerGameId() {
     try {
         def stringsFile = file("./src/main/res/values/secrets.xml")
         return new XmlParser().parse(stringsFile).string.find { it.@name.equals 'admob_banner_game' }.text()
-    } catch(e) {
-        println(e)
-        return ""
-    }
-}
-def getAdmobBannerRankingId() {
-    try {
-        def stringsFile = file("./src/main/res/values/secrets.xml")
-        return new XmlParser().parse(stringsFile).string.find { it.@name.equals 'admob_banner_ranking' }.text()
     } catch(e) {
         println(e)
         return ""

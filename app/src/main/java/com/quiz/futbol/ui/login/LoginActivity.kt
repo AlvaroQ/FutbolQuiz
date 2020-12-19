@@ -3,7 +3,6 @@ package com.quiz.futbol.ui.login
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -16,24 +15,26 @@ import com.quiz.domain.User
 import com.quiz.futbol.R
 import com.quiz.futbol.base.BaseActivity
 import com.quiz.futbol.common.startActivity
-import com.quiz.futbol.ui.game.GameActivity
+import com.quiz.futbol.databinding.LoginActivityBinding
 import com.quiz.futbol.ui.select.SelectActivity
 import com.quiz.futbol.utils.Constants.User
 import com.quiz.futbol.utils.log
 
 class LoginActivity : BaseActivity() {
+    private lateinit var binding: LoginActivityBinding
 
     lateinit var signInClient: GoogleSignInClient
     lateinit var signInOptions: GoogleSignInOptions
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.select_activity)
-        setupGoogleLogin()
+        binding = LoginActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
+        setupGoogleLogin()
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.containerSelect, LoginFragment.newInstance())
+                .replace(R.id.containerLogin, LoginFragment.newInstance())
                 .commitNow()
         }
     }
@@ -55,11 +56,8 @@ class LoginActivity : BaseActivity() {
             auth.currentUser?.phoneNumber,
             auth.currentUser?.photoUrl.toString())
 
-        startActivity<SelectActivity> {
-            putExtra(User, user)
-        }
+        startActivity<SelectActivity> { putExtra(User, user) }
     }
-
 
     private fun setupGoogleLogin() {
         signInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -85,9 +83,8 @@ class LoginActivity : BaseActivity() {
                         it.result.user?.email,
                         it.result.user?.phoneNumber,
                         it.result.user?.photoUrl.toString())
-                startActivity<SelectActivity> {
 
-                }
+                startActivity<SelectActivity> { putExtra(User, user) }
             } else {
                 Toast.makeText(this, "Google sign in failed:(", Toast.LENGTH_LONG).show()
             }

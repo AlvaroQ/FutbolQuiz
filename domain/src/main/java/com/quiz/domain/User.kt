@@ -7,4 +7,6 @@ data class User(
     var displayName: String? = "",
     var email: String? = "",
     var phoneNumber: String? = "",
-    var photoUrl: String? = "") : Serializable
+    var photoUrl: String? = "",
+    var signInTimestamp: Long = System.currentTimeMillis(),
+    var progressUser: Int = 0) : Serializable

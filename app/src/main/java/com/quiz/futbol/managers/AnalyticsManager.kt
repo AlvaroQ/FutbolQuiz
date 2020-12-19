@@ -66,13 +66,10 @@ object AnalyticsManager {
     //screen
     const val SCREEN_GAME = "screen_game"
     const val SCREEN_RESULT = "screen_result"
-    const val SCREEN_RANKING = "screen_ranking"
     const val SCREEN_SELECT_GAME = "screen_select_game"
-    const val SCREEN_DIALOG_SAVE_SCORE = "screen_dialog_save_score"
 
     // CLICKED
     const val BTN_PLAY_AGAIN = "btn_play_again"
     const val BTN_RATE = "btn_rate"
-    const val BTN_RANKING = "btn_ranking"
     const val BTN_SHARE = "btn_share"
 }

@@ -5,16 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.quiz.futbol.databinding.LoginFragmentBinding
-import com.quiz.futbol.utils.setSafeOnClickListener
-import com.quiz.futbol.utils.underline
 import androidx.lifecycle.Observer
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.FirebaseAuth
 import com.quiz.futbol.common.startActivity
+import com.quiz.futbol.databinding.LoginFragmentBinding
 import com.quiz.futbol.ui.game.GameActivity
-import com.quiz.futbol.utils.Constants
+import com.quiz.futbol.utils.setSafeOnClickListener
 import org.koin.android.scope.lifecycleScope
 import org.koin.android.viewmodel.scope.viewModel
 

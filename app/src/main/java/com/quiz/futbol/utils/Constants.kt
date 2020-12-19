@@ -9,7 +9,6 @@ object Constants {
     const val PATH_REFERENCE_SPAIN = "spain/"
     const val PATH_REFERENCE_FIRST_DIVISION = "first_division/"
     const val PATH_REFERENCE_APPS = "country/apps"
-    const val COLLECTION_RANKING = "ranking-teams"
 
     const val TYPE_GAME = "TypeGame"
     const val TYPE_CHAMPIONSHIP = "TypeChampionship"

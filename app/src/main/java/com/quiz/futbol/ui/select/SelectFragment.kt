@@ -1,7 +1,6 @@
 package com.quiz.futbol.ui.select
 
 import android.os.Bundle
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,16 +12,19 @@ import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.quiz.domain.User
 import com.quiz.futbol.R
-import com.quiz.futbol.base.BaseActivity
 import com.quiz.futbol.common.startActivity
 import com.quiz.futbol.databinding.SelectFragmentBinding
 import com.quiz.futbol.managers.DialogCustomManager
 import com.quiz.futbol.ui.game.GameActivity
-import com.quiz.futbol.utils.*
+import com.quiz.futbol.ui.profile.ProfileActivity
+import com.quiz.futbol.utils.Constants
 import com.quiz.futbol.utils.Constants.TYPE_CHAMPIONSHIP
 import com.quiz.futbol.utils.Constants.TYPE_GAME
 import com.quiz.futbol.utils.Constants.TypeGame.*
 import com.quiz.futbol.utils.Constants.User
+import com.quiz.futbol.utils.glideLoadURL
+import com.quiz.futbol.utils.setSafeOnClickListener
+import com.quiz.futbol.utils.underline
 import org.koin.android.scope.lifecycleScope
 import org.koin.android.viewmodel.scope.viewModel
 import org.koin.core.parameter.parametersOf
@@ -48,10 +50,8 @@ class SelectFragment : Fragment() {
 
         binding.btnStartCareerMode.setSafeOnClickListener { selectViewModel.loadCareerMode() }
         binding.btnStartTrainingMode.setSafeOnClickListener { selectViewModel.loadTrainingMode() }
+        binding.helloText.setSafeOnClickListener { selectViewModel.goToProfile() }
         binding.helloText.underline()
-        binding.helloText.setSafeOnClickListener {
-            // Profile
-        }
         return root
     }
 
@@ -120,6 +120,7 @@ class SelectFragment : Fragment() {
                     putExtra(TYPE_CHAMPIONSHIP, navigation.championship)
                 }
             }
+            SelectViewModel.Navigation.Profile -> activity?.startActivity<ProfileActivity> {}
         }
     }
 

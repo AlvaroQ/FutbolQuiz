@@ -18,6 +18,8 @@ import com.quiz.futbol.ui.game.GameFragment
 import com.quiz.futbol.ui.game.GameViewModel
 import com.quiz.futbol.ui.login.LoginFragment
 import com.quiz.futbol.ui.login.LoginViewModel
+import com.quiz.futbol.ui.profile.ProfileFragment
+import com.quiz.futbol.ui.profile.ProfileViewModel
 import com.quiz.futbol.ui.result.ResultFragment
 import com.quiz.futbol.ui.result.ResultViewModel
 import com.quiz.futbol.ui.select.SelectFragment
@@ -68,6 +70,9 @@ private val scopesModule = module {
     }
     scope(named<SelectFragment>()) {
         viewModel { SelectViewModel(get()) }
+    }
+    scope(named<ProfileFragment>()) {
+        viewModel { ProfileViewModel() }
     }
     scope(named<GameFragment>()) {
         viewModel { GameViewModel(get()) }
