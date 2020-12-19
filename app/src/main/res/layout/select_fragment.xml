@@ -46,7 +46,7 @@
                 android:id="@+id/helloText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="@string/hi"
+                tools:text="@string/hello"
                 android:textAppearance="@style/Bold.TextColorLight.VeryLarge"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 app:layout_constraintTop_toBottomOf="@+id/imageUser"

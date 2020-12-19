@@ -10,6 +10,7 @@ import com.quiz.data.datasource.SharedPreferencesLocalDataSource
 import com.quiz.data.repository.AppsRecommendedRepository
 import com.quiz.data.repository.SharedPreferencesRepository
 import com.quiz.data.repository.StadiumByIdRepository
+import com.quiz.data.repository.UserRepository
 import com.quiz.futbol.datasource.DataBaseSourceImpl
 import com.quiz.futbol.datasource.FirestoreDataSourceImpl
 import com.quiz.futbol.managers.DialogCustomManager
@@ -62,14 +63,20 @@ val dataModule = module {
     factory { StadiumByIdRepository(get()) }
     factory { AppsRecommendedRepository(get()) }
     factory { SharedPreferencesRepository(get()) }
+    factory { UserRepository(get()) }
 }
 
 private val scopesModule = module {
     scope(named<LoginFragment>()) {
-        viewModel { LoginViewModel() }
+        viewModel { LoginViewModel(get(), get(), get()) }
+        scoped { SetUUID(get()) }
+        scoped { GetUUID(get()) }
+        scoped { SaveUser(get())}
     }
     scope(named<SelectFragment>()) {
-        viewModel { SelectViewModel(get()) }
+        viewModel { SelectViewModel(get(), get(), get()) }
+        scoped { GetUUID(get()) }
+        scoped { GetUser(get()) }
     }
     scope(named<ProfileFragment>()) {
         viewModel { ProfileViewModel() }

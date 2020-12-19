@@ -13,12 +13,12 @@ class GetPaymentDone(private val sharedPreferencesRepository: SharedPreferencesR
     operator fun invoke() = sharedPreferencesRepository.paymentDone
 }
 
-class SetCurrentUser(private val sharedPreferencesRepository: SharedPreferencesRepository) {
-    operator fun invoke(value: User) {
-        sharedPreferencesRepository.currentUser = value
+class SetUUID(private val sharedPreferencesRepository: SharedPreferencesRepository) {
+    operator fun invoke(value: String) {
+        sharedPreferencesRepository.uuid = value
     }
 }
 
-class GetCurrentUser(private val sharedPreferencesRepository: SharedPreferencesRepository) {
-    operator fun invoke() = sharedPreferencesRepository.currentUser
+class GetUUID(private val sharedPreferencesRepository: SharedPreferencesRepository) {
+    operator fun invoke() = sharedPreferencesRepository.uuid
 }

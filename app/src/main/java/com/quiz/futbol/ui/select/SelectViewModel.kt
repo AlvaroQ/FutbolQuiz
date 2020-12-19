@@ -2,6 +2,8 @@ package com.quiz.futbol.ui.select
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import arrow.core.Either
+import com.quiz.domain.User
 import com.quiz.futbol.R
 import com.quiz.futbol.common.ScopedViewModel
 import com.quiz.futbol.managers.AnalyticsManager
@@ -12,8 +14,18 @@ import com.quiz.futbol.utils.Constants.TypeChampionship
 import com.quiz.futbol.utils.Constants.TypeChampionship.*
 import com.quiz.futbol.utils.Constants.TypeGame.*
 import com.quiz.futbol.utils.GetResources
+import com.quiz.futbol.utils.log
+import com.quiz.usecases.GetUUID
+import com.quiz.usecases.GetUser
+import kotlinx.coroutines.launch
 
-class SelectViewModel(private val getResources: GetResources) : ScopedViewModel() {
+class SelectViewModel(private val getResources: GetResources,
+                      private val uuid: GetUUID,
+                      private val getUser: GetUser
+) : ScopedViewModel() {
+
+    private val _userData = MutableLiveData<UiModel>()
+    val userData: LiveData<UiModel> = _userData
 
     private val _loadBottomSheetData = MutableLiveData<UiModel>()
     val loadBottomSheetData: LiveData<UiModel> = _loadBottomSheetData
@@ -26,6 +38,7 @@ class SelectViewModel(private val getResources: GetResources) : ScopedViewModel(
 
     init {
         AnalyticsManager.analyticsScreenViewed(AnalyticsManager.SCREEN_SELECT_GAME)
+        loadUserData()
     }
 
     fun loadTrainingMode() {
@@ -34,6 +47,20 @@ class SelectViewModel(private val getResources: GetResources) : ScopedViewModel(
 
     fun loadCareerMode() {
         _loadBottomSheetData.value = UiModel.ContentCareerMode(loadSelectAllItems(), CARRER)
+    }
+
+    private fun loadUserData() {
+        launch {
+            val uuid = uuid.invoke()
+            when (val userResult = getUser.invoke(uuid)) {
+                is Either.Left -> {
+                    log(TAG, "ERROR")
+                }
+                is Either.Right -> {
+                    _userData.value = UiModel.UserData(userResult.b)
+                }
+            }
+        }
     }
 
     private fun loadSelectAllItems(): MutableList<SelectItem> {
@@ -106,6 +133,7 @@ class SelectViewModel(private val getResources: GetResources) : ScopedViewModel(
 
     sealed class UiModel {
         data class ContentCareerMode(val items: List<SelectItem>, val mode: ModeGame) : UiModel()
+        data class UserData(val user: User) : UiModel()
     }
 
     companion object {

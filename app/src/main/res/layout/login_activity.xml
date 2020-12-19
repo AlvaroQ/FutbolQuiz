@@ -8,16 +8,13 @@
     android:background="@drawable/background"
     tools:context=".ui.login.LoginActivity">
 
-    <include
-        android:id="@+id/appBar"
-        layout="@layout/app_bar_layout" />
-
     <FrameLayout
         android:id="@+id/containerLogin"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:layout_margin="@dimen/activity_horizontal_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBar" />
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

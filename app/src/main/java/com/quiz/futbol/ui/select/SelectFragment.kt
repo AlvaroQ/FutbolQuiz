@@ -21,8 +21,7 @@ import com.quiz.futbol.utils.Constants
 import com.quiz.futbol.utils.Constants.TYPE_CHAMPIONSHIP
 import com.quiz.futbol.utils.Constants.TYPE_GAME
 import com.quiz.futbol.utils.Constants.TypeGame.*
-import com.quiz.futbol.utils.Constants.User
-import com.quiz.futbol.utils.glideLoadURL
+import com.quiz.futbol.utils.glideLoadBase64
 import com.quiz.futbol.utils.setSafeOnClickListener
 import com.quiz.futbol.utils.underline
 import org.koin.android.scope.lifecycleScope
@@ -30,7 +29,6 @@ import org.koin.android.viewmodel.scope.viewModel
 import org.koin.core.parameter.parametersOf
 
 class SelectFragment : Fragment() {
-    lateinit var user: User
     private lateinit var binding: SelectFragmentBinding
     private val selectViewModel: SelectViewModel by lifecycleScope.viewModel(this)
     private val dialogCustomManager: DialogCustomManager by lifecycleScope.inject { parametersOf(requireActivity()) }
@@ -40,10 +38,6 @@ class SelectFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SelectFragmentBinding.inflate(inflater)
         val root = binding.root
-
-        user = (activity?.intent?.getSerializableExtra(User) as User?)!!
-        binding.helloText.text = "Hola " + user.displayName
-        glideLoadURL(requireContext(), user.photoUrl, binding.imageUser)
 
         bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet.constraintBottomSheet)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
@@ -61,6 +55,7 @@ class SelectFragment : Fragment() {
         selectViewModel.navigation.observe(viewLifecycleOwner, Observer(::navigate))
         selectViewModel.dialog.observe(viewLifecycleOwner, Observer(::showDialog))
         selectViewModel.loadBottomSheetData.observe(viewLifecycleOwner, Observer(::updateUi))
+        selectViewModel.userData.observe(viewLifecycleOwner, Observer(::updateUi))
     }
 
     private fun updateUi(model: SelectViewModel.UiModel) {
@@ -82,6 +77,10 @@ class SelectFragment : Fragment() {
                 binding.bottomSheet.recyclerCategory.layoutManager = glm
                 bottomSheetBehavior.isDraggable = true
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+            }
+            is SelectViewModel.UiModel.UserData -> {
+                binding.helloText.text = getString(R.string.hello, model.user.displayName)
+                glideLoadBase64(requireContext(), model.user.photoBase64, binding.imageUser)
             }
         }
     }

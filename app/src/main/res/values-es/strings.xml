@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Fútbol quiz</string>
-    <string name="hi">Hola <u>Álvaro</u></string>
     <string name="settings">Ajustes</string>
     <string name="training_mode">Modo Entrenamiento</string>
     <string name="carrer_mode">Modo Carrera</string>
@@ -25,6 +24,8 @@
     <string name="blocked_level_description">Necesitas desbloquear el nivel anterior</string>
     <string name="login_necessary">Login necesario</string>
     <string name="login_necessary_description">Necesitamos que entres con tu cuenta Google para continuar</string>
+    <string name="hello">Hola %s</string>
 
     <string name="locale">es</string>
+    <string name="login_info">¡Hola! Necesitamos que hagas login mediante tu cuenta de Google para continuar y llegar a ser un campeón. ¿Aceptas el reto?</string>
 </resources>

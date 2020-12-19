@@ -1,9 +1,8 @@
 package com.quiz.futbol.utils
 
 object Constants {
-    const val RC_SIGN_IN: Int = 1
+    const val COLLECTION_USERS = "users"
     const val POINTS = "points"
-    const val User = "user"
     const val TOTAL_TEAMS_SPAIN_FIRST_DIVISION = 19
     const val PATH_REFERENCE_TEAMS = "stadiums/"
     const val PATH_REFERENCE_SPAIN = "spain/"

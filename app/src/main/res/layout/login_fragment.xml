@@ -9,6 +9,8 @@
     android:layout_marginStart="@dimen/activity_horizontal_margin"
     android:layout_marginEnd="@dimen/activity_horizontal_margin"
     android:background="@drawable/background_dialog"
+    android:id="@+id/layoutDialogLogin"
+    android:visibility="gone"
     tools:context=".ui.login.LoginFragment">
 
     <ImageView
@@ -25,7 +27,7 @@
         android:id="@+id/textInfoLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="¡Hola! Necesitamos que hagas login mediante tu cuenta de Google para continuar y llegar a ser un campeón. ¿Aceptas el reto?"
+        android:text="@string/login_info"
         android:padding="@dimen/activity_horizontal_margin"
         android:gravity="center"
         app:layout_constraintTop_toBottomOf="@id/imageLogin"

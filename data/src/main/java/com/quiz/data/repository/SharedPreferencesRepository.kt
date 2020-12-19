@@ -1,7 +1,6 @@
 package com.quiz.data.repository
 
 import com.quiz.data.datasource.SharedPreferencesLocalDataSource
-import com.quiz.domain.User
 
 
 class SharedPreferencesRepository(private val sharedPreferencesLocalDataSource: SharedPreferencesLocalDataSource)  {
@@ -12,10 +11,10 @@ class SharedPreferencesRepository(private val sharedPreferencesLocalDataSource: 
             sharedPreferencesLocalDataSource.paymentDone = value
         }
 
-    var currentUser: User
-        get() = sharedPreferencesLocalDataSource.currentUser
-        set(user) {
-            sharedPreferencesLocalDataSource.currentUser = user
+    var uuid: String
+        get() = sharedPreferencesLocalDataSource.uuid
+        set(uuid) {
+            sharedPreferencesLocalDataSource.uuid = uuid
         }
 
 }

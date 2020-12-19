@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Futbol Quiz</string>
-    <string name="hi">Hola Álvaro</string>
     <string name="settings">Settings</string>
     <string name="training_mode">Training mode</string>
     <string name="carrer_mode">Carrer mode</string>
@@ -25,6 +24,7 @@
     <string name="blocked_level_description">Your need unblock previus level</string>
     <string name="login_necessary">Login necessary</string>
     <string name="login_necessary_description">You need sign in with google</string>
+    <string name="hello">Hi %s</string>
 
     <!-- content description image -->
     <string translatable="false" name="flag">flag</string>
@@ -36,4 +36,5 @@
     <string translatable="false" name="game_image">image to guess</string>
 
     <string name="locale">en</string>
+    <string name="login_info">¡Hola! Necesitamos que hagas login mediante tu cuenta de Google para continuar y llegar a ser un campeón. ¿Aceptas el reto?</string>
 </resources>

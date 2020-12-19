@@ -16,12 +16,12 @@ open class SharedPrefsDataSource(context: Context): SharedPreferencesLocalDataSo
         get() = sharedPreferences.getBoolean(PAYMENT_DONE, false)
         set(value) = sharedPreferences.edit().putBoolean(PAYMENT_DONE, value).apply()
 
-    override var currentUser: User
-        get() = Gson().fromJson(sharedPreferences.getString(CURRENT_USER, null), User::class.java)
-        set(value) = sharedPreferences.edit().putString(CURRENT_USER, Gson().toJson(value)).apply()
+    override var uuid: String
+        get() = sharedPreferences.getString(UUID, "")!!
+        set(value) = sharedPreferences.edit().putString(UUID, value).apply()
 
     companion object {
         const val PAYMENT_DONE = "payment_done"
-        const val CURRENT_USER = "current_user"
+        const val UUID = "uuid"
     }
 }
