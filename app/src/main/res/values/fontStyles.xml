@@ -102,6 +102,9 @@
     <style name="Regular.TextColorLight.VerySmall" >
         <item name="android:textSize">@dimen/very_small</item>
     </style>
+    <style name="Regular.TextColorLight.VeryVerySmall" >
+        <item name="android:textSize">@dimen/very_very_small</item>
+    </style>
 
     <style name="Bold.TextColorDark.VeryVeryLarge" >
         <item name="android:textSize">@dimen/very_very_large</item>

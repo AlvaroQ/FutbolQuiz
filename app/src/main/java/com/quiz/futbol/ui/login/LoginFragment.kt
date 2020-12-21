@@ -90,6 +90,7 @@ class LoginFragment : Fragment() {
                 val user = User(
                     it.result.user?.uid,
                     it.result.user?.displayName,
+                    "",
                     it.result.user?.email,
                     it.result.user?.phoneNumber,
                     getByteArrayFromImageURL(it.result.user?.photoUrl.toString()),

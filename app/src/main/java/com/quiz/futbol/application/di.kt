@@ -79,7 +79,9 @@ private val scopesModule = module {
         scoped { GetUser(get()) }
     }
     scope(named<ProfileFragment>()) {
-        viewModel { ProfileViewModel() }
+        viewModel { ProfileViewModel(get(), get()) }
+        scoped { GetUUID(get()) }
+        scoped { GetUser(get()) }
     }
     scope(named<GameFragment>()) {
         viewModel { GameViewModel(get()) }

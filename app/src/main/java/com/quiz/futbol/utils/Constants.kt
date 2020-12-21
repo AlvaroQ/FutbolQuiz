@@ -20,4 +20,12 @@ object Constants {
         GERMAIN_FIRST_DIVISION,
         FRENCH_FIRST_DIVISION
     }
+
+    const val SPAIN = "spain"
+    const val ENGLAND = "england"
+    const val ITALY = "italy"
+    const val GERMANY = "germany"
+    const val FRANCE = "france"
+    const val BRAZIL = "brazil"
+    const val ARGENTINA = "argentina"
 }

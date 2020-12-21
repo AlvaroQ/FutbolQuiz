@@ -8,7 +8,7 @@
     android:id="@+id/constraintBottomSheet"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
     app:behavior_hideable="true"
-    app:behavior_peekHeight="512dp">
+    app:behavior_peekHeight="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutHeader"
@@ -25,7 +25,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:textAppearance="@style/Bold.TextColor.Large"
-            tools:text="@string/training_mode"
+            tools:text="Últimos logros"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -33,10 +33,10 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerCategory"
+        android:id="@+id/recyclerEvents"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        tools:listitem="@layout/item_select_type_game"
+        tools:listitem="@layout/item_profile_event"
         android:background="@drawable/background_bottom_sheet"
         app:layout_constraintTop_toBottomOf="@+id/layoutHeader"
         app:layout_constraintStart_toStartOf="parent"

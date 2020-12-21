@@ -1,6 +1,7 @@
 package com.quiz.futbol.ui.profile
 
 import android.os.Bundle
+import android.view.View
 import com.quiz.futbol.R
 import com.quiz.futbol.base.BaseActivity
 import com.quiz.futbol.databinding.ProfileActivityBinding
@@ -21,5 +22,7 @@ class ProfileActivity : BaseActivity() {
         }
 
         binding.appBar.btnBack.setSafeOnClickListener { finish() }
+        binding.appBar.toolbarTitle.text = ""
+        binding.appBar.layoutLife.visibility = View.GONE
     }
 }

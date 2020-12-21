@@ -72,6 +72,13 @@ fun glideCircleLoadBase64(context: Context, imageBytes: String?, where: ImageVie
             .into(where)
 }
 
+fun glideCircleLoadDrawable(context: Context, imageDrawable: Drawable, where: ImageView) {
+    Glide.with(context)
+        .load(imageDrawable)
+        .apply(RequestOptions.circleCropTransform())
+        .into(where)
+}
+
 fun glideLoadingGif(context: Context, where: ImageView) {
 
     Glide.with(context)
