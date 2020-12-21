@@ -2,6 +2,10 @@ package com.quiz.futbol.utils
 
 object Constants {
     const val COLLECTION_USERS = "users"
+    const val COLLECTION_FOLLOWERS = "followers"
+    const val COLLECTION_FOLLOWING = "following"
+    const val COLLECTION_MAIN_ARCHIEVEMENTS = "mainArchievements"
+    const val COLLECTION_OTHER_ARCHIEVEMENTS = "otherArchievements"
     const val POINTS = "points"
     const val TOTAL_TEAMS_SPAIN_FIRST_DIVISION = 19
     const val PATH_REFERENCE_TEAMS = "stadiums/"

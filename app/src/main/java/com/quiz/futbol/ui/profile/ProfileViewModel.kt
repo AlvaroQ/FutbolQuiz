@@ -14,12 +14,15 @@ import com.quiz.futbol.utils.Constants.FRANCE
 import com.quiz.futbol.utils.Constants.BRAZIL
 import com.quiz.futbol.utils.Constants.ARGENTINA
 import com.quiz.futbol.utils.log
-import com.quiz.usecases.GetUUID
-import com.quiz.usecases.GetUser
+import com.quiz.usecases.*
 import kotlinx.coroutines.launch
 
 class ProfileViewModel(private val uuid: GetUUID,
-                       private val getUser: GetUser
+                       private val getUser: GetUser,
+                       private val getLevel: GetLevel,
+                       private val getFollowers: GetFollowers,
+                       private val getFollowing: GetFollowing,
+                       private val getMainArchievements: GetMainArchievements,
 )  : ScopedViewModel() {
 
 
@@ -29,48 +32,55 @@ class ProfileViewModel(private val uuid: GetUUID,
     init {
         AnalyticsManager.analyticsScreenViewed(AnalyticsManager.SCREEN_PROFILE)
         loadUserPersonalData()
-        loadLevelUser()
-        loadFollowingUser()
-        loadFollowersUser()
-        loadMainArchievementsItems()
     }
 
     private fun loadUserPersonalData() {
         launch {
             val uuid = uuid.invoke()
             when (val userResult = getUser.invoke(uuid)) {
-                is Either.Left -> {
-                    log(TAG, "ERROR")
-                }
-                is Either.Right -> {
-                    _userData.value = UiModel.UserPersonalData(userResult.b)
-                }
+                is Either.Left -> log(TAG, "ERROR")
+                is Either.Right -> _userData.value = UiModel.UserPersonalData(userResult.b)
+            }
+            loadLevelUser(uuid)
+            loadFollowingUser(uuid)
+            loadFollowersUser(uuid)
+            loadMainArchievementsItems(uuid)
+        }
+    }
+
+    private fun loadLevelUser(uuid: String) {
+        launch {
+            when(val numberLevel = getLevel.invoke(uuid)) {
+                is Either.Left -> log(TAG, "ERROR loading numberLevel")
+                is Either.Right -> _userData.value = UiModel.Level(numberLevel.b)
             }
         }
     }
 
-    private fun loadLevelUser() {
+    private fun loadFollowingUser(uuid: String) {
         launch {
-            _userData.value = UiModel.Level(6)
+            when(val numberFollowing = getFollowing.invoke(uuid)) {
+                is Either.Left -> log(TAG, "ERROR loading Following")
+                is Either.Right -> _userData.value = UiModel.Following(numberFollowing.b)
+            }
         }
     }
 
-    private fun loadFollowingUser() {
+    private fun loadFollowersUser(uuid: String) {
         launch {
-            _userData.value = UiModel.Following(11)
+            when(val numberFollowers = getFollowers.invoke(uuid)) {
+                is Either.Left -> log(TAG, "ERROR loading Followers")
+                is Either.Right -> _userData.value = UiModel.Followers(numberFollowers.b)
+            }
         }
     }
 
-    private fun loadFollowersUser() {
+    private fun loadMainArchievementsItems(uuid: String) {
         launch {
-            _userData.value = UiModel.Followers(21)
-        }
-    }
-
-    private fun loadMainArchievementsItems() {
-        launch {
-            _userData.value = UiModel.MainArchievements(
-                    mutableListOf(SPAIN, ENGLAND, ITALY, GERMANY, FRANCE, BRAZIL, ARGENTINA))
+            when(val mainArchievements = getMainArchievements.invoke(uuid)) {
+                is Either.Left -> log(TAG, "ERROR loading Main Archievements")
+                is Either.Right -> _userData.value = UiModel.MainArchievements(mainArchievements.b)
+            }
         }
     }
 
