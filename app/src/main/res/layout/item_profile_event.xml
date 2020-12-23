@@ -3,53 +3,121 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/imageUser"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        tools:src="@color/black"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:id="@+id/imagePoint"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ball"
+        android:layout_marginStart="6dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardEvent"
         app:layout_constraintBottom_toTopOf="@+id/cardEvent"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardEvent"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="6dp"
+        app:cardUseCompatPadding="true"
         app:cardCornerRadius="12dp"
         app:cardElevation="6dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageUser">
+        app:layout_constraintStart_toEndOf="@+id/imagePoint"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutEvent"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp">
+            android:background="@drawable/gradient_item_level"
+            android:padding="6dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/layoutUserPoints"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:cardCornerRadius="120dp"
+                app:cardElevation="0dp">
+
+                <TextView
+                    android:id="@+id/textPoints"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    tools:text="2"
+                    android:textAppearance="@style/Regular.TextColorDark.Medium"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:gravity="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+            </androidx.cardview.widget.CardView>
+
+            <ImageView
+                android:id="@+id/imageArchievement"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                tools:src="@drawable/stadium_images"
+                android:layout_margin="6dp"
+                app:layout_constraintEnd_toStartOf="@+id/layoutUserPoints"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
             <TextView
-                android:id="@+id/textEvent"
+                android:id="@+id/textArchievement"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Registro inicial satisfactorio"
-                android:textAppearance="@style/Bold.TextColorLight.Small"
+                tools:text="Primera española superada"
+                android:layout_marginStart="6dp"
+                android:textAppearance="@style/Bold.TextColor.Medium"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
 
-            <TextView
-                android:id="@+id/textEventDescription"
+            <ImageView
+                android:id="@+id/imageUser"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@color/black"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@+id/textArchievement"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                tools:text="11 de Diciembre del 2.020"
-                android:textAppearance="@style/Regular.TextColorLight.VeryVerySmall"
-                app:layout_constraintTop_toBottomOf="@+id/textEvent"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:layout_marginStart="6dp"
+                app:layout_constraintTop_toTopOf="@id/imageUser"
+                app:layout_constraintBottom_toBottomOf="@id/imageUser"
+                app:layout_constraintStart_toEndOf="@+id/imageUser">
+                <TextView
+                    android:id="@+id/textUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    tools:text="Lucas Pérez"
+                    android:textAppearance="@style/Regular.TextColor.VerySmall"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/textTimeArchievement"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    tools:text="Hace 2 meses"
+                    android:textAppearance="@style/Regular.TextColor.VeryVerySmall"
+                    app:layout_constraintTop_toBottomOf="@+id/textUserName"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

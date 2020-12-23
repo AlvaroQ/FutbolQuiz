@@ -64,6 +64,9 @@
     <style name="Regular.TextColor.VerySmall" >
         <item name="android:textSize">@dimen/very_small</item>
     </style>
+    <style name="Regular.TextColor.VeryVerySmall" >
+        <item name="android:textSize">@dimen/very_very_small</item>
+    </style>
 
     <!-- TextColorLight -->
     <style name="Bold.TextColorLight.VeryVeryLarge" >

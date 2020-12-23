@@ -25,6 +25,19 @@
     <string name="login_necessary">Login necessary</string>
     <string name="login_necessary_description">You need sign in with google</string>
     <string name="hello">Hi %s</string>
+    <string name="login_info">Hello! We need you to login using your Google account to continue and become a champion. Do you accept the challenge?</string>
+    <string name="following">Following</string>
+    <string name="followers">followers</string>
+    <string name="level">Level</string>
+    <string name="archieve">Level completed</string>
+    <string name="personal_archievement">Personal archievement</string>
+    <string name="global_archievement">Global archievement</string>
+    <string name="last_global_archievements">Last global archievement</string>
+    <string name="last_personal_archievements">Last personal archievement</string>
+    <string name="stadium_by_image">Stadiums by image</string>
+    <string name="stadium_by_name">Stadiums by name</string>
+    <string name="stadium_by_capacity">Stadiums by capacity</string>
+    <string name="stadium_by_built">Stadiums by year</string>
 
     <!-- content description image -->
     <string translatable="false" name="flag">flag</string>
@@ -35,11 +48,18 @@
     <string translatable="false" name="back">back</string>
     <string translatable="false" name="game_image">image to guess</string>
 
+    <plurals name="weeks_ago">
+        <item quantity="one">%s week ago</item>
+        <item quantity="other">%s weeks ago</item>
+    </plurals>
+    <plurals name="months_ago">
+        <item quantity="one">%s month ago</item>
+        <item quantity="other">%s months ago</item>
+    </plurals>
+    <plurals name="years_ago">
+        <item quantity="one">%s year ago</item>
+        <item quantity="other">%s years ago</item>
+    </plurals>
+
     <string name="locale">en</string>
-    <string name="login_info">¡Hola! Necesitamos que hagas login mediante tu cuenta de Google para continuar y llegar a ser un campeón. ¿Aceptas el reto?</string>
-    <string name="following">Siguiendo</string>
-    <string name="followers">Seguidores</string>
-    <string name="level">Nivel</string>
-    <string name="personal_archievement">Logros Personales</string>
-    <string name="global_archievement">Logros globales</string>
 </resources>

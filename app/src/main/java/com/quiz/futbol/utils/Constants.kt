@@ -4,10 +4,12 @@ object Constants {
     const val COLLECTION_USERS = "users"
     const val COLLECTION_FOLLOWERS = "followers"
     const val COLLECTION_FOLLOWING = "following"
-    const val COLLECTION_MAIN_ARCHIEVEMENTS = "mainArchievements"
-    const val COLLECTION_OTHER_ARCHIEVEMENTS = "otherArchievements"
+    const val COLLECTION_ARCHIEVEMENTS = "archievement"
+
     const val POINTS = "points"
+    const val STAGE_COMPLETED = "STAGE_COMPLETED"
     const val TOTAL_TEAMS_SPAIN_FIRST_DIVISION = 19
+
     const val PATH_REFERENCE_TEAMS = "stadiums/"
     const val PATH_REFERENCE_SPAIN = "spain/"
     const val PATH_REFERENCE_FIRST_DIVISION = "first_division/"
@@ -24,12 +26,4 @@ object Constants {
         GERMAIN_FIRST_DIVISION,
         FRENCH_FIRST_DIVISION
     }
-
-    const val SPAIN = "spain"
-    const val ENGLAND = "england"
-    const val ITALY = "italy"
-    const val GERMANY = "germany"
-    const val FRANCE = "france"
-    const val BRAZIL = "brazil"
-    const val ARGENTINA = "argentina"
 }

@@ -79,13 +79,15 @@ private val scopesModule = module {
         scoped { GetUser(get()) }
     }
     scope(named<ProfileFragment>()) {
-        viewModel { ProfileViewModel(get(), get(), get(), get(), get(), get()) }
+        viewModel { ProfileViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
         scoped { GetUUID(get()) }
         scoped { GetUser(get()) }
-        scoped { GetLevel(get()) }
-        scoped { GetFollowing(get()) }
-        scoped { GetFollowers(get()) }
-        scoped { GetMainArchievements(get()) }
+        scoped { GetUserLevel(get()) }
+        scoped { GetCountFollowing(get()) }
+        scoped { GetCountFollowers(get()) }
+        scoped { GetUserStageCompleted(get()) }
+        scoped { GetGlobalArchievements(get()) }
+        scoped { GetPersonalArchievements(get()) }
     }
     scope(named<GameFragment>()) {
         viewModel { GameViewModel(get()) }

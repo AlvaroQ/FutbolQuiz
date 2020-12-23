@@ -11,6 +11,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
+import android.text.format.DateUtils
 import android.util.Base64
 import android.util.Log
 import android.view.WindowManager
@@ -20,6 +21,7 @@ import com.quiz.futbol.BuildConfig
 import com.quiz.futbol.R
 import java.io.ByteArrayOutputStream
 import java.net.URL
+import java.util.*
 
 
 fun hideKeyboard(activity: Activity) {
@@ -81,7 +83,7 @@ fun shareApp(points: Int, context: Context) {
 
         var shareMessage =
                 if(points < 0) context.resources.getString(R.string.share_message_general)
-                else context.resources.getString(R.string.share_message, points)
+                else context.resources.getString(R.string.share_message)
 
         shareMessage =
                 """
@@ -132,4 +134,24 @@ fun getByteArrayFromImageURL(url: String): String? {
         e.printStackTrace()
     }
     return base64
+}
+
+
+const val AVERAGE_MONTH_IN_MILLIS = DateUtils.DAY_IN_MILLIS * 30
+fun Context.getRelationTime(time: Long): String {
+    val now: Long = Date().time
+    val delta = now - time
+    val resolution: Long
+    resolution = when {
+        delta <= DateUtils.MINUTE_IN_MILLIS -> DateUtils.SECOND_IN_MILLIS
+        delta <= DateUtils.HOUR_IN_MILLIS -> DateUtils.MINUTE_IN_MILLIS
+        delta <= DateUtils.DAY_IN_MILLIS -> DateUtils.HOUR_IN_MILLIS
+        delta <= DateUtils.WEEK_IN_MILLIS -> DateUtils.DAY_IN_MILLIS
+        else -> return when {
+            delta <= AVERAGE_MONTH_IN_MILLIS -> resources.getQuantityString((R.plurals.weeks_ago), (delta / DateUtils.WEEK_IN_MILLIS).toInt(), (delta / DateUtils.WEEK_IN_MILLIS).toInt())
+            delta <= DateUtils.YEAR_IN_MILLIS -> resources.getQuantityString((R.plurals.months_ago), (delta / AVERAGE_MONTH_IN_MILLIS).toInt(), (delta / AVERAGE_MONTH_IN_MILLIS).toInt())
+            else -> resources.getQuantityString((R.plurals.years_ago), (delta / DateUtils.YEAR_IN_MILLIS).toInt() , (delta / DateUtils.YEAR_IN_MILLIS).toInt())
+        }
+    }
+    return DateUtils.getRelativeTimeSpanString(time, now, resolution).toString()
 }

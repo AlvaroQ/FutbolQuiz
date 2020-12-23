@@ -5,24 +5,35 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.quiz.futbol.R
 import com.quiz.futbol.databinding.ProfileFragmentBinding
 import com.quiz.futbol.utils.glideLoadBase64
+import com.quiz.futbol.utils.setSafeOnClickListener
 import org.koin.android.scope.lifecycleScope
 import org.koin.android.viewmodel.scope.viewModel
 
-class ProfileFragment  : Fragment() {
+class ProfileFragment : Fragment() {
 
     private lateinit var binding: ProfileFragmentBinding
     private val profileViewModel: ProfileViewModel by lifecycleScope.viewModel(this)
 
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = ProfileFragmentBinding.inflate(inflater)
         val root = binding.root
+
+        bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet.constraintBottomSheet)
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+
+        binding.layoutGlobal.setSafeOnClickListener { profileViewModel.loadGlobalArchievementsItems() }
+        binding.layoutPersonal.setSafeOnClickListener { profileViewModel.loadPersonalArchievementsItems() }
         return root
     }
 
@@ -49,12 +60,26 @@ class ProfileFragment  : Fragment() {
             is ProfileViewModel.UiModel.Following -> {
                 binding.textNumberFollowing.text = model.numberFollowing.toString()
             }
-            is ProfileViewModel.UiModel.MainArchievements -> {
+            is ProfileViewModel.UiModel.MainUserStageCompleted -> {
                 if (model.items.size == 0) binding.recyclerArchivements.visibility = View.GONE
                 else {
                     binding.recyclerArchivements.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
                     binding.recyclerArchivements.adapter = MainArchievementItemsAdapter(requireContext(), model.items.toMutableList())
                 }
+            }
+            is ProfileViewModel.UiModel.MainArchievements -> {
+                binding.bottomSheet.textTitle.text = getString(R.string.last_global_archievements)
+                binding.bottomSheet.recyclerEvents.adapter = ProfileBottomSheetItemsAdapter(requireContext(), model.items.toMutableList())
+                binding.bottomSheet.recyclerEvents.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+                bottomSheetBehavior.isDraggable = true
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+            }
+            is ProfileViewModel.UiModel.PersonalArchievements -> {
+                binding.bottomSheet.textTitle.text = getString(R.string.last_personal_archievements)
+                binding.bottomSheet.recyclerEvents.adapter = ProfileBottomSheetItemsAdapter(requireContext(), model.items.toMutableList())
+                binding.bottomSheet.recyclerEvents.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+                bottomSheetBehavior.isDraggable = true
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
             }
         }
     }

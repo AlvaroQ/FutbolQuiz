@@ -10,7 +10,6 @@ import com.quiz.futbol.R
 import com.quiz.futbol.common.inflate
 import com.quiz.futbol.utils.Constants.TypeChampionship
 import com.quiz.futbol.utils.glideCircleLoadDrawable
-import java.util.*
 
 
 class MainArchievementItemsAdapter(private var context: Context,

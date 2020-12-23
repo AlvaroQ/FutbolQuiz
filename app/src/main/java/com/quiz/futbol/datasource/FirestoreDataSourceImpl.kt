@@ -7,15 +7,15 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.firestore.ktx.toObjects
 import com.quiz.data.datasource.FirestoreDataSource
 import com.quiz.data.repository.RepositoryException
+import com.quiz.domain.Archievements
 import com.quiz.domain.User
+import com.quiz.futbol.utils.Constants.COLLECTION_ARCHIEVEMENTS
 import com.quiz.futbol.utils.Constants.COLLECTION_FOLLOWERS
 import com.quiz.futbol.utils.Constants.COLLECTION_FOLLOWING
-import com.quiz.futbol.utils.Constants.COLLECTION_MAIN_ARCHIEVEMENTS
-import com.quiz.futbol.utils.Constants.COLLECTION_OTHER_ARCHIEVEMENTS
 import com.quiz.futbol.utils.Constants.COLLECTION_USERS
+import com.quiz.futbol.utils.Constants.STAGE_COMPLETED
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 
@@ -47,7 +47,7 @@ class FirestoreDataSourceImpl(private val database: FirebaseFirestore) : Firesto
         }
     }
 
-    override suspend fun getFollowers(uuid: String): Either<RepositoryException, Int> {
+    override suspend fun getCountFollowers(uuid: String): Either<RepositoryException, Int> {
         return suspendCancellableCoroutine { continuation ->
             database.collection(COLLECTION_FOLLOWERS).document(uuid).get()
                     .addOnSuccessListener {
@@ -61,7 +61,7 @@ class FirestoreDataSourceImpl(private val database: FirebaseFirestore) : Firesto
         }
     }
 
-    override suspend fun getFollowing(uuid: String): Either<RepositoryException, Int> {
+    override suspend fun getCountFollowing(uuid: String): Either<RepositoryException, Int> {
         return suspendCancellableCoroutine { continuation ->
             database.collection(COLLECTION_FOLLOWING).document(uuid).get()
                     .addOnSuccessListener {
@@ -75,13 +75,11 @@ class FirestoreDataSourceImpl(private val database: FirebaseFirestore) : Firesto
         }
     }
 
-    override suspend fun getLevel(uuid: String): Either<RepositoryException, Int> {
+    override suspend fun getUserLevel(uuid: String): Either<RepositoryException, Int> {
         return suspendCancellableCoroutine { continuation ->
-            database.collection(COLLECTION_OTHER_ARCHIEVEMENTS).document(uuid).get()
+            database.collection(COLLECTION_ARCHIEVEMENTS).whereEqualTo("userUid", uuid).get()
                     .addOnSuccessListener {
-                        val numberDocuments = it.data
-                        if(numberDocuments == null) continuation.resume(0.right())
-                        else continuation.resume(numberDocuments.size.right())
+                        continuation.resume(it.documents.size.right())
                     }
                     .addOnFailureListener {
                         continuation.resume(RepositoryException.NoConnectionException.left())
@@ -90,13 +88,18 @@ class FirestoreDataSourceImpl(private val database: FirebaseFirestore) : Firesto
         }
     }
 
-    override suspend fun getMainArchievements(uuid: String): Either<RepositoryException, MutableList<String>> {
+    override suspend fun getUserStageCompleted(uuid: String): Either<RepositoryException, MutableList<String>> {
         return suspendCancellableCoroutine { continuation ->
-            database.collection(COLLECTION_MAIN_ARCHIEVEMENTS).document(uuid).get()
-                    .addOnSuccessListener {
-                        val numberDocuments = it.data
-                        if(numberDocuments == null) continuation.resume(mutableListOf("").right())
-                        else continuation.resume(numberDocuments.keys.toMutableList().right())
+            database.collection(COLLECTION_ARCHIEVEMENTS)
+                    .whereEqualTo("userUid", uuid)
+                    .whereEqualTo("typeGame", STAGE_COMPLETED)
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        val result: MutableList<String> = mutableListOf()
+                        for (document in documents) {
+                            result.add(document.data["typeChampionship"].toString())
+                        }
+                        continuation.resume(result.right())
                     }
                     .addOnFailureListener {
                         continuation.resume(RepositoryException.NoConnectionException.left())
@@ -104,5 +107,53 @@ class FirestoreDataSourceImpl(private val database: FirebaseFirestore) : Firesto
                     }
         }
 
+    }
+
+    override suspend fun getGlobalArchievements(): Either<RepositoryException, MutableList<Archievements>> {
+        return suspendCancellableCoroutine { continuation ->
+            database.collection(COLLECTION_ARCHIEVEMENTS).orderBy("createdAt", Query.Direction.DESCENDING).get()
+                    .addOnSuccessListener { documents ->
+                        val result: MutableList<Archievements> = mutableListOf()
+                        for (document in documents) {
+                            result.add(Archievements(
+                                    userUid = document.data["userUid"].toString(),
+                                    displayName = document.data["displayName"].toString(),
+                                    photoBase64 = document.data["photoBase64"].toString(),
+                                    typeChampionship = document.data["typeChampionship"].toString(),
+                                    typeGame = document.data["typeGame"].toString(),
+                                    createdAt = document.data["createdAt"] as Long,
+                                    points = document.data["points"] as Long))
+                        }
+                        continuation.resume(result.right())
+                    }
+                    .addOnFailureListener {
+                        continuation.resume(RepositoryException.NoConnectionException.left())
+                        FirebaseCrashlytics.getInstance().recordException(Throwable(it.cause))
+                    }
+        }
+    }
+
+    override suspend fun getPersonalArchievements(uuid: String): Either<RepositoryException, MutableList<Archievements>> {
+        return suspendCancellableCoroutine { continuation ->
+            database.collection(COLLECTION_ARCHIEVEMENTS).whereEqualTo("userUid", uuid).orderBy ("createdAt", Query.Direction.DESCENDING).get()
+                    .addOnSuccessListener { documents ->
+                        val result: MutableList<Archievements> = mutableListOf()
+                        for (document in documents) {
+                            result.add(Archievements(
+                                    userUid = document.data["userUid"].toString(),
+                                    displayName = document.data["displayName"].toString(),
+                                    photoBase64 = document.data["photoBase64"].toString(),
+                                    typeChampionship = document.data["typeChampionship"].toString(),
+                                    typeGame = document.data["typeGame"].toString(),
+                                    createdAt = document.data["createdAt"] as Long,
+                                    points = document.data["points"] as Long))
+                        }
+                        continuation.resume(result.right())
+                    }
+                    .addOnFailureListener {
+                        continuation.resume(RepositoryException.NoConnectionException.left())
+                        FirebaseCrashlytics.getInstance().recordException(Throwable(it.cause))
+                    }
+        }
     }
 }

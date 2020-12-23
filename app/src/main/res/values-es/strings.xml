@@ -25,12 +25,32 @@
     <string name="login_necessary">Login necesario</string>
     <string name="login_necessary_description">Necesitamos que entres con tu cuenta Google para continuar</string>
     <string name="hello">Hola %s</string>
-
-    <string name="locale">es</string>
     <string name="login_info">¡Hola! Necesitamos que hagas login mediante tu cuenta de Google para continuar y llegar a ser un campeón. ¿Aceptas el reto?</string>
     <string name="following">Siguiendo</string>
     <string name="followers">Seguidores</string>
     <string name="level">Nivel</string>
     <string name="personal_archievement">Logros Personales</string>
     <string name="global_archievement">Logros globales</string>
+    <string name="last_global_archievements">Últimos logros mundiales</string>
+    <string name="last_personal_archievements">Últimos logros personales</string>
+    <string name="archieve">Nivel completado</string>
+    <string name="stadium_by_image">Estadios por imagen</string>
+    <string name="stadium_by_name">Estadios por nombre</string>
+    <string name="stadium_by_capacity">Estadios por capacidad</string>
+    <string name="stadium_by_built">Estadios por año de construcción</string>
+
+    <plurals name="weeks_ago">
+        <item quantity="one">Hace %s semana</item>
+        <item quantity="other">Hace %s semanas</item>
+    </plurals>
+    <plurals name="months_ago">
+        <item quantity="one">Hace %s mes</item>
+        <item quantity="other">Hace %s meses</item>
+    </plurals>
+    <plurals name="years_ago">
+        <item quantity="one">Hace %s año</item>
+        <item quantity="other">Hace %s años</item>
+    </plurals>
+
+    <string name="locale">es</string>
 </resources>
