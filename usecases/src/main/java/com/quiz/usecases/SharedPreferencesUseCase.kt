@@ -1,7 +1,6 @@
 package com.quiz.usecases
 
 import com.quiz.data.repository.SharedPreferencesRepository
-import com.quiz.domain.User
 
 class SetPaymentDone(private val sharedPreferencesRepository: SharedPreferencesRepository) {
     operator fun invoke(value: Boolean) {

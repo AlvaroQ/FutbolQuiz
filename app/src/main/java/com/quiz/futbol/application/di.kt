@@ -21,6 +21,8 @@ import com.quiz.futbol.ui.login.LoginFragment
 import com.quiz.futbol.ui.login.LoginViewModel
 import com.quiz.futbol.ui.profile.ProfileFragment
 import com.quiz.futbol.ui.profile.ProfileViewModel
+import com.quiz.futbol.ui.profileEdit.ProfileEditFragment
+import com.quiz.futbol.ui.profileEdit.ProfileEditViewModel
 import com.quiz.futbol.ui.result.ResultFragment
 import com.quiz.futbol.ui.result.ResultViewModel
 import com.quiz.futbol.ui.select.SelectFragment
@@ -88,6 +90,12 @@ private val scopesModule = module {
         scoped { GetUserStageCompleted(get()) }
         scoped { GetGlobalArchievements(get()) }
         scoped { GetPersonalArchievements(get()) }
+    }
+    scope(named<ProfileEditFragment>()) {
+        viewModel { ProfileEditViewModel(get(), get(), get()) }
+        scoped { GetUUID(get()) }
+        scoped { GetUser(get()) }
+        scoped { SaveUser(get())}
     }
     scope(named<GameFragment>()) {
         viewModel { GameViewModel(get()) }

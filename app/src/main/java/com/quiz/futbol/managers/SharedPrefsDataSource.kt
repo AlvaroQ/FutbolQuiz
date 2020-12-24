@@ -3,9 +3,7 @@ package com.quiz.futbol.managers
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
-import com.google.gson.Gson
 import com.quiz.data.datasource.SharedPreferencesLocalDataSource
-import com.quiz.domain.User
 
 open class SharedPrefsDataSource(context: Context): SharedPreferencesLocalDataSource {
     private val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(

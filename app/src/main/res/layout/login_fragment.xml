@@ -11,6 +11,7 @@
     android:background="@drawable/background_dialog"
     android:id="@+id/layoutDialogLogin"
     android:visibility="gone"
+    tools:visibility="visible"
     tools:context=".ui.login.LoginFragment">
 
     <ImageView

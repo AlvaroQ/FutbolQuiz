@@ -38,6 +38,10 @@
     <string name="stadium_by_name">Stadiums by name</string>
     <string name="stadium_by_capacity">Stadiums by capacity</string>
     <string name="stadium_by_built">Stadiums by year</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="hint_description">Biography</string>
+    <string name="hint_location">Location</string>
+    <string name="hint_name">Name and surname</string>
 
     <!-- content description image -->
     <string translatable="false" name="flag">flag</string>

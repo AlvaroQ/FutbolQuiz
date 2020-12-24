@@ -136,6 +136,12 @@ fun getByteArrayFromImageURL(url: String): String? {
     return base64
 }
 
+fun getBase64FromBitmap(imageBitmap: Bitmap): String {
+    val byteArrayOutputStream = ByteArrayOutputStream()
+    imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+    val byteArray: ByteArray = byteArrayOutputStream.toByteArray()
+    return Base64.encodeToString(byteArray, Base64.DEFAULT)
+}
 
 const val AVERAGE_MONTH_IN_MILLIS = DateUtils.DAY_IN_MILLIS * 30
 fun Context.getRelationTime(time: Long): String {

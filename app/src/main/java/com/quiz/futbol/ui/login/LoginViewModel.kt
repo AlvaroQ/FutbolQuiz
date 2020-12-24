@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.quiz.domain.User
 import com.quiz.futbol.common.ScopedViewModel
+import com.quiz.usecases.GetUUID
 import com.quiz.usecases.SaveUser
 import com.quiz.usecases.SetUUID
-import com.quiz.usecases.GetUUID
 import kotlinx.coroutines.launch
 
 

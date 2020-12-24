@@ -8,6 +8,7 @@
     <color name="colorAccent">#3F51B5</color>
     <color name="blocked">#FFFFFF</color>
 
+    <color name="white20Transparent">#33FFFFFF</color>
     <color name="transparent">#33000000</color>
     <color name="semitransparent">#66000000</color>
     <color name="responseCorrect">#009E07</color>

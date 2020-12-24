@@ -25,12 +25,14 @@ class ProfileViewModel(private val uuid: GetUUID,
     private val _userData = MutableLiveData<UiModel>()
     val userData: LiveData<UiModel> = _userData
 
+    private val _navigation = MutableLiveData<Navigation>()
+    val navigation: LiveData<Navigation> = _navigation
+
     init {
         AnalyticsManager.analyticsScreenViewed(AnalyticsManager.SCREEN_PROFILE)
-        loadUserPersonalData()
     }
 
-    private fun loadUserPersonalData() {
+    fun loadUserPersonalData() {
         launch {
             val uuid = uuid.invoke()
             when (val userResult = getUser.invoke(uuid)) {
@@ -99,6 +101,10 @@ class ProfileViewModel(private val uuid: GetUUID,
         }
     }
 
+    fun goToEditProfile() {
+        _navigation.value = Navigation.EditProfile
+    }
+
     sealed class UiModel {
         data class UserPersonalData(val user: User) : UiModel()
         data class Level(val numberLevel: Int) : UiModel()
@@ -107,6 +113,10 @@ class ProfileViewModel(private val uuid: GetUUID,
         data class MainUserStageCompleted(val items: MutableList<String>) : UiModel()
         data class MainArchievements(val items: MutableList<Archievements>) : UiModel()
         data class PersonalArchievements(val items: MutableList<Archievements>) : UiModel()
+    }
+
+    sealed class Navigation {
+        object EditProfile : Navigation()
     }
 
     companion object {

@@ -38,6 +38,7 @@
     <string name="stadium_by_name">Estadios por nombre</string>
     <string name="stadium_by_capacity">Estadios por capacidad</string>
     <string name="stadium_by_built">Estadios por año de construcción</string>
+    <string name="edit_profile">Editar mis datos personales</string>
 
     <plurals name="weeks_ago">
         <item quantity="one">Hace %s semana</item>
@@ -53,4 +54,7 @@
     </plurals>
 
     <string name="locale">es</string>
+    <string name="hint_description">Breve descripción</string>
+    <string name="hint_location">Ubicación</string>
+    <string name="hint_name">Nombre y apellido</string>
 </resources>

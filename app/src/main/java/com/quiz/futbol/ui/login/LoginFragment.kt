@@ -2,7 +2,6 @@ package com.quiz.futbol.ui.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,10 +27,6 @@ import com.quiz.futbol.utils.log
 import com.quiz.futbol.utils.setSafeOnClickListener
 import org.koin.android.scope.lifecycleScope
 import org.koin.android.viewmodel.scope.viewModel
-import java.io.ByteArrayOutputStream
-import java.io.InputStream
-import java.net.URL
-import java.net.URLConnection
 
 class LoginFragment : Fragment() {
     private lateinit var binding: LoginFragmentBinding
@@ -90,6 +85,7 @@ class LoginFragment : Fragment() {
                 val user = User(
                     it.result.user?.uid,
                     it.result.user?.displayName,
+                    "",
                     "",
                     it.result.user?.email,
                     it.result.user?.phoneNumber,

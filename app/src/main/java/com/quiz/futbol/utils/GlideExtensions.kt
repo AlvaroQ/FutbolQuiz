@@ -13,6 +13,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.quiz.futbol.R
+import java.io.File
 
 private fun initUrlGlide(context: Context, url: String?) =
         Glide.with(context)
@@ -85,4 +86,9 @@ fun glideLoadingGif(context: Context, where: ImageView) {
             .asGif()
             .load(R.drawable.ball_loading)
             .into(where)
+}
+
+fun File.toBase64(): String {
+    val bytes = readBytes()
+    return Base64.encodeToString(bytes, Base64.NO_WRAP)
 }

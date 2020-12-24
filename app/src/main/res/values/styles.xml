@@ -42,4 +42,13 @@
         <item name="android:windowEnterAnimation">@anim/slide_in_up</item>
         <item name="android:windowExitAnimation">@anim/slide_out_down</item>
     </style>
+
+    <style name="BioTextInputLayout">
+        <item name="android:textColorPrimary">@color/textColorDark</item>
+        <item name="colorControlNormal">@color/textColorLight</item>
+        <item name="android:textColorHint">@color/textColorLight</item>
+        <item name="colorControlActivated">@color/textColorLight</item>
+        <item name="android:colorControlActivated">@color/textColorLight</item>
+        <item name="android:textSize">16sp</item>
+    </style>
 </resources>

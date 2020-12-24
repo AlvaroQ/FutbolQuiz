@@ -10,7 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.quiz.domain.User
 import com.quiz.futbol.R
 import com.quiz.futbol.common.startActivity
 import com.quiz.futbol.databinding.SelectFragmentBinding
@@ -21,7 +20,7 @@ import com.quiz.futbol.utils.Constants
 import com.quiz.futbol.utils.Constants.TYPE_CHAMPIONSHIP
 import com.quiz.futbol.utils.Constants.TYPE_GAME
 import com.quiz.futbol.utils.Constants.TypeGame.*
-import com.quiz.futbol.utils.glideLoadBase64
+import com.quiz.futbol.utils.glideCircleLoadBase64
 import com.quiz.futbol.utils.setSafeOnClickListener
 import com.quiz.futbol.utils.underline
 import org.koin.android.scope.lifecycleScope
@@ -80,7 +79,7 @@ class SelectFragment : Fragment() {
             }
             is SelectViewModel.UiModel.UserData -> {
                 binding.helloText.text = getString(R.string.hello, model.user.displayName)
-                glideLoadBase64(requireContext(), model.user.photoBase64, binding.imageUser)
+                glideCircleLoadBase64(requireContext(), model.user.photoBase64, binding.imageUser)
             }
         }
     }
