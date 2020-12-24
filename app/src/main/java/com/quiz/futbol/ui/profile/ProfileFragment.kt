@@ -16,6 +16,7 @@ import com.quiz.futbol.databinding.ProfileFragmentBinding
 import com.quiz.futbol.ui.profileEdit.ProfileEditActivity
 import com.quiz.futbol.utils.glideLoadBase64
 import com.quiz.futbol.utils.setSafeOnClickListener
+import com.quiz.futbol.utils.expandImage
 import org.koin.android.scope.lifecycleScope
 import org.koin.android.viewmodel.scope.viewModel
 
@@ -33,6 +34,7 @@ class ProfileFragment : Fragment() {
         bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet.constraintBottomSheet)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
 
+        binding.imageUser.setSafeOnClickListener { profileViewModel.onUserImageClicked(binding.imageUser) }
         binding.imageEditProfile.setSafeOnClickListener { profileViewModel.goToEditProfile() }
         binding.layoutGlobal.setSafeOnClickListener { profileViewModel.loadGlobalArchievementsItems() }
         binding.layoutPersonal.setSafeOnClickListener { profileViewModel.loadPersonalArchievementsItems() }
@@ -56,6 +58,7 @@ class ProfileFragment : Fragment() {
     private fun navigate(navigation: ProfileViewModel.Navigation) {
         when (navigation) {
             ProfileViewModel.Navigation.EditProfile -> activity?.startActivity<ProfileEditActivity> {}
+            is ProfileViewModel.Navigation.Expand -> activity?.expandImage(navigation.imageView, navigation.icon)
         }
     }
     private fun updateUi(model: ProfileViewModel.UiModel) {
@@ -67,7 +70,7 @@ class ProfileFragment : Fragment() {
                 if(model.user.displayDescription == "") binding.textDescriptionUser.visibility = View.GONE
                 else binding.textDescriptionUser.text = model.user.displayDescription
 
-                if(model.user.displayLocation == "") binding.textLocationUser.visibility = View.GONE
+                if(model.user.displayLocation == "") binding.layoutLocation.visibility = View.GONE
                 else binding.textLocationUser.text = model.user.displayLocation
             }
             is ProfileViewModel.UiModel.Level -> binding.textLevel.text = model.numberLevel.toString()

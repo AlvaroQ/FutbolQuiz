@@ -43,7 +43,7 @@ class SelectFragment : Fragment() {
 
         binding.btnStartCareerMode.setSafeOnClickListener { selectViewModel.loadCareerMode() }
         binding.btnStartTrainingMode.setSafeOnClickListener { selectViewModel.loadTrainingMode() }
-        binding.helloText.setSafeOnClickListener { selectViewModel.goToProfile() }
+        binding.layoutUser.setSafeOnClickListener { selectViewModel.goToProfile() }
         binding.helloText.underline()
         return root
     }

@@ -16,9 +16,11 @@ import android.util.Base64
 import android.util.Log
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.quiz.futbol.BuildConfig
 import com.quiz.futbol.R
+import com.quiz.futbol.ui.helpers.ImagePreviewer
 import java.io.ByteArrayOutputStream
 import java.net.URL
 import java.util.*
@@ -160,4 +162,8 @@ fun Context.getRelationTime(time: Long): String {
         }
     }
     return DateUtils.getRelativeTimeSpanString(time, now, resolution).toString()
+}
+
+fun Activity.expandImage(imageView: ImageView, icon: String) {
+    ImagePreviewer().show(this, imageView, icon)
 }

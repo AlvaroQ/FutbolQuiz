@@ -1,5 +1,6 @@
 package com.quiz.futbol.ui.profile
 
+import android.widget.ImageView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import arrow.core.Either
@@ -20,7 +21,7 @@ class ProfileViewModel(private val uuid: GetUUID,
                        private val getGlobalArchievements: GetGlobalArchievements,
                        private val getPersonalArchievements: GetPersonalArchievements
 )  : ScopedViewModel() {
-
+    private lateinit var user: User
 
     private val _userData = MutableLiveData<UiModel>()
     val userData: LiveData<UiModel> = _userData
@@ -37,7 +38,10 @@ class ProfileViewModel(private val uuid: GetUUID,
             val uuid = uuid.invoke()
             when (val userResult = getUser.invoke(uuid)) {
                 is Either.Left -> log(TAG, "ERROR")
-                is Either.Right -> _userData.value = UiModel.UserPersonalData(userResult.b)
+                is Either.Right -> {
+                    user = userResult.b
+                    _userData.value = UiModel.UserPersonalData(user)
+                }
             }
             loadLevelUser(uuid)
             loadCountFollowingUser(uuid)
@@ -105,6 +109,10 @@ class ProfileViewModel(private val uuid: GetUUID,
         _navigation.value = Navigation.EditProfile
     }
 
+    fun onUserImageClicked(imageView: ImageView) {
+        _navigation.value = Navigation.Expand(imageView, user.photoBase64!!)
+    }
+
     sealed class UiModel {
         data class UserPersonalData(val user: User) : UiModel()
         data class Level(val numberLevel: Int) : UiModel()
@@ -117,6 +125,7 @@ class ProfileViewModel(private val uuid: GetUUID,
 
     sealed class Navigation {
         object EditProfile : Navigation()
+        data class Expand(val imageView: ImageView, val icon: String): Navigation()
     }
 
     companion object {

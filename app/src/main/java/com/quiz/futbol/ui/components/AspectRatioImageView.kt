@@ -1,4 +1,4 @@
-package com.quiz.futbol.components
+package com.quiz.futbol.ui.components
 
 import android.content.Context
 import android.util.AttributeSet
