@@ -18,8 +18,15 @@ class GetCountFollowers(private val userRepository: UserRepository) {
     suspend fun invoke(uuid: String): Either<RepositoryException, Int> = userRepository.getCountFollowers(uuid)
 }
 
+class GetFollowers(private val userRepository: UserRepository) {
+    suspend fun invoke(uuid: String): Either<RepositoryException, MutableList<User>> = userRepository.getFollowers(uuid)
+}
+
 class GetCountFollowing(private val userRepository: UserRepository) {
     suspend fun invoke(uuid: String): Either<RepositoryException, Int> = userRepository.getCountFollowing(uuid)
+}
+class GetFollowing(private val userRepository: UserRepository) {
+    suspend fun invoke(uuid: String): Either<RepositoryException, MutableList<User>> = userRepository.getFollowing(uuid)
 }
 
 class GetUserLevel(private val userRepository: UserRepository) {

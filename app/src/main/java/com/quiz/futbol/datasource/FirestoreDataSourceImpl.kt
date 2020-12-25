@@ -16,6 +16,7 @@ import com.quiz.futbol.utils.Constants.COLLECTION_FOLLOWERS
 import com.quiz.futbol.utils.Constants.COLLECTION_FOLLOWING
 import com.quiz.futbol.utils.Constants.COLLECTION_USERS
 import com.quiz.futbol.utils.Constants.STAGE_COMPLETED
+import com.quiz.futbol.utils.log
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 
@@ -52,7 +53,7 @@ class FirestoreDataSourceImpl(private val database: FirebaseFirestore) : Firesto
             database.collection(COLLECTION_FOLLOWERS).document(uuid).get()
                     .addOnSuccessListener {
                         if(it.data == null) continuation.resume(0.right())
-                        else continuation.resume((it.data!!["uuid"] as ArrayList<*>).size.right())
+                        else continuation.resume(it.data!!.size.right())
                     }
                     .addOnFailureListener {
                         continuation.resume(RepositoryException.NoConnectionException.left())
@@ -66,8 +67,40 @@ class FirestoreDataSourceImpl(private val database: FirebaseFirestore) : Firesto
             database.collection(COLLECTION_FOLLOWING).document(uuid).get()
                     .addOnSuccessListener {
                         if(it.data == null) continuation.resume(0.right())
-                        else continuation.resume((it.data!!["uuid"] as ArrayList<*>).size.right())
+                        else continuation.resume(it.data!!.size.right())
                     }
+                    .addOnFailureListener {
+                        continuation.resume(RepositoryException.NoConnectionException.left())
+                        FirebaseCrashlytics.getInstance().recordException(Throwable(it.cause))
+                    }
+        }
+    }
+
+    override suspend fun getFollowing(uuid: String): Either<RepositoryException, MutableList<User>> {
+        return suspendCancellableCoroutine { continuation ->
+            database.collection(COLLECTION_FOLLOWING).document(uuid).get()
+                    .addOnSuccessListener { it ->
+                        val result: MutableList<User> = mutableListOf()
+                        it.data?.keys?.forEach { result.add(User(uuid = it)) }
+                        continuation.resume(result.right())
+                    }
+
+                    .addOnFailureListener {
+                        continuation.resume(RepositoryException.NoConnectionException.left())
+                        FirebaseCrashlytics.getInstance().recordException(Throwable(it.cause))
+                    }
+        }
+    }
+
+    override suspend fun getFollowers(uuid: String): Either<RepositoryException, MutableList<User>> {
+        return suspendCancellableCoroutine { continuation ->
+            database.collection(COLLECTION_FOLLOWERS).document(uuid).get()
+                    .addOnSuccessListener { it ->
+                        val result: MutableList<User> = mutableListOf()
+                        it.data?.keys?.forEach { result.add(User(uuid = it)) }
+                        continuation.resume(result.right())
+                    }
+
                     .addOnFailureListener {
                         continuation.resume(RepositoryException.NoConnectionException.left())
                         FirebaseCrashlytics.getInstance().recordException(Throwable(it.cause))
@@ -117,8 +150,6 @@ class FirestoreDataSourceImpl(private val database: FirebaseFirestore) : Firesto
                         for (document in documents) {
                             result.add(Archievements(
                                     userUid = document.data["userUid"].toString(),
-                                    displayName = document.data["displayName"].toString(),
-                                    photoBase64 = document.data["photoBase64"].toString(),
                                     typeChampionship = document.data["typeChampionship"].toString(),
                                     typeGame = document.data["typeGame"].toString(),
                                     createdAt = document.data["createdAt"] as Long,
@@ -141,8 +172,6 @@ class FirestoreDataSourceImpl(private val database: FirebaseFirestore) : Firesto
                         for (document in documents) {
                             result.add(Archievements(
                                     userUid = document.data["userUid"].toString(),
-                                    displayName = document.data["displayName"].toString(),
-                                    photoBase64 = document.data["photoBase64"].toString(),
                                     typeChampionship = document.data["typeChampionship"].toString(),
                                     typeGame = document.data["typeGame"].toString(),
                                     createdAt = document.data["createdAt"] as Long,

@@ -32,6 +32,7 @@
             android:noHistory="true" />
 
         <activity android:name=".ui.profile.ProfileActivity"  />
+        <activity android:name=".ui.follows.FollowsActivity"  />
 
         <activity android:name=".ui.profileEdit.ProfileEditActivity" />
 

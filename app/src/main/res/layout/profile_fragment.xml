@@ -140,46 +140,63 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guidelineLeft"/>
 
-            <TextView
-                android:id="@+id/textNumberFollowing"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutFollowing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="1"
-                android:textAppearance="@style/Bold.TextColorLight.Large"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/guidelineLeft"
-                app:layout_constraintEnd_toStartOf="@+id/guidelineRight"/>
+                app:layout_constraintEnd_toStartOf="@+id/guidelineRight" >
+                <TextView
+                    android:id="@+id/textNumberFollowing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="1"
+                    android:textAppearance="@style/Bold.TextColorLight.Large"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
-            <TextView
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/following"
+                    android:textAppearance="@style/Regular.TextColorLight.Small"
+                    app:layout_constraintTop_toBottomOf="@+id/textNumberFollowing"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutFollowers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/following"
-                android:textAppearance="@style/Regular.TextColorLight.Small"
-                app:layout_constraintTop_toBottomOf="@+id/textNumberFollowing"
-                app:layout_constraintStart_toEndOf="@id/guidelineLeft"
-                app:layout_constraintEnd_toStartOf="@+id/guidelineRight"/>
-
-            <TextView
-                android:id="@+id/textNumberFollowers"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="9"
-                android:textAppearance="@style/Bold.TextColorLight.Large"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/guidelineRight"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent" >
+                <TextView
+                    android:id="@+id/textNumberFollowers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="9"
+                    android:textAppearance="@style/Bold.TextColorLight.Large"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/followers"
-                android:textAppearance="@style/Regular.TextColorLight.Small"
-                app:layout_constraintTop_toBottomOf="@+id/textNumberFollowers"
-                app:layout_constraintStart_toEndOf="@id/guidelineRight"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/followers"
+                    android:textAppearance="@style/Regular.TextColorLight.Small"
+                    app:layout_constraintTop_toBottomOf="@+id/textNumberFollowers"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

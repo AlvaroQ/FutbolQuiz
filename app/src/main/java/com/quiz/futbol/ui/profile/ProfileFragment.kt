@@ -13,7 +13,9 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.quiz.futbol.R
 import com.quiz.futbol.common.startActivity
 import com.quiz.futbol.databinding.ProfileFragmentBinding
+import com.quiz.futbol.ui.follows.FollowsActivity
 import com.quiz.futbol.ui.profileEdit.ProfileEditActivity
+import com.quiz.futbol.utils.Constants
 import com.quiz.futbol.utils.glideLoadBase64
 import com.quiz.futbol.utils.setSafeOnClickListener
 import com.quiz.futbol.utils.expandImage
@@ -38,6 +40,8 @@ class ProfileFragment : Fragment() {
         binding.imageEditProfile.setSafeOnClickListener { profileViewModel.goToEditProfile() }
         binding.layoutGlobal.setSafeOnClickListener { profileViewModel.loadGlobalArchievementsItems() }
         binding.layoutPersonal.setSafeOnClickListener { profileViewModel.loadPersonalArchievementsItems() }
+        binding.layoutFollowing.setSafeOnClickListener { profileViewModel.goToFollows(getString(R.string.following)) }
+        binding.layoutFollowers.setSafeOnClickListener { profileViewModel.goToFollows(getString(R.string.followers)) }
         return root
     }
 
@@ -58,6 +62,7 @@ class ProfileFragment : Fragment() {
     private fun navigate(navigation: ProfileViewModel.Navigation) {
         when (navigation) {
             ProfileViewModel.Navigation.EditProfile -> activity?.startActivity<ProfileEditActivity> {}
+            is ProfileViewModel.Navigation.Follows -> activity?.startActivity<FollowsActivity> { putExtra(Constants.FOLLOW_SCREEN, navigation.screenFollow) }
             is ProfileViewModel.Navigation.Expand -> activity?.expandImage(navigation.imageView, navigation.icon)
         }
     }

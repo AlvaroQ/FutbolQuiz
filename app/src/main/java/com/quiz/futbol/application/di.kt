@@ -15,6 +15,8 @@ import com.quiz.futbol.datasource.DataBaseSourceImpl
 import com.quiz.futbol.datasource.FirestoreDataSourceImpl
 import com.quiz.futbol.managers.DialogCustomManager
 import com.quiz.futbol.managers.SharedPrefsDataSource
+import com.quiz.futbol.ui.follows.FollowsFragment
+import com.quiz.futbol.ui.follows.FollowsViewModel
 import com.quiz.futbol.ui.game.GameFragment
 import com.quiz.futbol.ui.game.GameViewModel
 import com.quiz.futbol.ui.login.LoginFragment
@@ -73,7 +75,7 @@ private val scopesModule = module {
         viewModel { LoginViewModel(get(), get(), get()) }
         scoped { SetUUID(get()) }
         scoped { GetUUID(get()) }
-        scoped { SaveUser(get())}
+        scoped { SaveUser(get()) }
     }
     scope(named<SelectFragment>()) {
         viewModel { SelectViewModel(get(), get(), get()) }
@@ -90,6 +92,13 @@ private val scopesModule = module {
         scoped { GetUserStageCompleted(get()) }
         scoped { GetGlobalArchievements(get()) }
         scoped { GetPersonalArchievements(get()) }
+    }
+    scope(named<FollowsFragment>()) {
+        viewModel { FollowsViewModel(get(), get(), get(), get()) }
+        scoped { GetFollowing(get()) }
+        scoped { GetFollowers(get()) }
+        scoped { GetUUID(get()) }
+        scoped { GetUser(get()) }
     }
     scope(named<ProfileEditFragment>()) {
         viewModel { ProfileEditViewModel(get(), get(), get()) }

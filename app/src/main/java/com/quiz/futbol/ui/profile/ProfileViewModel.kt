@@ -8,6 +8,7 @@ import com.quiz.domain.Archievements
 import com.quiz.domain.User
 import com.quiz.futbol.common.ScopedViewModel
 import com.quiz.futbol.managers.AnalyticsManager
+import com.quiz.futbol.ui.follows.FollowsViewModel
 import com.quiz.futbol.utils.log
 import com.quiz.usecases.*
 import kotlinx.coroutines.launch
@@ -88,25 +89,55 @@ class ProfileViewModel(private val uuid: GetUUID,
 
     fun loadGlobalArchievementsItems() {
         launch {
+            val archievementResultList = mutableListOf<Archievements>()
             when(val mainArchievements = getGlobalArchievements.invoke()) {
                 is Either.Left -> log(TAG, "ERROR loading Main Archievements")
-                is Either.Right -> _userData.value = UiModel.MainArchievements(mainArchievements.b)
+                is Either.Right -> {
+                    for (globalArchievement in mainArchievements.b) {
+                        when (val userResult = getUser.invoke(globalArchievement.userUid!!)) {
+                            is Either.Left -> log(TAG, "ERROR")
+                            is Either.Right -> {
+                                globalArchievement.displayName = userResult.b.displayName
+                                globalArchievement.photoBase64 = userResult.b.photoBase64
+                                archievementResultList.add(globalArchievement)
+                            }
+                        }
+                    }
+                    _userData.value = UiModel.MainArchievements(archievementResultList)
+                }
             }
         }
     }
 
     fun loadPersonalArchievementsItems() {
+        val archievementResultList = mutableListOf<Archievements>()
         launch {
             val uuid = uuid.invoke()
             when(val personalArchievements = getPersonalArchievements.invoke(uuid)) {
                 is Either.Left -> log(TAG, "ERROR loading Main Archievements")
-                is Either.Right -> _userData.value = UiModel.PersonalArchievements(personalArchievements.b)
+                is Either.Right -> {
+                    for (personalArchievement in personalArchievements.b) {
+                        when (val userResult = getUser.invoke(personalArchievement.userUid!!)) {
+                            is Either.Left -> log(TAG, "ERROR")
+                            is Either.Right -> {
+                                personalArchievement.displayName = userResult.b.displayName
+                                personalArchievement.photoBase64 = userResult.b.photoBase64
+                                archievementResultList.add(personalArchievement)
+                            }
+                        }
+                    }
+                    _userData.value = UiModel.PersonalArchievements(archievementResultList)
+                }
             }
         }
     }
 
     fun goToEditProfile() {
         _navigation.value = Navigation.EditProfile
+    }
+
+    fun goToFollows(screenFollow: String) {
+        _navigation.value = Navigation.Follows(screenFollow)
     }
 
     fun onUserImageClicked(imageView: ImageView) {
@@ -125,6 +156,7 @@ class ProfileViewModel(private val uuid: GetUUID,
 
     sealed class Navigation {
         object EditProfile : Navigation()
+        data class Follows(val screenFollow: String) : Navigation()
         data class Expand(val imageView: ImageView, val icon: String): Navigation()
     }
 
