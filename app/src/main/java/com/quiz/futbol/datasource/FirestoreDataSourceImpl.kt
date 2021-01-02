@@ -93,6 +93,22 @@ class FirestoreDataSourceImpl(private val database: FirebaseFirestore) : Firesto
         }
     }
 
+    override suspend fun getIsFollowingThisUser(myUuid: String, uuid: String): Either<RepositoryException, Boolean> {
+        return suspendCancellableCoroutine { continuation ->
+            database.collection(COLLECTION_FOLLOWING).document(myUuid).get()
+                    .addOnSuccessListener { it ->
+                        var result = false
+                        it.data?.keys?.forEach { if(uuid == it) result = true }
+                        continuation.resume(result.right())
+                    }
+
+                    .addOnFailureListener {
+                        continuation.resume(RepositoryException.NoConnectionException.left())
+                        FirebaseCrashlytics.getInstance().recordException(Throwable(it.cause))
+                    }
+        }
+    }
+
     override suspend fun getFollowers(uuid: String): Either<RepositoryException, MutableList<User>> {
         return suspendCancellableCoroutine { continuation ->
             database.collection(COLLECTION_FOLLOWERS).document(uuid).get()

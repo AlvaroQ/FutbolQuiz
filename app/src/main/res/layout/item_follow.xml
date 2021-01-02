@@ -11,28 +11,30 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@color/black"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="6dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textUser"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:layout_margin="6dp"
         tools:text="nombre"
         android:textAppearance="@style/Regular.TextColorDark.Medium"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageUser"/>
+        app:layout_constraintStart_toEndOf="@+id/imageUser"
+        app:layout_constraintEnd_toStartOf="@+id/buttonUnfollow"/>
 
     <Button
         android:id="@+id/buttonUnfollow"
-        android:layout_width="80dp"
+        android:layout_width="150dp"
         android:layout_height="30dp"
-        android:layout_marginEnd="12dp"
+        android:layout_marginEnd="6dp"
         android:text="@string/unfollow"
+        android:background="@drawable/button_follow_selected"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

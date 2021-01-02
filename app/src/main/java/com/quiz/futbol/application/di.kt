@@ -83,7 +83,7 @@ private val scopesModule = module {
         scoped { GetUser(get()) }
     }
     scope(named<ProfileFragment>()) {
-        viewModel { ProfileViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
+        viewModel { ProfileViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
         scoped { GetUUID(get()) }
         scoped { GetUser(get()) }
         scoped { GetUserLevel(get()) }
@@ -92,6 +92,7 @@ private val scopesModule = module {
         scoped { GetUserStageCompleted(get()) }
         scoped { GetGlobalArchievements(get()) }
         scoped { GetPersonalArchievements(get()) }
+        scoped { GetIsFollowingThisUser(get()) }
     }
     scope(named<FollowsFragment>()) {
         viewModel { FollowsViewModel(get(), get(), get(), get(), get(), get()) }

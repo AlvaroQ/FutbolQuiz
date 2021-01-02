@@ -20,7 +20,8 @@ class ProfileViewModel(private val uuid: GetUUID,
                        private val getCountFollowing: GetCountFollowing,
                        private val getUserStageCompleted: GetUserStageCompleted,
                        private val getGlobalArchievements: GetGlobalArchievements,
-                       private val getPersonalArchievements: GetPersonalArchievements
+                       private val getPersonalArchievements: GetPersonalArchievements,
+                       private val getIsFollowingThisUser: GetIsFollowingThisUser
 )  : ScopedViewModel() {
     private lateinit var user: User
 
@@ -48,6 +49,15 @@ class ProfileViewModel(private val uuid: GetUUID,
             loadCountFollowingUser(uuid)
             loadCountFollowersUser(uuid)
             loadStageCompletedUserItems(uuid)
+        }
+    }
+
+    fun isFollowed(friendUuid: String) {
+        launch {
+            when(val isFollowed = getIsFollowingThisUser.invoke(uuid.invoke(), friendUuid)) {
+                is Either.Left -> log(TAG, "ERROR loading numberLevel")
+                is Either.Right -> _userData.value = UiModel.IsFollowed(isFollowed.b)
+            }
         }
     }
 
@@ -154,6 +164,7 @@ class ProfileViewModel(private val uuid: GetUUID,
     sealed class UiModel {
         data class MyPersonalData(val user: User) : UiModel()
         data class FriendPersonalData(val user: User) : UiModel()
+        data class IsFollowed(val isFollowed: Boolean) : UiModel()
         data class Level(val numberLevel: Int) : UiModel()
         data class Followers(val numberFollowers: Int) : UiModel()
         data class Following(val numberFollowing: Int) : UiModel()
