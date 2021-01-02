@@ -16,7 +16,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-
     <TextView
         android:id="@+id/textUser"
         android:layout_width="wrap_content"
@@ -27,4 +26,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageUser"/>
+
+    <Button
+        android:id="@+id/buttonUnfollow"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="12dp"
+        android:text="@string/unfollow"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

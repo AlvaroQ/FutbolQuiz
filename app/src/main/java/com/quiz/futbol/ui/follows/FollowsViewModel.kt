@@ -14,11 +14,16 @@ import kotlinx.coroutines.launch
 
 class FollowsViewModel(private val uuid: GetUUID,
                        private val getUser: GetUser,
+                       private val setUnfollower: SetUnfollower,
+                       private val setUnfollowing: SetUnfollowing,
                        private val getFollowing: GetFollowing,
                        private val getFollowers: GetFollowers) : ScopedViewModel() {
 
     private val _followsData = MutableLiveData<UiModel>()
     val followsData: LiveData<UiModel> = _followsData
+
+    private val _unfollowFinished = MutableLiveData<UiModel>()
+    val unfollowFinished: LiveData<UiModel> = _unfollowFinished
 
     init {
         AnalyticsManager.analyticsScreenViewed(AnalyticsManager.SCREEN_FOLLOWS)
@@ -60,8 +65,23 @@ class FollowsViewModel(private val uuid: GetUUID,
         }
     }
 
+    fun unfollow(uuidToUnfollow: String) {
+        launch {
+            when(setUnfollower.invoke(uuid.invoke(), uuidToUnfollow)) {
+                is Either.Right -> _unfollowFinished.value = UiModel.FollowerResult(true)
+                else -> _unfollowFinished.value = UiModel.FollowerResult(false)
+            }
+            when(setUnfollowing.invoke(uuidToUnfollow, uuid.invoke())) {
+                is Either.Right -> _unfollowFinished.value = UiModel.FollowingResult(true)
+                else -> _unfollowFinished.value = UiModel.FollowingResult(false)
+            }
+        }
+    }
+
     sealed class UiModel {
         data class FilledUserList(val userList: MutableList<User>) : UiModel()
+        data class FollowerResult(val isSuccess: Boolean) : UiModel()
+        data class FollowingResult(val isSuccess: Boolean) : UiModel()
     }
 
     companion object {

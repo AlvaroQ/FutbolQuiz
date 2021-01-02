@@ -7,6 +7,7 @@ object Constants {
     const val COLLECTION_ARCHIEVEMENTS = "archievement"
 
     const val POINTS = "points"
+    const val USER_UUID = "user_uuid"
     const val FOLLOW_SCREEN = "points"
     const val STAGE_COMPLETED = "STAGE_COMPLETED"
     const val TOTAL_TEAMS_SPAIN_FIRST_DIVISION = 19

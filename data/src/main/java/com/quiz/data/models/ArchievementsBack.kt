@@ -1,12 +1,11 @@
-package com.quiz.domain
+package com.quiz.data.models
 
-data class Archievements(
+data class ArchievementsBack(
         var userUid: String? = "",
         var displayName: String? = "",
         var photoBase64: String? = "",
         var typeChampionship: String? = "",
         var typeGame: String? = "",
         var points: Long = 0,
-        var createdAt: Long,
-        var click: () -> Unit
+        var createdAt: Long
 )

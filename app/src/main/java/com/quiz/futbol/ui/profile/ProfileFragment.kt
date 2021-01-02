@@ -10,12 +10,14 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.quiz.domain.User
 import com.quiz.futbol.R
 import com.quiz.futbol.common.startActivity
 import com.quiz.futbol.databinding.ProfileFragmentBinding
 import com.quiz.futbol.ui.follows.FollowsActivity
 import com.quiz.futbol.ui.profileEdit.ProfileEditActivity
-import com.quiz.futbol.utils.Constants
+import com.quiz.futbol.utils.Constants.USER_UUID
+import com.quiz.futbol.utils.Constants.FOLLOW_SCREEN
 import com.quiz.futbol.utils.glideLoadBase64
 import com.quiz.futbol.utils.setSafeOnClickListener
 import com.quiz.futbol.utils.expandImage
@@ -39,7 +41,7 @@ class ProfileFragment : Fragment() {
         binding.imageUser.setSafeOnClickListener { profileViewModel.onUserImageClicked(binding.imageUser) }
         binding.imageEditProfile.setSafeOnClickListener { profileViewModel.goToEditProfile() }
         binding.layoutGlobal.setSafeOnClickListener { profileViewModel.loadGlobalArchievementsItems() }
-        binding.layoutPersonal.setSafeOnClickListener { profileViewModel.loadPersonalArchievementsItems() }
+        binding.layoutPersonal.setSafeOnClickListener { profileViewModel.loadPersonalArchievementsItems(activity?.intent?.getStringExtra(USER_UUID)) }
         binding.layoutFollowing.setSafeOnClickListener { profileViewModel.goToFollows(getString(R.string.following)) }
         binding.layoutFollowers.setSafeOnClickListener { profileViewModel.goToFollows(getString(R.string.followers)) }
         return root
@@ -56,27 +58,42 @@ class ProfileFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        profileViewModel.loadUserPersonalData()
+        profileViewModel.loadUserPersonalData(activity?.intent?.getStringExtra(USER_UUID))
     }
 
     private fun navigate(navigation: ProfileViewModel.Navigation) {
         when (navigation) {
             ProfileViewModel.Navigation.EditProfile -> activity?.startActivity<ProfileEditActivity> {}
-            is ProfileViewModel.Navigation.Follows -> activity?.startActivity<FollowsActivity> { putExtra(Constants.FOLLOW_SCREEN, navigation.screenFollow) }
+            is ProfileViewModel.Navigation.Follows -> activity?.startActivity<FollowsActivity> { putExtra(FOLLOW_SCREEN, navigation.screenFollow) }
             is ProfileViewModel.Navigation.Expand -> activity?.expandImage(navigation.imageView, navigation.icon)
+            is ProfileViewModel.Navigation.FriendProfile ->  activity?.startActivity<ProfileActivity> { putExtra(USER_UUID, navigation.uuid) }
         }
     }
+
+    private fun updateFriendUI() {
+        binding.imageEditProfile.visibility = View.GONE
+        binding.layoutGlobal.visibility = View.GONE
+        binding.buttonFollow.visibility = View.VISIBLE
+    }
+    private fun updateUserUI(user: User) {
+        binding.textNameUser.text = user.displayName
+        glideLoadBase64(requireContext(), user.photoBase64, binding.imageUser)
+
+        if(user.displayDescription == "") binding.textDescriptionUser.visibility = View.GONE
+        else binding.textDescriptionUser.text = user.displayDescription
+
+        if(user.displayLocation == "") binding.layoutLocation.visibility = View.GONE
+        else binding.textLocationUser.text = user.displayLocation
+    }
+
     private fun updateUi(model: ProfileViewModel.UiModel) {
         when (model) {
-            is ProfileViewModel.UiModel.UserPersonalData -> {
-                binding.textNameUser.text = model.user.displayName
-                glideLoadBase64(requireContext(), model.user.photoBase64, binding.imageUser)
-
-                if(model.user.displayDescription == "") binding.textDescriptionUser.visibility = View.GONE
-                else binding.textDescriptionUser.text = model.user.displayDescription
-
-                if(model.user.displayLocation == "") binding.layoutLocation.visibility = View.GONE
-                else binding.textLocationUser.text = model.user.displayLocation
+            is ProfileViewModel.UiModel.MyPersonalData -> {
+                updateUserUI(model.user)
+            }
+            is ProfileViewModel.UiModel.FriendPersonalData -> {
+                updateUserUI(model.user)
+                updateFriendUI()
             }
             is ProfileViewModel.UiModel.Level -> binding.textLevel.text = model.numberLevel.toString()
             is ProfileViewModel.UiModel.Followers -> binding.textNumberFollowers.text = model.numberFollowers.toString()
@@ -90,14 +107,14 @@ class ProfileFragment : Fragment() {
             }
             is ProfileViewModel.UiModel.MainArchievements -> {
                 binding.bottomSheet.textTitle.text = getString(R.string.last_global_archievements)
-                binding.bottomSheet.recyclerEvents.adapter = ProfileBottomSheetItemsAdapter(requireContext(), model.items.toMutableList())
+                binding.bottomSheet.recyclerEvents.adapter = ProfileBottomSheetItemsAdapter(model.items.toMutableList())
                 binding.bottomSheet.recyclerEvents.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
                 bottomSheetBehavior.isDraggable = true
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
             }
             is ProfileViewModel.UiModel.PersonalArchievements -> {
                 binding.bottomSheet.textTitle.text = getString(R.string.last_personal_archievements)
-                binding.bottomSheet.recyclerEvents.adapter = ProfileBottomSheetItemsAdapter(requireContext(), model.items.toMutableList())
+                binding.bottomSheet.recyclerEvents.adapter = ProfileBottomSheetItemsAdapter(model.items.toMutableList())
                 binding.bottomSheet.recyclerEvents.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
                 bottomSheetBehavior.isDraggable = true
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED

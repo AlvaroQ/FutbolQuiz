@@ -4,11 +4,11 @@ import android.widget.ImageView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import arrow.core.Either
+import com.quiz.data.toArchievements
 import com.quiz.domain.Archievements
 import com.quiz.domain.User
 import com.quiz.futbol.common.ScopedViewModel
 import com.quiz.futbol.managers.AnalyticsManager
-import com.quiz.futbol.ui.follows.FollowsViewModel
 import com.quiz.futbol.utils.log
 import com.quiz.usecases.*
 import kotlinx.coroutines.launch
@@ -34,14 +34,14 @@ class ProfileViewModel(private val uuid: GetUUID,
         AnalyticsManager.analyticsScreenViewed(AnalyticsManager.SCREEN_PROFILE)
     }
 
-    fun loadUserPersonalData() {
+    fun loadUserPersonalData(userUuid: String?) {
         launch {
-            val uuid = uuid.invoke()
+            val uuid: String = userUuid ?: uuid.invoke()
             when (val userResult = getUser.invoke(uuid)) {
                 is Either.Left -> log(TAG, "ERROR")
                 is Either.Right -> {
                     user = userResult.b
-                    _userData.value = UiModel.UserPersonalData(user)
+                    _userData.value = if(userUuid == null) UiModel.MyPersonalData(user) else UiModel.FriendPersonalData(user)
                 }
             }
             loadLevelUser(uuid)
@@ -99,7 +99,10 @@ class ProfileViewModel(private val uuid: GetUUID,
                             is Either.Right -> {
                                 globalArchievement.displayName = userResult.b.displayName
                                 globalArchievement.photoBase64 = userResult.b.photoBase64
-                                archievementResultList.add(globalArchievement)
+                                archievementResultList.add(globalArchievement.toArchievements {
+                                    // if user not me navigate to user selected
+                                    if (uuid.invoke() != globalArchievement.userUid) navigationToProfile(userResult.b.uuid)
+                                })
                             }
                         }
                     }
@@ -109,10 +112,10 @@ class ProfileViewModel(private val uuid: GetUUID,
         }
     }
 
-    fun loadPersonalArchievementsItems() {
+    fun loadPersonalArchievementsItems(userUuid: String?) {
         val archievementResultList = mutableListOf<Archievements>()
         launch {
-            val uuid = uuid.invoke()
+            val uuid: String = userUuid ?: uuid.invoke()
             when(val personalArchievements = getPersonalArchievements.invoke(uuid)) {
                 is Either.Left -> log(TAG, "ERROR loading Main Archievements")
                 is Either.Right -> {
@@ -122,7 +125,7 @@ class ProfileViewModel(private val uuid: GetUUID,
                             is Either.Right -> {
                                 personalArchievement.displayName = userResult.b.displayName
                                 personalArchievement.photoBase64 = userResult.b.photoBase64
-                                archievementResultList.add(personalArchievement)
+                                archievementResultList.add(personalArchievement.toArchievements {})
                             }
                         }
                     }
@@ -130,6 +133,10 @@ class ProfileViewModel(private val uuid: GetUUID,
                 }
             }
         }
+    }
+
+    fun navigationToProfile(uuid: String?) {
+        _navigation.value = Navigation.FriendProfile(uuid)
     }
 
     fun goToEditProfile() {
@@ -145,7 +152,8 @@ class ProfileViewModel(private val uuid: GetUUID,
     }
 
     sealed class UiModel {
-        data class UserPersonalData(val user: User) : UiModel()
+        data class MyPersonalData(val user: User) : UiModel()
+        data class FriendPersonalData(val user: User) : UiModel()
         data class Level(val numberLevel: Int) : UiModel()
         data class Followers(val numberFollowers: Int) : UiModel()
         data class Following(val numberFollowing: Int) : UiModel()
@@ -158,6 +166,7 @@ class ProfileViewModel(private val uuid: GetUUID,
         object EditProfile : Navigation()
         data class Follows(val screenFollow: String) : Navigation()
         data class Expand(val imageView: ImageView, val icon: String): Navigation()
+        data class FriendProfile(val uuid: String?): Navigation()
     }
 
     companion object {

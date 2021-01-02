@@ -51,6 +51,8 @@
     <string translatable="false" name="dialog_image">image dialog</string>
     <string translatable="false" name="back">back</string>
     <string translatable="false" name="game_image">image to guess</string>
+    <string name="unfollow">unfollow</string>
+    <string name="follow">follow</string>
 
     <plurals name="weeks_ago">
         <item quantity="one">%s week ago</item>

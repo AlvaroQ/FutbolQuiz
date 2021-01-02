@@ -94,11 +94,13 @@ private val scopesModule = module {
         scoped { GetPersonalArchievements(get()) }
     }
     scope(named<FollowsFragment>()) {
-        viewModel { FollowsViewModel(get(), get(), get(), get()) }
+        viewModel { FollowsViewModel(get(), get(), get(), get(), get(), get()) }
         scoped { GetFollowing(get()) }
         scoped { GetFollowers(get()) }
         scoped { GetUUID(get()) }
         scoped { GetUser(get()) }
+        scoped { SetUnfollower(get()) }
+        scoped { SetUnfollowing(get()) }
     }
     scope(named<ProfileEditFragment>()) {
         viewModel { ProfileEditViewModel(get(), get(), get()) }

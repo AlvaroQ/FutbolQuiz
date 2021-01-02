@@ -1,6 +1,7 @@
 package com.quiz.usecases
 
 import arrow.core.Either
+import com.quiz.data.models.ArchievementsBack
 import com.quiz.data.repository.RepositoryException
 import com.quiz.data.repository.UserRepository
 import com.quiz.domain.Archievements
@@ -16,6 +17,23 @@ class SaveUser(private val userRepository: UserRepository) {
 
 class GetCountFollowers(private val userRepository: UserRepository) {
     suspend fun invoke(uuid: String): Either<RepositoryException, Int> = userRepository.getCountFollowers(uuid)
+}
+
+class SetUnfollower(private val userRepository: UserRepository) {
+    suspend fun invoke(fromUuid: String, toUuid: String): Either<RepositoryException, Boolean> = userRepository.setUnfollower(fromUuid, toUuid)
+}
+
+class SetUnfollowing(private val userRepository: UserRepository) {
+    suspend fun invoke(fromUuid: String, toUuid: String): Either<RepositoryException, Boolean> = userRepository.setUnfollowing(fromUuid, toUuid)
+}
+
+class SetFollower(private val userRepository: UserRepository) {
+    suspend fun invoke(fromUuid: String, toUuid: String): Either<RepositoryException, Boolean> = userRepository.setFollower(fromUuid, toUuid)
+}
+
+
+class SetFollowing(private val userRepository: UserRepository) {
+    suspend fun invoke(fromUuid: String, toUuid: String): Either<RepositoryException, Boolean> = userRepository.setFollowing(fromUuid, toUuid)
 }
 
 class GetFollowers(private val userRepository: UserRepository) {
@@ -38,10 +56,10 @@ class GetUserStageCompleted(private val userRepository: UserRepository) {
 }
 
 class GetGlobalArchievements(private val userRepository: UserRepository) {
-    suspend fun invoke(): Either<RepositoryException, MutableList<Archievements>> = userRepository.getGlobalArchievements()
+    suspend fun invoke(): Either<RepositoryException, MutableList<ArchievementsBack>> = userRepository.getGlobalArchievements()
 }
 
 class GetPersonalArchievements(private val userRepository: UserRepository) {
-    suspend fun invoke(uuid: String): Either<RepositoryException, MutableList<Archievements>> = userRepository.getPersonalArchievements(uuid)
+    suspend fun invoke(uuid: String): Either<RepositoryException, MutableList<ArchievementsBack>> = userRepository.getPersonalArchievements(uuid)
 }
 

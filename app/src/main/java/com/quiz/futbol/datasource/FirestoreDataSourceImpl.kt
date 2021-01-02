@@ -8,6 +8,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObject
 import com.quiz.data.datasource.FirestoreDataSource
+import com.quiz.data.models.ArchievementsBack
 import com.quiz.data.repository.RepositoryException
 import com.quiz.domain.Archievements
 import com.quiz.domain.User
@@ -108,6 +109,32 @@ class FirestoreDataSourceImpl(private val database: FirebaseFirestore) : Firesto
         }
     }
 
+    override suspend fun setFollower(isFollow: Boolean, fromUuid: String, toUuid: String): Either<RepositoryException, Boolean> {
+        return suspendCancellableCoroutine { continuation ->
+            database.collection(COLLECTION_FOLLOWERS)
+                .document(fromUuid)
+                .set( { toUuid to isFollow } )
+                .addOnSuccessListener { continuation.resume(true.right()) }
+                .addOnFailureListener {
+                    continuation.resume(RepositoryException.NoConnectionException.left())
+                    FirebaseCrashlytics.getInstance().recordException(Throwable(it.cause))
+                }
+        }
+    }
+
+    override suspend fun setFollowing(isFollow: Boolean, fromUuid: String, toUuid: String): Either<RepositoryException, Boolean> {
+        return suspendCancellableCoroutine { continuation ->
+            database.collection(COLLECTION_FOLLOWING)
+                .document(toUuid)
+                .set( { fromUuid to isFollow } )
+                .addOnSuccessListener { continuation.resume(true.right()) }
+                .addOnFailureListener {
+                    continuation.resume(RepositoryException.NoConnectionException.left())
+                    FirebaseCrashlytics.getInstance().recordException(Throwable(it.cause))
+                }
+        }
+    }
+
     override suspend fun getUserLevel(uuid: String): Either<RepositoryException, Int> {
         return suspendCancellableCoroutine { continuation ->
             database.collection(COLLECTION_ARCHIEVEMENTS).whereEqualTo("userUid", uuid).get()
@@ -142,13 +169,13 @@ class FirestoreDataSourceImpl(private val database: FirebaseFirestore) : Firesto
 
     }
 
-    override suspend fun getGlobalArchievements(): Either<RepositoryException, MutableList<Archievements>> {
+    override suspend fun getGlobalArchievements(): Either<RepositoryException, MutableList<ArchievementsBack>> {
         return suspendCancellableCoroutine { continuation ->
             database.collection(COLLECTION_ARCHIEVEMENTS).orderBy("createdAt", Query.Direction.DESCENDING).get()
                     .addOnSuccessListener { documents ->
-                        val result: MutableList<Archievements> = mutableListOf()
+                        val result: MutableList<ArchievementsBack> = mutableListOf()
                         for (document in documents) {
-                            result.add(Archievements(
+                            result.add(ArchievementsBack(
                                     userUid = document.data["userUid"].toString(),
                                     typeChampionship = document.data["typeChampionship"].toString(),
                                     typeGame = document.data["typeGame"].toString(),
@@ -164,13 +191,13 @@ class FirestoreDataSourceImpl(private val database: FirebaseFirestore) : Firesto
         }
     }
 
-    override suspend fun getPersonalArchievements(uuid: String): Either<RepositoryException, MutableList<Archievements>> {
+    override suspend fun getPersonalArchievements(uuid: String): Either<RepositoryException, MutableList<ArchievementsBack>> {
         return suspendCancellableCoroutine { continuation ->
             database.collection(COLLECTION_ARCHIEVEMENTS).whereEqualTo("userUid", uuid).orderBy ("createdAt", Query.Direction.DESCENDING).get()
                     .addOnSuccessListener { documents ->
-                        val result: MutableList<Archievements> = mutableListOf()
+                        val result: MutableList<ArchievementsBack> = mutableListOf()
                         for (document in documents) {
-                            result.add(Archievements(
+                            result.add(ArchievementsBack(
                                     userUid = document.data["userUid"].toString(),
                                     typeChampionship = document.data["typeChampionship"].toString(),
                                     typeGame = document.data["typeGame"].toString(),
