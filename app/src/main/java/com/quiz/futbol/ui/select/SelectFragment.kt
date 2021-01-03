@@ -16,7 +16,8 @@ import com.quiz.futbol.databinding.SelectFragmentBinding
 import com.quiz.futbol.managers.DialogCustomManager
 import com.quiz.futbol.ui.game.GameActivity
 import com.quiz.futbol.ui.profile.ProfileActivity
-import com.quiz.futbol.utils.Constants
+import com.quiz.futbol.utils.Constants.ModeGame
+import com.quiz.futbol.utils.Constants.MODE_GAME
 import com.quiz.futbol.utils.Constants.TYPE_CHAMPIONSHIP
 import com.quiz.futbol.utils.Constants.TYPE_GAME
 import com.quiz.futbol.utils.Constants.TypeGame.*
@@ -33,6 +34,7 @@ class SelectFragment : Fragment() {
     private val dialogCustomManager: DialogCustomManager by lifecycleScope.inject { parametersOf(requireActivity()) }
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
+    private lateinit var modeGame: ModeGame
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SelectFragmentBinding.inflate(inflater)
@@ -60,9 +62,11 @@ class SelectFragment : Fragment() {
     private fun updateUi(model: SelectViewModel.UiModel) {
         when (model) {
             is SelectViewModel.UiModel.ContentCareerMode -> {
-                binding.bottomSheet.textTitle.text = if(model.mode == Constants.ModeGame.TRAINIG) {
+                binding.bottomSheet.textTitle.text = if(model.mode == ModeGame.TRAINIG) {
+                    modeGame = ModeGame.TRAINIG
                     getString(R.string.training_mode)
                 } else {
+                    modeGame = ModeGame.CARRER
                     getString(R.string.carrer_mode)
                 }
                 binding.bottomSheet.recyclerCategory.adapter = SelectItemsAdapter(requireContext(), model.items.toMutableList())
@@ -96,24 +100,28 @@ class SelectFragment : Fragment() {
         when (navigation) {
             is SelectViewModel.Navigation.GameByImage -> {
                 activity?.startActivity<GameActivity> {
+                    putExtra(MODE_GAME, modeGame)
                     putExtra(TYPE_GAME, BY_IMAGE)
                     putExtra(TYPE_CHAMPIONSHIP, navigation.championship)
                 }
             }
             is SelectViewModel.Navigation.GameByName -> {
                 activity?.startActivity<GameActivity> {
+                    putExtra(MODE_GAME, modeGame)
                     putExtra(TYPE_GAME, BY_NAME)
                     putExtra(TYPE_CHAMPIONSHIP, navigation.championship)
                 }
             }
             is SelectViewModel.Navigation.GameByCapacity -> {
                 activity?.startActivity<GameActivity> {
+                    putExtra(MODE_GAME, modeGame)
                     putExtra(TYPE_GAME, BY_CAPACITY)
                     putExtra(TYPE_CHAMPIONSHIP, navigation.championship)
                 }
             }
             is SelectViewModel.Navigation.GameByBuilt -> {
                 activity?.startActivity<GameActivity> {
+                    putExtra(MODE_GAME, modeGame)
                     putExtra(TYPE_GAME, BY_BUILT)
                     putExtra(TYPE_CHAMPIONSHIP, navigation.championship)
                 }

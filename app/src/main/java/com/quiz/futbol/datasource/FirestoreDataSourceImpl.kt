@@ -153,9 +153,9 @@ class FirestoreDataSourceImpl(private val database: FirebaseFirestore) : Firesto
 
     override suspend fun getUserLevel(uuid: String): Either<RepositoryException, Int> {
         return suspendCancellableCoroutine { continuation ->
-            database.collection(COLLECTION_ARCHIEVEMENTS).whereEqualTo("userUid", uuid).get()
+            database.collection(COLLECTION_USERS).document(uuid).get()
                     .addOnSuccessListener {
-                        continuation.resume(it.documents.size.right())
+                        continuation.resume(it.toObject<User>()!!.progressUser.right())
                     }
                     .addOnFailureListener {
                         continuation.resume(RepositoryException.NoConnectionException.left())

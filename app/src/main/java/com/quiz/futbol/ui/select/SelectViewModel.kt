@@ -7,6 +7,7 @@ import com.quiz.domain.User
 import com.quiz.futbol.R
 import com.quiz.futbol.common.ScopedViewModel
 import com.quiz.futbol.managers.AnalyticsManager
+import com.quiz.futbol.utils.Constants.TypeGame
 import com.quiz.futbol.utils.Constants.ModeGame
 import com.quiz.futbol.utils.Constants.ModeGame.CARRER
 import com.quiz.futbol.utils.Constants.ModeGame.TRAINIG
@@ -23,6 +24,7 @@ class SelectViewModel(private val getResources: GetResources,
                       private val uuid: GetUUID,
                       private val getUser: GetUser
 ) : ScopedViewModel() {
+    var progressUser: Int = 0
 
     private val _userData = MutableLiveData<UiModel>()
     val userData: LiveData<UiModel> = _userData
@@ -51,12 +53,10 @@ class SelectViewModel(private val getResources: GetResources,
 
     private fun loadUserData() {
         launch {
-            val uuid = uuid.invoke()
-            when (val userResult = getUser.invoke(uuid)) {
-                is Either.Left -> {
-                    log(TAG, "ERROR")
-                }
+            when (val userResult = getUser.invoke(uuid.invoke())) {
+                is Either.Left -> log(TAG, "ERROR")
                 is Either.Right -> {
+                    progressUser = userResult.b.progressUser
                     _userData.value = UiModel.UserData(userResult.b)
                 }
             }
@@ -85,27 +85,29 @@ class SelectViewModel(private val getResources: GetResources,
         }
         val itemHeader = SelectItem(title, false, null, typeChampionship){}
 
-        val itemSelectImageItem = SelectItem(getResources.getString(R.string.by_image), false, BY_IMAGE) {
-            val isBlocked = false
-
+        val itemSelectImageItem = SelectItem(getResources.getString(R.string.by_image), isBlocked(typeChampionship, BY_IMAGE), BY_IMAGE) {
             when {
-                isBlocked -> _dialog.value = Dialog.DialogLevelLock
+                isBlocked(typeChampionship, BY_IMAGE) -> _dialog.value = Dialog.DialogLevelLock
                 else -> _navigation.value = Navigation.GameByImage(typeChampionship)
             }
         }
-        val itemSelectNameItem = SelectItem(getResources.getString(R.string.by_name), true, BY_NAME) {
-            val isBlocked = true
-
+        val itemSelectNameItem = SelectItem(getResources.getString(R.string.by_name), isBlocked(typeChampionship, BY_NAME), BY_NAME) {
             when {
-                isBlocked -> _dialog.value = Dialog.DialogLevelLock
+                isBlocked(typeChampionship, BY_NAME) -> _dialog.value = Dialog.DialogLevelLock
                 else -> _navigation.value = Navigation.GameByName(typeChampionship)
             }
         }
-        val itemSelectCapacityItem = SelectItem(getResources.getString(R.string.by_capacity), true, BY_CAPACITY) {
-            _navigation.value = Navigation.GameByCapacity(typeChampionship)
+        val itemSelectCapacityItem = SelectItem(getResources.getString(R.string.by_capacity), isBlocked(typeChampionship, BY_CAPACITY), BY_CAPACITY) {
+            when {
+                isBlocked(typeChampionship, BY_CAPACITY) -> _dialog.value = Dialog.DialogLevelLock
+                else -> _navigation.value = Navigation.GameByCapacity(typeChampionship)
+            }
         }
-        val itemSelectBuiltItem = SelectItem(getResources.getString(R.string.by_built), true, BY_BUILT) {
-            _navigation.value = Navigation.GameByBuilt(typeChampionship)
+        val itemSelectBuiltItem = SelectItem(getResources.getString(R.string.by_built), isBlocked(typeChampionship, BY_BUILT), BY_BUILT) {
+            when {
+                isBlocked(typeChampionship, BY_BUILT) -> _dialog.value = Dialog.DialogLevelLock
+                else -> _navigation.value = Navigation.GameByBuilt(typeChampionship)
+            }
         }
         listOf.add(itemHeader)
         listOf.add(itemSelectImageItem)
@@ -114,6 +116,42 @@ class SelectViewModel(private val getResources: GetResources,
         listOf.add(itemSelectBuiltItem)
 
         return listOf
+    }
+
+    private fun isBlocked(typeChampionship: TypeChampionship, typeGame: TypeGame): Boolean {
+        val progressionGame = when(typeChampionship) {
+            SPAIN_FIRST_DIVISION -> when(typeGame) {
+                BY_IMAGE -> 0
+                BY_NAME -> 1
+                BY_CAPACITY -> 2
+                BY_BUILT -> 3
+            }
+            ENGLAND_FIRST_DIVISION -> when(typeGame) {
+                BY_IMAGE -> 4
+                BY_NAME -> 5
+                BY_CAPACITY -> 6
+                BY_BUILT -> 7
+            }
+            ITALY_FIRST_DIVISION -> when(typeGame) {
+                BY_IMAGE -> 8
+                BY_NAME -> 9
+                BY_CAPACITY -> 10
+                BY_BUILT -> 11
+            }
+            GERMAIN_FIRST_DIVISION -> when(typeGame) {
+                BY_IMAGE -> 12
+                BY_NAME -> 13
+                BY_CAPACITY -> 14
+                BY_BUILT -> 15
+            }
+            FRENCH_FIRST_DIVISION -> when(typeGame) {
+                BY_IMAGE -> 16
+                BY_NAME -> 17
+                BY_CAPACITY -> 18
+                BY_BUILT -> 19
+            }
+        }
+        return progressionGame > progressUser
     }
 
     fun goToProfile() {

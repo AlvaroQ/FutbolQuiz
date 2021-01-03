@@ -17,6 +17,7 @@ object Constants {
     const val PATH_REFERENCE_FIRST_DIVISION = "first_division/"
     const val PATH_REFERENCE_APPS = "country/apps"
 
+    const val MODE_GAME = "ModeGame"
     const val TYPE_GAME = "TypeGame"
     const val TYPE_CHAMPIONSHIP = "TypeChampionship"
     enum class ModeGame { CARRER, TRAINIG }

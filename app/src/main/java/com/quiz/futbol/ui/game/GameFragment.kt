@@ -17,9 +17,13 @@ import com.quiz.futbol.common.traslationAnimation
 import com.quiz.futbol.common.traslationAnimationFadeIn
 import com.quiz.futbol.databinding.GameFragmentBinding
 import com.quiz.futbol.ui.result.ResultActivity
+import com.quiz.futbol.utils.Constants.MODE_GAME
+import com.quiz.futbol.utils.Constants.TypeChampionship
 import com.quiz.futbol.utils.Constants.POINTS
 import com.quiz.futbol.utils.Constants.TOTAL_TEAMS_SPAIN_FIRST_DIVISION
+import com.quiz.futbol.utils.Constants.TYPE_CHAMPIONSHIP
 import com.quiz.futbol.utils.Constants.TYPE_GAME
+import com.quiz.futbol.utils.Constants.ModeGame
 import com.quiz.futbol.utils.Constants.TypeGame
 import com.quiz.futbol.utils.glideLoadURL
 import com.quiz.futbol.utils.glideLoadingGif
@@ -46,7 +50,10 @@ class GameFragment : Fragment() {
     private var life: Int = 2
     private var stage: Int = 1
     private var points: Int = 0
+
     lateinit var typeGame: Enum<TypeGame>
+    lateinit var typeChampionship: Enum<TypeChampionship>
+    lateinit var typeMode: Enum<ModeGame>
 
     companion object {
         fun newInstance() = GameFragment()
@@ -61,7 +68,9 @@ class GameFragment : Fragment() {
         binding = GameFragmentBinding.inflate(inflater)
         val root = binding.root
 
-        typeGame = (activity?.intent?.getSerializableExtra(TYPE_GAME) as TypeGame?)!!
+        typeGame = (activity?.intent?.getSerializableExtra(TYPE_GAME) as TypeGame)
+        typeChampionship = (activity?.intent?.getSerializableExtra(TYPE_CHAMPIONSHIP) as TypeChampionship)
+        typeMode = (activity?.intent?.getSerializableExtra(MODE_GAME) as ModeGame)
 
         imageLoading = root.findViewById(R.id.imageLoading)
         imageQuiz = root.findViewById(R.id.imageQuiz)
@@ -111,7 +120,7 @@ class GameFragment : Fragment() {
 
     private fun updateProgress(model: GameViewModel.UiModel?) {
         if (model is GameViewModel.UiModel.Loading && model.show) {
-            glideLoadingGif(activity as GameActivity, imageLoading)
+            glideLoadingGif(requireContext(), imageLoading)
             imageLoading.visibility = View.VISIBLE
             textQuiz.visibility = View.GONE
             imageQuiz.visibility = View.GONE
