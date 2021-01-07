@@ -17,4 +17,9 @@ class SharedPreferencesRepository(private val sharedPreferencesLocalDataSource: 
             sharedPreferencesLocalDataSource.uuid = uuid
         }
 
+    var timestampGame: Long
+        get() = sharedPreferencesLocalDataSource.timestampGame
+        set(value) {
+            sharedPreferencesLocalDataSource.timestampGame = value
+        }
 }

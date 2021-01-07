@@ -10,7 +10,7 @@ import com.quiz.futbol.managers.AnalyticsManager
 import com.quiz.futbol.utils.Constants.TypeGame
 import com.quiz.futbol.utils.Constants.ModeGame
 import com.quiz.futbol.utils.Constants.ModeGame.CARRER
-import com.quiz.futbol.utils.Constants.ModeGame.TRAINIG
+import com.quiz.futbol.utils.Constants.ModeGame.TRAINNIG
 import com.quiz.futbol.utils.Constants.TypeChampionship
 import com.quiz.futbol.utils.Constants.TypeChampionship.*
 import com.quiz.futbol.utils.Constants.TypeGame.*
@@ -44,7 +44,7 @@ class SelectViewModel(private val getResources: GetResources,
     }
 
     fun loadTrainingMode() {
-        _loadBottomSheetData.value = UiModel.ContentCareerMode(loadSelectAllItems(), TRAINIG)
+        _loadBottomSheetData.value = UiModel.ContentCareerMode(loadSelectAllItems(), TRAINNIG)
     }
 
     fun loadCareerMode() {

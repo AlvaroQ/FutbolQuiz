@@ -2,32 +2,26 @@ package com.quiz.futbol.ui.game
 
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.view.animation.AnimationUtils
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.quiz.domain.Stadium
 import com.quiz.futbol.R
-import com.quiz.futbol.common.startActivity
 import com.quiz.futbol.common.traslationAnimation
 import com.quiz.futbol.common.traslationAnimationFadeIn
-import com.quiz.futbol.databinding.GameFragmentBinding
-import com.quiz.futbol.ui.result.ResultActivity
-import com.quiz.futbol.utils.Constants.MODE_GAME
-import com.quiz.futbol.utils.Constants.TypeChampionship
-import com.quiz.futbol.utils.Constants.POINTS
+import com.quiz.futbol.databinding.FragmentGameBinding
+import com.quiz.futbol.utils.*
 import com.quiz.futbol.utils.Constants.TOTAL_TEAMS_SPAIN_FIRST_DIVISION
-import com.quiz.futbol.utils.Constants.TYPE_CHAMPIONSHIP
-import com.quiz.futbol.utils.Constants.TYPE_GAME
-import com.quiz.futbol.utils.Constants.ModeGame
 import com.quiz.futbol.utils.Constants.TypeGame
-import com.quiz.futbol.utils.glideLoadURL
-import com.quiz.futbol.utils.glideLoadingGif
-import com.quiz.futbol.utils.setSafeOnClickListener
+import com.quiz.futbol.utils.Constants.ModeGame
+import com.quiz.futbol.utils.Constants.COUNTER_DOWN_DEFAULT
 import kotlinx.coroutines.*
 import org.koin.android.scope.lifecycleScope
 import org.koin.android.viewmodel.scope.viewModel
@@ -37,11 +31,8 @@ import java.util.concurrent.TimeUnit
 
 class GameFragment : Fragment() {
     private val gameViewModel: GameViewModel by lifecycleScope.viewModel(this)
-    private lateinit var binding: GameFragmentBinding
+    private lateinit var binding: FragmentGameBinding
 
-    lateinit var imageLoading: ImageView
-    lateinit var imageQuiz: ImageView
-    lateinit var textQuiz: TextView
     lateinit var btnOptionOne: TextView
     lateinit var btnOptionTwo: TextView
     lateinit var btnOptionThree: TextView
@@ -51,30 +42,31 @@ class GameFragment : Fragment() {
     private var stage: Int = 1
     private var points: Int = 0
 
-    lateinit var typeGame: Enum<TypeGame>
-    lateinit var typeChampionship: Enum<TypeChampionship>
-    lateinit var typeMode: Enum<ModeGame>
+    lateinit var typeGame: String
+    lateinit var typeChampionship: String
+    lateinit var modeGame: String
 
-    companion object {
-        fun newInstance() = GameFragment()
-    }
+    var cTimer: CountDownTimer? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater,
+                              container: ViewGroup?,
+                              savedInstanceState: Bundle?): View {
 
-        binding = GameFragmentBinding.inflate(inflater)
+        binding = FragmentGameBinding.inflate(inflater)
         val root = binding.root
 
-        typeGame = (activity?.intent?.getSerializableExtra(TYPE_GAME) as TypeGame)
-        typeChampionship = (activity?.intent?.getSerializableExtra(TYPE_CHAMPIONSHIP) as TypeChampionship)
-        typeMode = (activity?.intent?.getSerializableExtra(MODE_GAME) as ModeGame)
+        typeGame = GameFragmentArgs.fromBundle(requireArguments()).typeGame
+        typeChampionship = GameFragmentArgs.fromBundle(requireArguments()).typeChampionship
+        modeGame = GameFragmentArgs.fromBundle(requireArguments()).typeMode
 
-        imageLoading = root.findViewById(R.id.imageLoading)
-        imageQuiz = root.findViewById(R.id.imageQuiz)
-        textQuiz = root.findViewById(R.id.textQuiz)
+        when(modeGame) {
+            ModeGame.TRAINNIG.name -> drawTrainingMode()
+            ModeGame.CARRER.name -> drawCarrerMode()
+        }
+
+
+        binding.appBarLayoutGame.btnBack.setSafeOnClickListener { activity?.onBackPressed() }
+
         btnOptionOne = root.findViewById(R.id.btnOptionOne)
         btnOptionTwo = root.findViewById(R.id.btnOptionTwo)
         btnOptionThree = root.findViewById(R.id.btnOptionThree)
@@ -110,20 +102,62 @@ class GameFragment : Fragment() {
         gameViewModel.responseOptions.observe(viewLifecycleOwner, Observer(::drawOptionsResponse))
     }
 
+    private fun drawTrainingMode() {
+        binding.appBarLayoutGame.toolbarTitle.text = getString(R.string.training)
+        binding.appBarLayoutGame.layoutCounter.visibility = View.GONE
+        binding.appBarLayoutGame.layoutLife.visibility = View.VISIBLE
+    }
+
+    private fun drawCarrerMode() {
+        binding.appBarLayoutGame.toolbarTitle.visibility = View.GONE
+        binding.appBarLayoutGame.layoutCounter.visibility = View.VISIBLE
+        binding.appBarLayoutGame.layoutLife.visibility = View.GONE
+        gameViewModel.setVerificationSent(System.currentTimeMillis())
+        startCountDown()
+    }
+
+    private fun startCountDown() {
+        val timeSinceVerificationSent = System.currentTimeMillis() - gameViewModel.getVerificationSent()
+        if(cTimer == null && timeSinceVerificationSent < COUNTER_DOWN_DEFAULT) {
+            cTimer = object : CountDownTimer(COUNTER_DOWN_DEFAULT - timeSinceVerificationSent, 1000) {
+                override fun onTick(millisUntilFinished: Long) {
+                    binding.appBarLayoutGame.tvTimer.text = (millisUntilFinished / 1000).toString()
+                }
+
+                override fun onFinish() {
+                    life = 0
+                    nextScreen()
+                }
+            }
+            (cTimer as CountDownTimer).start()
+        } else {
+            cancelTimer()
+        }
+    }
+
+    private fun cancelTimer() {
+        binding.appBarLayoutGame.tvTimer.text = ""
+        cTimer = with(cTimer) {
+            this?.cancel()
+            null
+        }
+    }
     private fun navigate(navigation: GameViewModel.Navigation?) {
+        log(TAG, "navigate to $navigation")
         when (navigation) {
             is GameViewModel.Navigation.Result -> {
-                activity?.startActivity<ResultActivity> { putExtra(POINTS, points) }
+                val action = GameFragmentDirections.actionNavigationGameToResult(points.toString(), modeGame)
+                findNavController().navigate(action)
             }
         }
     }
 
     private fun updateProgress(model: GameViewModel.UiModel?) {
         if (model is GameViewModel.UiModel.Loading && model.show) {
-            glideLoadingGif(requireContext(), imageLoading)
-            imageLoading.visibility = View.VISIBLE
-            textQuiz.visibility = View.GONE
-            imageQuiz.visibility = View.GONE
+            glideLoadingGif(requireContext(), binding.imageLoading)
+            binding.imageLoading.visibility = View.VISIBLE
+            binding.textQuiz.visibility = View.GONE
+            binding.imageQuiz.visibility = View.GONE
 
             btnOptionOne.isSelected = false
             btnOptionTwo.isSelected = false
@@ -132,19 +166,22 @@ class GameFragment : Fragment() {
 
             enableBtn(false)
         } else {
-            imageLoading.visibility = View.GONE
-            textQuiz.visibility = View.VISIBLE
-            imageQuiz.visibility = View.VISIBLE
+            binding.imageLoading.visibility = View.GONE
+            binding.textQuiz.visibility = View.VISIBLE
+            binding.imageQuiz.visibility = View.VISIBLE
 
             enableBtn(true)
-            (activity as GameActivity).writeStage(stage)
         }
     }
 
     private fun drawQuestionQuiz(stadium: Stadium) {
+        log(tag, "drawQuestionQuiz")
+        log(tag, "typeGame = $typeGame")
+        log(tag, "imageQuiz = " + stadium.stadium_image)
+        gameViewModel.setVerificationSent(System.currentTimeMillis())
         when(typeGame) {
-            TypeGame.BY_NAME -> textQuiz.text = Locale(getString(R.string.locale), stadium.name!!).displayCountry
-            TypeGame.BY_IMAGE -> glideLoadURL(activity as GameActivity, stadium.stadium_image, imageQuiz)
+            TypeGame.BY_NAME.name -> binding.textQuiz.text = Locale(getString(R.string.locale), stadium.name!!).displayCountry
+            TypeGame.BY_IMAGE.name -> glideLoadURL(requireContext(), stadium.stadium_image, binding.imageQuiz)
         }
     }
 
@@ -171,13 +208,15 @@ class GameFragment : Fragment() {
         enableBtn(false)
         stage += 1
 
-        drawCorrectResponse(gameViewModel.getStadium()?.name!!)
+        drawCorrectResponse(gameViewModel.getStadium().name!!)
         nextScreen()
     }
 
     private fun deleteLife() {
-        life--
-        (activity as GameActivity).writeDeleteLife(life)
+        if(modeGame == ModeGame.TRAINNIG.name) {
+            life--
+            writeDeleteLife(life)
+        }
     }
 
     private fun drawCorrectResponse(capitalNameCorrect: String) {
@@ -319,5 +358,32 @@ class GameFragment : Fragment() {
                 else gameViewModel.generateNewStage()
             }
         }
+    }
+
+    private fun writeDeleteLife(life: Int) {
+        when(life) {
+            2 -> {
+                binding.appBarLayoutGame.lifeSecond.setImageDrawable(context?.getDrawable(R.drawable.ic_life_on))
+                binding.appBarLayoutGame.lifeFirst.setImageDrawable(context?.getDrawable(R.drawable.ic_life_on))
+            }
+            1 -> {
+                binding.appBarLayoutGame.lifeSecond.startAnimation(AnimationUtils.loadAnimation(context, R.anim.scale_xy_collapse))
+
+                binding.appBarLayoutGame.lifeSecond.setImageDrawable(context?.getDrawable(R.drawable.ic_life_off))
+                binding.appBarLayoutGame.lifeFirst.setImageDrawable(context?.getDrawable(R.drawable.ic_life_on))
+            }
+            0 -> {
+                binding.appBarLayoutGame.lifeFirst.startAnimation(AnimationUtils.loadAnimation(context, R.anim.scale_xy_collapse))
+
+                // GAME OVER
+                binding.appBarLayoutGame.lifeSecond.setImageDrawable(context?.getDrawable(R.drawable.ic_life_off))
+                binding.appBarLayoutGame.lifeFirst.setImageDrawable(context?.getDrawable(R.drawable.ic_life_off))
+            }
+        }
+    }
+
+
+    companion object {
+        private val TAG = GameFragment::class.java.simpleName
     }
 }

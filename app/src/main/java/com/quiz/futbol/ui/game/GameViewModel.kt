@@ -7,9 +7,14 @@ import com.quiz.futbol.common.ScopedViewModel
 import com.quiz.futbol.managers.AnalyticsManager
 import com.quiz.futbol.utils.Constants.TOTAL_TEAMS_SPAIN_FIRST_DIVISION
 import com.quiz.usecases.GetStadiumById
+import com.quiz.usecases.GetTimestampGame
+import com.quiz.usecases.SetTimestampGame
+
 import kotlinx.coroutines.launch
 
-class GameViewModel(private val getStadiumById: GetStadiumById) : ScopedViewModel() {
+class GameViewModel(private val getStadiumById: GetStadiumById,
+                    val setTimestampGame: SetTimestampGame,
+                    val getTimestampGame: GetTimestampGame) : ScopedViewModel() {
     private var randomCountries = mutableListOf<Int>()
     private lateinit var stadium: Stadium
 
@@ -87,6 +92,14 @@ class GameViewModel(private val getStadiumById: GetStadiumById) : ScopedViewMode
             numRandom = (start..end).random()
         }
         return numRandom
+    }
+
+    fun getVerificationSent(): Long {
+        return getTimestampGame()
+    }
+
+    fun setVerificationSent(time: Long) {
+        setTimestampGame(time)
     }
 
     sealed class UiModel {

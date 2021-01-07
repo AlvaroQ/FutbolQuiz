@@ -21,3 +21,13 @@ class SetUUID(private val sharedPreferencesRepository: SharedPreferencesReposito
 class GetUUID(private val sharedPreferencesRepository: SharedPreferencesRepository) {
     operator fun invoke() = sharedPreferencesRepository.uuid
 }
+
+class GetTimestampGame(private val sharedPreferencesRepository: SharedPreferencesRepository) {
+    operator fun invoke() = sharedPreferencesRepository.timestampGame
+}
+
+class SetTimestampGame(private val sharedPreferencesRepository: SharedPreferencesRepository) {
+    operator fun invoke(value: Long) {
+        sharedPreferencesRepository.timestampGame = value
+    }
+}

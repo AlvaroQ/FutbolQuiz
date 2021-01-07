@@ -6,9 +6,10 @@ object Constants {
     const val COLLECTION_FOLLOWING = "following"
     const val COLLECTION_ARCHIEVEMENTS = "archievement"
 
+    const val COUNTER_DOWN_DEFAULT = 20000
+    const val MIN_HITS_TO_UNLOCKED = 15
+
     const val POINTS = "points"
-    const val USER_UUID = "user_uuid"
-    const val FOLLOW_SCREEN = "points"
     const val STAGE_COMPLETED = "STAGE_COMPLETED"
     const val TOTAL_TEAMS_SPAIN_FIRST_DIVISION = 19
 
@@ -20,7 +21,8 @@ object Constants {
     const val MODE_GAME = "ModeGame"
     const val TYPE_GAME = "TypeGame"
     const val TYPE_CHAMPIONSHIP = "TypeChampionship"
-    enum class ModeGame { CARRER, TRAINIG }
+    enum class FollowTypes { FOLLOWING, FOLLOWER }
+    enum class ModeGame { CARRER, TRAINNIG }
     enum class TypeGame { BY_NAME, BY_IMAGE, BY_CAPACITY, BY_BUILT }
     enum class TypeChampionship {
         SPAIN_FIRST_DIVISION,

@@ -7,21 +7,17 @@ import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.quiz.futbol.R
-import com.quiz.futbol.common.startActivity
-import com.quiz.futbol.databinding.SelectFragmentBinding
+import com.quiz.futbol.databinding.FragmentSelectBinding
 import com.quiz.futbol.managers.DialogCustomManager
-import com.quiz.futbol.ui.game.GameActivity
-import com.quiz.futbol.ui.profile.ProfileActivity
 import com.quiz.futbol.utils.Constants.ModeGame
-import com.quiz.futbol.utils.Constants.MODE_GAME
-import com.quiz.futbol.utils.Constants.TYPE_CHAMPIONSHIP
-import com.quiz.futbol.utils.Constants.TYPE_GAME
 import com.quiz.futbol.utils.Constants.TypeGame.*
 import com.quiz.futbol.utils.glideCircleLoadBase64
+import com.quiz.futbol.utils.log
 import com.quiz.futbol.utils.setSafeOnClickListener
 import com.quiz.futbol.utils.underline
 import org.koin.android.scope.lifecycleScope
@@ -29,7 +25,7 @@ import org.koin.android.viewmodel.scope.viewModel
 import org.koin.core.parameter.parametersOf
 
 class SelectFragment : Fragment() {
-    private lateinit var binding: SelectFragmentBinding
+    private lateinit var binding: FragmentSelectBinding
     private val selectViewModel: SelectViewModel by lifecycleScope.viewModel(this)
     private val dialogCustomManager: DialogCustomManager by lifecycleScope.inject { parametersOf(requireActivity()) }
 
@@ -37,7 +33,7 @@ class SelectFragment : Fragment() {
     private lateinit var modeGame: ModeGame
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = SelectFragmentBinding.inflate(inflater)
+        binding = FragmentSelectBinding.inflate(inflater)
         val root = binding.root
 
         bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet.constraintBottomSheet)
@@ -62,8 +58,8 @@ class SelectFragment : Fragment() {
     private fun updateUi(model: SelectViewModel.UiModel) {
         when (model) {
             is SelectViewModel.UiModel.ContentCareerMode -> {
-                binding.bottomSheet.textTitle.text = if(model.mode == ModeGame.TRAINIG) {
-                    modeGame = ModeGame.TRAINIG
+                binding.bottomSheet.textTitle.text = if(model.mode == ModeGame.TRAINNIG) {
+                    modeGame = ModeGame.TRAINNIG
                     getString(R.string.training_mode)
                 } else {
                     modeGame = ModeGame.CARRER
@@ -90,48 +86,23 @@ class SelectFragment : Fragment() {
 
     private fun showDialog(dialog: SelectViewModel.Dialog?) {
         when (dialog) {
-            is SelectViewModel.Dialog.DialogLevelLock -> {
-                dialogCustomManager.showDialogLevelLock()
-            }
+            is SelectViewModel.Dialog.DialogLevelLock -> dialogCustomManager.showDialogLevelLock()
         }
     }
 
     private fun navigate(navigation: SelectViewModel.Navigation?) {
-        when (navigation) {
-            is SelectViewModel.Navigation.GameByImage -> {
-                activity?.startActivity<GameActivity> {
-                    putExtra(MODE_GAME, modeGame)
-                    putExtra(TYPE_GAME, BY_IMAGE)
-                    putExtra(TYPE_CHAMPIONSHIP, navigation.championship)
-                }
-            }
-            is SelectViewModel.Navigation.GameByName -> {
-                activity?.startActivity<GameActivity> {
-                    putExtra(MODE_GAME, modeGame)
-                    putExtra(TYPE_GAME, BY_NAME)
-                    putExtra(TYPE_CHAMPIONSHIP, navigation.championship)
-                }
-            }
-            is SelectViewModel.Navigation.GameByCapacity -> {
-                activity?.startActivity<GameActivity> {
-                    putExtra(MODE_GAME, modeGame)
-                    putExtra(TYPE_GAME, BY_CAPACITY)
-                    putExtra(TYPE_CHAMPIONSHIP, navigation.championship)
-                }
-            }
-            is SelectViewModel.Navigation.GameByBuilt -> {
-                activity?.startActivity<GameActivity> {
-                    putExtra(MODE_GAME, modeGame)
-                    putExtra(TYPE_GAME, BY_BUILT)
-                    putExtra(TYPE_CHAMPIONSHIP, navigation.championship)
-                }
-            }
-            SelectViewModel.Navigation.Profile -> activity?.startActivity<ProfileActivity> {}
+        log(TAG, "navigate to $navigation")
+        val action = when (navigation) {
+            is SelectViewModel.Navigation.GameByImage -> SelectFragmentDirections.actionNavigationSelectToGame(BY_IMAGE.name, navigation.championship.name, modeGame.name)
+            is SelectViewModel.Navigation.GameByName -> SelectFragmentDirections.actionNavigationSelectToGame(BY_NAME.name, navigation.championship.name, modeGame.name)
+            is SelectViewModel.Navigation.GameByCapacity -> SelectFragmentDirections.actionNavigationSelectToGame(BY_CAPACITY.name, navigation.championship.name, modeGame.name)
+            is SelectViewModel.Navigation.GameByBuilt -> SelectFragmentDirections.actionNavigationSelectToGame(BY_BUILT.name, navigation.championship.name, modeGame.name)
+            else -> SelectFragmentDirections.actionNavigationSelectToProfile()
         }
+        findNavController().navigate(action)
     }
 
     companion object {
         private val TAG = SelectFragment::class.java.simpleName
-        fun newInstance() = SelectFragment()
     }
 }

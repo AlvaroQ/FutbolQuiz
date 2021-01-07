@@ -37,12 +37,12 @@ class ProfileViewModel(private val uuid: GetUUID,
 
     fun loadUserPersonalData(userUuid: String?) {
         launch {
-            val uuid: String = userUuid ?: uuid.invoke()
+            val uuid: String = if(userUuid.isNullOrEmpty()) uuid.invoke() else userUuid
             when (val userResult = getUser.invoke(uuid)) {
                 is Either.Left -> log(TAG, "ERROR")
                 is Either.Right -> {
                     user = userResult.b
-                    _userData.value = if(userUuid == null) UiModel.MyPersonalData(user) else UiModel.FriendPersonalData(user)
+                    _userData.value = if(userUuid.isNullOrEmpty()) UiModel.MyPersonalData(user) else UiModel.FriendPersonalData(user)
                 }
             }
             loadLevelUser(uuid)

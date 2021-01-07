@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/appBarLayout"
     android:orientation="vertical"
     android:background="@android:color/transparent"
@@ -16,7 +17,8 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize">
-        <RelativeLayout
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -27,27 +29,68 @@
                 android:layout_height="@dimen/height_back"
                 android:padding="@dimen/padding_back"
                 android:src="@drawable/ic_back"
-                android:contentDescription="@string/back" />
+                android:contentDescription="@string/back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
                 android:id="@+id/toolbarTitle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="@string/app_name"
                 android:textAppearance="@style/Regular.TextColor.ToolbarTitle"
-                android:layout_marginTop="18dp"
                 android:gravity="center"
+                tools:visibility="gone"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layoutLife"
+                android:id="@+id/layoutCounter"
+                android:visibility="gone"
+                tools:visibility="visible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true">
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+                <TextView
+                    android:id="@+id/tvTimer"
+                    android:layout_width="24dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    tools:text="15"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/Bold.TextColor.Large"
+                    app:layout_constraintTop_toTopOf="@+id/progressTimer"
+                    app:layout_constraintBottom_toBottomOf="@+id/progressTimer"
+                    app:layout_constraintStart_toStartOf="@+id/progressTimer"
+                    app:layout_constraintEnd_toEndOf="@+id/progressTimer"/>
+
+                <ProgressBar
+                    android:id="@+id/progressTimer"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:indeterminateTint="@android:color/white"
+                    android:layout_marginEnd="5dp"
+                    android:indeterminate="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutLife"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
                 <ImageView
                     android:id="@+id/lifeFirst"
@@ -69,6 +112,6 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/lifeFirst"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>
 </com.google.android.material.appbar.AppBarLayout>

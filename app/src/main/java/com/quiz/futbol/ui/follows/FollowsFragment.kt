@@ -11,20 +11,18 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.quiz.futbol.R
-import com.quiz.futbol.databinding.FollowsFragmentBinding
-import com.quiz.futbol.utils.Constants.FOLLOW_SCREEN
+import com.quiz.futbol.databinding.FragmentFollowsBinding
 import com.quiz.futbol.utils.setSafeOnClickListener
 import org.koin.android.scope.lifecycleScope
 import org.koin.android.viewmodel.scope.viewModel
 
 class FollowsFragment : Fragment() {
 
-    private lateinit var binding: FollowsFragmentBinding
+    private lateinit var binding: FragmentFollowsBinding
     private val followsViewModel: FollowsViewModel by lifecycleScope.viewModel(this)
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FollowsFragmentBinding.inflate(inflater)
+        binding = FragmentFollowsBinding.inflate(inflater)
         val root = binding.root
         refreshList()
         return root
@@ -57,7 +55,7 @@ class FollowsFragment : Fragment() {
     }
 
     private fun refreshList() {
-        when(activity?.intent?.getStringExtra(FOLLOW_SCREEN)) {
+        when(FollowsFragmentArgs.fromBundle(requireArguments()).typeFollow) {
             getString(R.string.following) -> followsViewModel.loadFollowingList()
             else -> followsViewModel.loadFollowersList()
         }
@@ -65,6 +63,5 @@ class FollowsFragment : Fragment() {
 
     companion object {
         private val TAG = FollowsFragment::class.java.simpleName
-        fun newInstance() = FollowsFragment()
     }
 }

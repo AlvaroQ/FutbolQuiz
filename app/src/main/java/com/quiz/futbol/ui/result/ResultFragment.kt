@@ -5,77 +5,67 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import com.quiz.futbol.R
-import com.quiz.futbol.databinding.ResultFragmentBinding
-import com.quiz.futbol.utils.Constants.POINTS
-import com.quiz.futbol.utils.openAppOnPlayStore
-import com.quiz.futbol.utils.rateApp
-import com.quiz.futbol.utils.setSafeOnClickListener
-import com.quiz.futbol.utils.shareApp
+import com.quiz.futbol.databinding.FragmentResultBinding
+import com.quiz.futbol.utils.*
 import org.koin.android.scope.lifecycleScope
 import org.koin.android.viewmodel.scope.viewModel
+import com.quiz.futbol.utils.Constants.MIN_HITS_TO_UNLOCKED
 
 
 class ResultFragment : Fragment() {
-    private lateinit var binding: ResultFragmentBinding
+    private lateinit var binding: FragmentResultBinding
     private val resultViewModel: ResultViewModel by lifecycleScope.viewModel(this)
-    private var gamePoints = 0
-    private lateinit var imageViewPickup: ImageView
-
-    companion object {
-        fun newInstance() = ResultFragment()
-    }
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
 
-        binding = ResultFragmentBinding.inflate(inflater)
+        binding = FragmentResultBinding.inflate(inflater)
         val root = binding.root
+        val gamePoints = ResultFragmentArgs.fromBundle(requireArguments()).points.toInt()
+        val modeGame = ResultFragmentArgs.fromBundle(requireArguments()).typeMode
 
         if(PreferenceManager.getDefaultSharedPreferences(context).getBoolean("sound", true)) {
             MediaPlayer.create(context, R.raw.game_over).start()
         }
-        gamePoints = activity?.intent?.extras?.getInt(POINTS)!!
 
-        val textResult: TextView = root.findViewById(R.id.textResult)
-        textResult.text = resources.getString(R.string.successful_stadiums, gamePoints)
+        // Stage passed, unlocked next level saving on firebase && show info to user
+        if(gamePoints > MIN_HITS_TO_UNLOCKED) {
 
-        val btnContinue: Button = root.findViewById(R.id.btnContinue)
-        btnContinue.setSafeOnClickListener { resultViewModel.navigateToGame() }
+        }
 
-        val btnShare: Button = root.findViewById(R.id.btnShare)
-        btnShare.setSafeOnClickListener { resultViewModel.navigateToShare(gamePoints) }
+        binding.appBarLayoutResult.toolbarTitle.text = getString(R.string.result)
+        binding.textResult.text = resources.getString(R.string.successful_stadiums, gamePoints)
 
-        val btnRate: Button = root.findViewById(R.id.btnRate)
-        btnRate.setSafeOnClickListener { resultViewModel.navigateToRate() }
+        binding.btnContinue.setSafeOnClickListener { resultViewModel.navigateToGame() }
+        binding.btnShare.setSafeOnClickListener { resultViewModel.navigateToShare(gamePoints) }
+        binding.btnRate.setSafeOnClickListener { resultViewModel.navigateToRate() }
+        binding.appBarLayoutResult.btnBack.setSafeOnClickListener { activity?.onBackPressed() }
 
-        return binding.root
+        return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         resultViewModel.navigation.observe(viewLifecycleOwner, Observer(::navigate))
-        resultViewModel.showingAds.observe(viewLifecycleOwner, Observer(::loadAd))
-    }
-
-    private fun loadAd(model: ResultViewModel.UiModel) {
-        /*  if (model is ResultViewModel.UiModel.ShowAd)
-              (activity as ResultActivity).showAd(model.show)*/
     }
 
     private fun navigate(navigation: ResultViewModel.Navigation?) {
+        log(TAG, "navigate to $navigation")
         when (navigation) {
             ResultViewModel.Navigation.Rate -> rateApp(requireContext())
-            ResultViewModel.Navigation.Game -> activity?.finishAfterTransition()
+            ResultViewModel.Navigation.Game -> findNavController().navigate(R.id.action_navigation_result_to_select)
             is ResultViewModel.Navigation.Share -> shareApp(navigation.points, requireContext())
             is ResultViewModel.Navigation.Open -> openAppOnPlayStore(requireContext(), navigation.url)
         }
+    }
+
+    companion object {
+        private val TAG = ResultFragment::class.java.simpleName
     }
 }

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_login">
+
+    <fragment
+        android:id="@+id/navigation_login"
+        android:name="com.quiz.futbol.ui.login.LoginFragment"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_navigation_login_to_select"
+            app:destination="@id/navigation_select"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"  />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_select"
+        android:name="com.quiz.futbol.ui.select.SelectFragment"
+        tools:layout="@layout/fragment_select" >
+        <action
+            android:id="@+id/action_navigation_select_to_profile"
+            app:destination="@id/navigation_profile"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"  />
+        <action
+            android:id="@+id/action_navigation_select_to_game"
+            app:destination="@id/navigation_game"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"  />
+        <argument
+            android:name="typeMode"
+            app:argType="string"
+            android:defaultValue="CARRER" />
+        <argument
+            android:name="typeGame"
+            app:argType="string"
+            android:defaultValue="BY_NAME" />
+        <argument
+            android:name="typeChampionship"
+            app:argType="string"
+            android:defaultValue="SPAIN_FIRST_DIVISION" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_game"
+        android:name="com.quiz.futbol.ui.game.GameFragment"
+        tools:layout="@layout/fragment_game" >
+        <action
+            android:id="@+id/action_navigation_game_to_result"
+            app:destination="@id/navigation_result"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"  />
+        <action
+            android:id="@+id/action_navigation_game_to_select"
+            app:destination="@id/navigation_select"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"  />
+        <argument
+            android:name="typeGame"
+            app:argType="string"
+            android:defaultValue="BY_NAME" />
+        <argument
+            android:name="typeChampionship"
+            app:argType="string"
+            android:defaultValue="SPAIN_FIRST_DIVISION" />
+        <argument
+            android:name="typeMode"
+            app:argType="string"
+            android:defaultValue="CARRER" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_result"
+        android:name="com.quiz.futbol.ui.result.ResultFragment"
+        tools:layout="@layout/fragment_result" >
+        <action
+            android:id="@+id/action_navigation_result_to_select"
+            app:destination="@id/navigation_select"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <argument
+            android:name="points"
+            app:argType="string"
+            android:defaultValue="" />
+        <argument
+            android:name="typeMode"
+            app:argType="string"
+            android:defaultValue="CARRER" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.quiz.futbol.ui.profile.ProfileFragment"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_navigation_profile_to_select"
+            app:destination="@id/navigation_select"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_navigation_profile_to_edit_profile"
+            app:destination="@id/navigation_profile_edit"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"  />
+        <action
+            android:id="@+id/action_navigation_profile_to_follow"
+            app:destination="@id/navigation_follows"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"  />
+        <action
+            android:id="@+id/action_navigation_profile_to_profile"
+            app:destination="@id/navigation_profile"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"  />
+        <argument
+            android:name="userUuid"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_profile_edit"
+        android:name="com.quiz.futbol.ui.profileEdit.ProfileEditFragment"
+        tools:layout="@layout/fragment_edit_profile" >
+        <action
+            android:id="@+id/action_navigation_edit_profile_to_profile"
+            app:destination="@id/navigation_profile"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"  />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_follows"
+        android:name="com.quiz.futbol.ui.follows.FollowsFragment"
+        tools:layout="@layout/fragment_follows" >
+        <action
+            android:id="@+id/action_navigation_follow_to_profile"
+            app:destination="@id/navigation_profile"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"  />
+        <argument
+            android:name="typeFollow"
+            app:argType="string"
+            android:defaultValue="FOLLOWING" />
+    </fragment>
+</navigation>

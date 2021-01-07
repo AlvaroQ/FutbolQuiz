@@ -110,8 +110,10 @@ private val scopesModule = module {
         scoped { SaveUser(get())}
     }
     scope(named<GameFragment>()) {
-        viewModel { GameViewModel(get()) }
+        viewModel { GameViewModel(get(), get(), get()) }
         scoped { GetStadiumById(get()) }
+        scoped { GetTimestampGame(get()) }
+        scoped { SetTimestampGame(get()) }
     }
     scope(named<ResultFragment>()) {
         viewModel { ResultViewModel(get()) }

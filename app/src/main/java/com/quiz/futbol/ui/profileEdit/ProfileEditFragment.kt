@@ -4,34 +4,37 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.github.dhaval2404.imagepicker.ImagePicker
-import com.quiz.futbol.databinding.EditProfileFragmentBinding
-import com.quiz.futbol.utils.getBase64FromBitmap
-import com.quiz.futbol.utils.glideLoadBase64
-import com.quiz.futbol.utils.setSafeOnClickListener
-import com.quiz.futbol.utils.toBase64
+import com.quiz.futbol.R
+import com.quiz.futbol.databinding.FragmentEditProfileBinding
+import com.quiz.futbol.ui.MainActivity
+import com.quiz.futbol.utils.*
 import org.koin.android.scope.lifecycleScope
 import org.koin.android.viewmodel.scope.viewModel
 
 
 class ProfileEditFragment : Fragment() {
 
-    private lateinit var binding: EditProfileFragmentBinding
+    private lateinit var binding: FragmentEditProfileBinding
     private val profileEditViewModel: ProfileEditViewModel by lifecycleScope.viewModel(this)
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = EditProfileFragmentBinding.inflate(inflater)
+    override fun onCreateView(inflater: LayoutInflater,
+                              container: ViewGroup?,
+                              savedInstanceState: Bundle?): View {
+
+        binding = FragmentEditProfileBinding.inflate(inflater)
         val root = binding.root
+
+        binding.appBarLayoutEditProfile.toolbarTitle.text = getString(R.string.edit_profile)
+        binding.appBarLayoutEditProfile.btnBack.setSafeOnClickListener { activity?.onBackPressed() }
 
         binding.imageUser.setSafeOnClickListener {
             profileEditViewModel.clickOnPicker()
@@ -56,16 +59,23 @@ class ProfileEditFragment : Fragment() {
         }
     }
 
-    private fun navigate(nav: ProfileEditViewModel.ProfileNavigation) {
-        when (nav) {
-            ProfileEditViewModel.ProfileNavigation.PickerNavigation -> {
-                ImagePicker.with(this)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> activity?.onBackPressed()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun navigate(navigation: ProfileEditViewModel.ProfileNavigation) {
+        log(TAG, "navigate to $navigation")
+        when (navigation) {
+            ProfileEditViewModel.ProfileNavigation.PickerNavigation -> ImagePicker
+                    .with(this)
                     .crop()
                     .compress(maxSize = 1024)
                     .maxResultSize(width = 1080, height = 1080)
                     .start()
-            }
-            else -> activity?.finish()
+            else -> findNavController().navigate(R.id.action_navigation_edit_profile_to_profile)
         }
     }
 
@@ -79,12 +89,8 @@ class ProfileEditFragment : Fragment() {
                     binding.imageUser
                 )
             }
-            ImagePicker.RESULT_ERROR -> {
-                Toast.makeText(context, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
-            }
-            else -> {
-                Toast.makeText(context, "Task Cancelled", Toast.LENGTH_SHORT).show()
-            }
+            ImagePicker.RESULT_ERROR -> Toast.makeText(context, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
+            else -> Toast.makeText(context, "Task Cancelled", Toast.LENGTH_SHORT).show()
         }
     }
     private fun updateUi(model: ProfileEditViewModel.UiModel) {
@@ -100,6 +106,5 @@ class ProfileEditFragment : Fragment() {
 
     companion object {
         private val TAG = ProfileEditFragment::class.java.simpleName
-        fun newInstance() = ProfileEditFragment()
     }
 }

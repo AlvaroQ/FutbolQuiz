@@ -2,6 +2,7 @@
     <string name="app_name">Fútbol quiz</string>
     <string name="settings">Ajustes</string>
     <string name="training_mode">Modo Entrenamiento</string>
+    <string name="training">Entrenamiento</string>
     <string name="carrer_mode">Modo Carrera</string>
     <string name="spain_league">Liga española</string>
     <string name="england_league">Liga inglesa</string>
@@ -38,6 +39,8 @@
     <string name="stadium_by_name">Estadios por nombre</string>
     <string name="stadium_by_capacity">Estadios por capacidad</string>
     <string name="stadium_by_built">Estadios por año de construcción</string>
+    <string name="profile">Perfil</string>
+    <string name="result">Resultado</string>
     <string name="edit_profile">Editar datos</string>
     <string name="hint_description">Breve descripción</string>
     <string name="hint_location">Ubicación</string>

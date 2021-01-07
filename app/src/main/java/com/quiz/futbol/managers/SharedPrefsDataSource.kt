@@ -18,8 +18,13 @@ open class SharedPrefsDataSource(context: Context): SharedPreferencesLocalDataSo
         get() = sharedPreferences.getString(UUID, "")!!
         set(value) = sharedPreferences.edit().putString(UUID, value).apply()
 
+    override var timestampGame: Long
+        get() = sharedPreferences.getLong(TIMESTAMP_GAME, 0)
+        set(value) = sharedPreferences.edit().putLong(TIMESTAMP_GAME, value).apply()
+
     companion object {
         const val PAYMENT_DONE = "payment_done"
         const val UUID = "uuid"
+        const val TIMESTAMP_GAME = "timestamp_game"
     }
 }
