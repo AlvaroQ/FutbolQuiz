@@ -55,8 +55,16 @@ class GetUserLevel(private val userRepository: UserRepository) {
     suspend fun invoke(uuid: String): Either<RepositoryException, Int> = userRepository.getUserLevel(uuid)
 }
 
+class SetUserLevel(private val userRepository: UserRepository) {
+    suspend fun invoke(uuid: String, level: Int): Either<RepositoryException, Int> = userRepository.setUserLevel(uuid, level)
+}
+
 class GetUserStageCompleted(private val userRepository: UserRepository) {
     suspend fun invoke(uuid: String): Either<RepositoryException, MutableList<String>> = userRepository.getUserStageCompleted(uuid)
+}
+
+class SetUserStageCompleted(private val userRepository: UserRepository) {
+    suspend fun invoke(archievementBack: ArchievementsBack): Either<RepositoryException, Boolean> = userRepository.setUserStageCompleted(archievementBack)
 }
 
 class GetGlobalArchievements(private val userRepository: UserRepository) {

@@ -116,7 +116,12 @@ private val scopesModule = module {
         scoped { SetTimestampGame(get()) }
     }
     scope(named<ResultFragment>()) {
-        viewModel { ResultViewModel(get()) }
+        viewModel { ResultViewModel(get(), get(), get(), get(), get(), get()) }
         scoped { GetPaymentDone(get()) }
+        scoped { GetUUID(get()) }
+        scoped { SetUserStageCompleted(get()) }
+        scoped { GetLevelLocal(get()) }
+        scoped { SetLevelLocal(get()) }
+        scoped { SetUserLevel(get()) }
     }
 }

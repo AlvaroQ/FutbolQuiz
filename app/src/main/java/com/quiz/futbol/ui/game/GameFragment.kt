@@ -146,7 +146,7 @@ class GameFragment : Fragment() {
         log(TAG, "navigate to $navigation")
         when (navigation) {
             is GameViewModel.Navigation.Result -> {
-                val action = GameFragmentDirections.actionNavigationGameToResult(points.toString(), modeGame)
+                val action = GameFragmentDirections.actionNavigationGameToResult(points.toString(), modeGame, typeGame, typeChampionship)
                 findNavController().navigate(action)
             }
         }

@@ -12,7 +12,7 @@ import com.quiz.usecases.GetUser
 import com.quiz.usecases.SaveUser
 import kotlinx.coroutines.launch
 
-class ProfileEditViewModel(private val uuid: GetUUID,
+class ProfileEditViewModel(private val myUuid: GetUUID,
                            private val getUser: GetUser,
                            private val saveUser: SaveUser
 )  : ScopedViewModel() {
@@ -36,7 +36,7 @@ class ProfileEditViewModel(private val uuid: GetUUID,
 
     private fun loadUserPersonalData() {
         launch {
-            val uuid = uuid.invoke()
+            val uuid = myUuid.invoke()
             when (val userResult = getUser.invoke(uuid)) {
                 is Either.Left -> log(TAG, "ERROR")
                 is Either.Right -> {
@@ -50,6 +50,7 @@ class ProfileEditViewModel(private val uuid: GetUUID,
     fun updateUserData(name: String, description: String, location: String, imageBase64: String) {
         launch {
             user.apply {
+                uuid = myUuid.invoke()
                 displayName = name
                 displayDescription = description
                 displayLocation = location

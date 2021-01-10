@@ -29,6 +29,10 @@
     <string name="login_info">Hello! We need you to login using your Google account to continue and become a champion. Do you accept the challenge?</string>
     <string name="following">Following</string>
     <string name="followers">followers</string>
+    <string name="follower_to_user">Now you dont follow this user</string>
+    <string name="follower_to_user_error">ERROR</string>
+    <string name="following_to_user">Now this user is not follow for you</string>
+    <string name="following_to_user_error">ERROR</string>
     <string name="level">Level</string>
     <string name="archieve">Level completed</string>
     <string name="personal_archievement">Personal archievement</string>
@@ -45,6 +49,7 @@
     <string name="hint_description">Biography</string>
     <string name="hint_location">Location</string>
     <string name="hint_name">Name and surname</string>
+    <string name="level_unlocked">¡Enhorabuena!\nNuevo nivel desbloqueado</string>
 
     <!-- content description image -->
     <string translatable="false" name="flag">flag</string>

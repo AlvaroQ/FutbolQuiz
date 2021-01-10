@@ -90,6 +90,14 @@
             android:name="typeMode"
             app:argType="string"
             android:defaultValue="CARRER" />
+        <argument
+            android:name="typeGame"
+            app:argType="string"
+            android:defaultValue="BY_NAME" />
+        <argument
+            android:name="typeChampionship"
+            app:argType="string"
+            android:defaultValue="SPAIN_FIRST_DIVISION" />
     </fragment>
 
     <fragment

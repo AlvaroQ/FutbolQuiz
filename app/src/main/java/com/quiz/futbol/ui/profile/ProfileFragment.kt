@@ -16,11 +16,8 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.quiz.domain.User
 import com.quiz.futbol.R
 import com.quiz.futbol.databinding.FragmentProfileBinding
-import com.quiz.futbol.ui.MainActivity
-import com.quiz.futbol.utils.expandImage
-import com.quiz.futbol.utils.glideLoadBase64
-import com.quiz.futbol.utils.log
-import com.quiz.futbol.utils.setSafeOnClickListener
+import com.quiz.futbol.utils.*
+import com.quiz.futbol.utils.Constants.FollowTypes
 import org.koin.android.scope.lifecycleScope
 import org.koin.android.viewmodel.scope.viewModel
 
@@ -49,8 +46,8 @@ class ProfileFragment : Fragment() {
         binding.imageEditProfile.setSafeOnClickListener { profileViewModel.goToEditProfile() }
         binding.layoutGlobal.setSafeOnClickListener { profileViewModel.loadGlobalArchievementsItems() }
         binding.layoutPersonal.setSafeOnClickListener { profileViewModel.loadPersonalArchievementsItems(userUuid) }
-        binding.layoutFollowing.setSafeOnClickListener { profileViewModel.goToFollows(getString(R.string.following)) }
-        binding.layoutFollowers.setSafeOnClickListener { profileViewModel.goToFollows(getString(R.string.followers)) }
+        binding.layoutFollowing.setSafeOnClickListener { profileViewModel.goToFollows(FollowTypes.FOLLOWING.name) }
+        binding.layoutFollowers.setSafeOnClickListener { profileViewModel.goToFollows(FollowTypes.FOLLOWER.name) }
 
         return root
     }
@@ -182,6 +179,7 @@ class ProfileFragment : Fragment() {
                 )
                 bottomSheetBehavior.isDraggable = true
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+                binding.bottomSheet.imageClose.setSafeOnClickListener { bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED }
             }
             is ProfileViewModel.UiModel.PersonalArchievements -> {
                 binding.bottomSheet.textTitle.text = getString(R.string.last_personal_archievements)
@@ -194,6 +192,7 @@ class ProfileFragment : Fragment() {
                 )
                 bottomSheetBehavior.isDraggable = true
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+                binding.bottomSheet.imageClose.setSafeOnClickListener { bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED }
             }
         }
     }

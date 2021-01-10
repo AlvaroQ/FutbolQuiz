@@ -22,4 +22,10 @@ class SharedPreferencesRepository(private val sharedPreferencesLocalDataSource: 
         set(value) {
             sharedPreferencesLocalDataSource.timestampGame = value
         }
+
+    var levelLocal: Int
+        get() = sharedPreferencesLocalDataSource.levelLocal
+        set(levelLocal) {
+            sharedPreferencesLocalDataSource.levelLocal = levelLocal
+        }
 }

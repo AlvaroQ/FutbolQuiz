@@ -19,7 +19,9 @@ class UserRepository(private val firestoreDataSource: FirestoreDataSource) {
     suspend fun getFollowing(uuid: String): Either<RepositoryException, MutableList<User>> = firestoreDataSource.getFollowing(uuid)
     suspend fun getIsFollowingThisUser(myUuid: String, uuid: String): Either<RepositoryException, Boolean> = firestoreDataSource.getIsFollowingThisUser(myUuid, uuid)
     suspend fun getUserLevel(uuid: String): Either<RepositoryException, Int> = firestoreDataSource.getUserLevel(uuid)
+    suspend fun setUserLevel(uuid: String, level: Int): Either<RepositoryException, Int> = firestoreDataSource.setUserLevel(uuid, level)
     suspend fun getUserStageCompleted(uuid: String): Either<RepositoryException, MutableList<String>> = firestoreDataSource.getUserStageCompleted(uuid)
+    suspend fun setUserStageCompleted(archievementBack: ArchievementsBack): Either<RepositoryException, Boolean> = firestoreDataSource.setUserStageCompleted(archievementBack)
     suspend fun getGlobalArchievements(): Either<RepositoryException, MutableList<ArchievementsBack>> = firestoreDataSource.getGlobalArchievements()
     suspend fun getPersonalArchievements(uuid: String): Either<RepositoryException, MutableList<ArchievementsBack>> = firestoreDataSource.getPersonalArchievements(uuid)
 }

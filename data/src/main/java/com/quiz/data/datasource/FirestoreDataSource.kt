@@ -18,7 +18,9 @@ interface FirestoreDataSource {
     suspend fun getFollowing(uuid: String): Either<RepositoryException, MutableList<User>>
     suspend fun getIsFollowingThisUser(myUuid: String, uuid: String): Either<RepositoryException, Boolean>
     suspend fun getUserLevel(uuid: String): Either<RepositoryException, Int>
+    suspend fun setUserLevel(uuid: String, level: Int): Either<RepositoryException, Int>
     suspend fun getUserStageCompleted(uuid: String): Either<RepositoryException, MutableList<String>>
+    suspend fun setUserStageCompleted(archievementBack: ArchievementsBack): Either<RepositoryException, Boolean>
     suspend fun getGlobalArchievements(): Either<RepositoryException, MutableList<ArchievementsBack>>
     suspend fun getPersonalArchievements(uuid: String): Either<RepositoryException, MutableList<ArchievementsBack>>
 }

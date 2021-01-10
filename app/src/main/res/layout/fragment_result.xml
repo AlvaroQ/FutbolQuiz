@@ -32,15 +32,28 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="visible"/>
 
+        <TextView
+            android:id="@+id/textResultStageUnlocked"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            tools:text="¡Enhorabuena! Nuevo nivel desbloqueado"
+            android:textAppearance="@style/Bold.TextColor.Large"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@+id/textResult"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="visible"/>
+
         <Button
             android:id="@+id/btnContinue"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="160dp"
+            android:layout_marginTop="120dp"
             android:layout_marginStart="50dp"
             android:layout_marginEnd="50dp"
             android:textAppearance="@style/Bold.TextColorLight.Large"
-            app:layout_constraintTop_toBottomOf="@+id/textResult"
+            app:layout_constraintTop_toBottomOf="@+id/textResultStageUnlocked"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/play_again"/>

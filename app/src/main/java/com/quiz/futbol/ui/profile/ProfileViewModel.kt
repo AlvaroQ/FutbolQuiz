@@ -107,12 +107,12 @@ class ProfileViewModel(private val uuid: GetUUID,
                         when (val userResult = getUser.invoke(globalArchievement.userUid!!)) {
                             is Either.Left -> log(TAG, "ERROR")
                             is Either.Right -> {
-                                globalArchievement.displayName = userResult.b.displayName
-                                globalArchievement.photoBase64 = userResult.b.photoBase64
-                                archievementResultList.add(globalArchievement.toArchievements {
-                                    // if user not me navigate to user selected
+                                val archievementItem = globalArchievement.toArchievements{
                                     if (uuid.invoke() != globalArchievement.userUid) navigationToProfile(userResult.b.uuid)
-                                })
+                                }
+                                archievementItem.displayName = userResult.b.displayName
+                                archievementItem.photoBase64 = userResult.b.photoBase64
+                                archievementResultList.add(archievementItem)
                             }
                         }
                     }
@@ -125,7 +125,7 @@ class ProfileViewModel(private val uuid: GetUUID,
     fun loadPersonalArchievementsItems(userUuid: String?) {
         val archievementResultList = mutableListOf<Archievements>()
         launch {
-            val uuid: String = userUuid ?: uuid.invoke()
+            val uuid: String = if(userUuid.isNullOrEmpty()) uuid.invoke() else userUuid
             when(val personalArchievements = getPersonalArchievements.invoke(uuid)) {
                 is Either.Left -> log(TAG, "ERROR loading Main Archievements")
                 is Either.Right -> {
@@ -133,9 +133,10 @@ class ProfileViewModel(private val uuid: GetUUID,
                         when (val userResult = getUser.invoke(personalArchievement.userUid!!)) {
                             is Either.Left -> log(TAG, "ERROR")
                             is Either.Right -> {
-                                personalArchievement.displayName = userResult.b.displayName
-                                personalArchievement.photoBase64 = userResult.b.photoBase64
-                                archievementResultList.add(personalArchievement.toArchievements {})
+                                val archievementItem = personalArchievement.toArchievements {}
+                                archievementItem.displayName = userResult.b.displayName
+                                archievementItem.photoBase64 = userResult.b.photoBase64
+                                archievementResultList.add(archievementItem)
                             }
                         }
                     }

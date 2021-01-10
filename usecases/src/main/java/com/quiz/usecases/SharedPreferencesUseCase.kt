@@ -22,6 +22,16 @@ class GetUUID(private val sharedPreferencesRepository: SharedPreferencesReposito
     operator fun invoke() = sharedPreferencesRepository.uuid
 }
 
+class GetLevelLocal(private val sharedPreferencesRepository: SharedPreferencesRepository) {
+    operator fun invoke() = sharedPreferencesRepository.levelLocal
+}
+
+class SetLevelLocal(private val sharedPreferencesRepository: SharedPreferencesRepository) {
+    operator fun invoke(level: Int) {
+        sharedPreferencesRepository.levelLocal = level
+    }
+}
+
 class GetTimestampGame(private val sharedPreferencesRepository: SharedPreferencesRepository) {
     operator fun invoke() = sharedPreferencesRepository.timestampGame
 }

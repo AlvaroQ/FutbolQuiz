@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.quiz.futbol.R
 import com.quiz.futbol.databinding.FragmentFollowsBinding
+import com.quiz.futbol.utils.Constants.FollowTypes
 import com.quiz.futbol.utils.setSafeOnClickListener
 import org.koin.android.scope.lifecycleScope
 import org.koin.android.viewmodel.scope.viewModel
@@ -24,6 +25,7 @@ class FollowsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentFollowsBinding.inflate(inflater)
         val root = binding.root
+        binding.appBarLayoutFollow.btnBack.setSafeOnClickListener { activity?.onBackPressed() }
         refreshList()
         return root
     }
@@ -42,13 +44,13 @@ class FollowsFragment : Fragment() {
                 binding.recyclerFollows.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
             }
             is FollowsViewModel.UiModel.FollowerResult -> {
-                if(model.isSuccess) Toast.makeText(requireContext(), "Ya no sigues al usuario", Toast.LENGTH_SHORT).show()
-                else Toast.makeText(requireContext(), "No se ha podido completar dejar de seguir al usuario", Toast.LENGTH_SHORT).show()
+                if(model.isSuccess) Toast.makeText(requireContext(), getString(R.string.follower_to_user), Toast.LENGTH_SHORT).show()
+                else Toast.makeText(requireContext(), getString(R.string.follower_to_user_error), Toast.LENGTH_SHORT).show()
                 refreshList()
             }
             is FollowsViewModel.UiModel.FollowingResult -> {
-                if(model.isSuccess) Toast.makeText(requireContext(), "El usuario seleccionado ya no es seguido por ti", Toast.LENGTH_SHORT).show()
-                else Toast.makeText(requireContext(), "No se ha podido completar dejar de seguir al usuario", Toast.LENGTH_SHORT).show()
+                if(model.isSuccess) Toast.makeText(requireContext(), getString(R.string.following_to_user), Toast.LENGTH_SHORT).show()
+                else Toast.makeText(requireContext(), getString(R.string.following_to_user_error), Toast.LENGTH_SHORT).show()
                 refreshList()
             }
         }
@@ -56,8 +58,14 @@ class FollowsFragment : Fragment() {
 
     private fun refreshList() {
         when(FollowsFragmentArgs.fromBundle(requireArguments()).typeFollow) {
-            getString(R.string.following) -> followsViewModel.loadFollowingList()
-            else -> followsViewModel.loadFollowersList()
+            FollowTypes.FOLLOWING.name -> {
+                binding.appBarLayoutFollow.toolbarTitle.text = getString(R.string.following)
+                followsViewModel.loadFollowingList()
+            }
+            FollowTypes.FOLLOWER.name -> {
+                binding.appBarLayoutFollow.toolbarTitle.text = getString(R.string.followers)
+                followsViewModel.loadFollowersList()
+            }
         }
     }
 

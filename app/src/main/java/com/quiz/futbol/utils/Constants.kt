@@ -7,7 +7,7 @@ object Constants {
     const val COLLECTION_ARCHIEVEMENTS = "archievement"
 
     const val COUNTER_DOWN_DEFAULT = 20000
-    const val MIN_HITS_TO_UNLOCKED = 15
+    const val MIN_HITS_TO_UNLOCKED = 4
 
     const val POINTS = "points"
     const val STAGE_COMPLETED = "STAGE_COMPLETED"

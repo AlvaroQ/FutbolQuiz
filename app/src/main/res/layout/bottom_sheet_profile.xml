@@ -5,10 +5,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/height_status_bar"
     android:id="@+id/constraintBottomSheet"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
     app:behavior_hideable="true"
-    app:behavior_peekHeight="0dp">
+    app:behavior_peekHeight="-1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/imageCornerTop"
@@ -51,6 +52,15 @@
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageClose"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:paddingBottom="16dp"
+                android:src="@drawable/ic_close"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View

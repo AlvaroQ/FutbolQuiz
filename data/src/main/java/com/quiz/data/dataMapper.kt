@@ -5,13 +5,11 @@ import com.quiz.domain.Archievements
 
 fun ArchievementsBack.toArchievements(click:()->Unit): Archievements {
     return Archievements(
-            userUid,
-            displayName,
-            photoBase64,
-            typeChampionship,
-            typeGame,
-            points,
-            createdAt,
-            click
+        userUid = userUid,
+        typeChampionship = typeChampionship,
+        typeGame = typeGame,
+        points = points,
+        createdAt = createdAt,
+        click = click
     )
 }
