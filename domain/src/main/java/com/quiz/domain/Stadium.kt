@@ -1,6 +1,7 @@
 package com.quiz.domain
 
 data class Stadium(
+    var id: Int = 0,
     var name: String? = "",
     var shield: String? = "",
     var city: String? = "",

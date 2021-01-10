@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -18,10 +18,10 @@ import com.quiz.futbol.common.traslationAnimation
 import com.quiz.futbol.common.traslationAnimationFadeIn
 import com.quiz.futbol.databinding.FragmentGameBinding
 import com.quiz.futbol.utils.*
+import com.quiz.futbol.utils.Constants.COUNTER_DOWN_DEFAULT
+import com.quiz.futbol.utils.Constants.ModeGame
 import com.quiz.futbol.utils.Constants.TOTAL_TEAMS_SPAIN_FIRST_DIVISION
 import com.quiz.futbol.utils.Constants.TypeGame
-import com.quiz.futbol.utils.Constants.ModeGame
-import com.quiz.futbol.utils.Constants.COUNTER_DOWN_DEFAULT
 import kotlinx.coroutines.*
 import org.koin.android.scope.lifecycleScope
 import org.koin.android.viewmodel.scope.viewModel
@@ -33,10 +33,10 @@ class GameFragment : Fragment() {
     private val gameViewModel: GameViewModel by lifecycleScope.viewModel(this)
     private lateinit var binding: FragmentGameBinding
 
-    lateinit var btnOptionOne: TextView
-    lateinit var btnOptionTwo: TextView
-    lateinit var btnOptionThree: TextView
-    lateinit var btnOptionFour: TextView
+    private lateinit var layoutOptionOne: ConstraintLayout
+    private lateinit var layoutOptionTwo: ConstraintLayout
+    private lateinit var layoutOptionThree: ConstraintLayout
+    private lateinit var layoutOptionFour: ConstraintLayout
 
     private var life: Int = 2
     private var stage: Int = 1
@@ -44,13 +44,15 @@ class GameFragment : Fragment() {
 
     lateinit var typeGame: String
     lateinit var typeChampionship: String
-    lateinit var modeGame: String
+    private lateinit var modeGame: String
 
     var cTimer: CountDownTimer? = null
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
 
         binding = FragmentGameBinding.inflate(inflater)
         val root = binding.root
@@ -64,31 +66,37 @@ class GameFragment : Fragment() {
             ModeGame.CARRER.name -> drawCarrerMode()
         }
 
+        binding.textTitle.text = when(typeGame) {
+            TypeGame.BY_NAME.name -> getString(R.string.stadium_by_name)
+            TypeGame.BY_IMAGE.name -> getString(R.string.stadium_by_image)
+            TypeGame.BY_BUILT.name -> getString(R.string.stadium_by_built)
+            else -> getString(R.string.stadium_by_capacity)
+        }
 
         binding.appBarLayoutGame.btnBack.setSafeOnClickListener { activity?.onBackPressed() }
 
-        btnOptionOne = root.findViewById(R.id.btnOptionOne)
-        btnOptionTwo = root.findViewById(R.id.btnOptionTwo)
-        btnOptionThree = root.findViewById(R.id.btnOptionThree)
-        btnOptionFour = root.findViewById(R.id.btnOptionFour)
+        layoutOptionOne = binding.layoutButtonOne.layoutOption
+        layoutOptionTwo = binding.layoutButtonTwo.layoutOption
+        layoutOptionThree = binding.layoutButtonThree.layoutOption
+        layoutOptionFour = binding.layoutButtonFour.layoutOption
 
-        btnOptionOne.setSafeOnClickListener {
-            btnOptionOne.isSelected = !btnOptionOne.isSelected
+        layoutOptionOne.setSafeOnClickListener {
+            layoutOptionOne.isSelected = !layoutOptionOne.isSelected
             checkResponse()
         }
 
-        btnOptionTwo.setSafeOnClickListener {
-            btnOptionTwo.isSelected = !btnOptionTwo.isSelected
+        layoutOptionTwo.setSafeOnClickListener {
+            layoutOptionTwo.isSelected = !layoutOptionTwo.isSelected
             checkResponse()
         }
 
-        btnOptionThree.setSafeOnClickListener {
-            btnOptionThree.isSelected = !btnOptionThree.isSelected
+        layoutOptionThree.setSafeOnClickListener {
+            layoutOptionThree.isSelected = !layoutOptionThree.isSelected
             checkResponse()
         }
 
-        btnOptionFour.setSafeOnClickListener {
-            btnOptionFour.isSelected = !btnOptionFour.isSelected
+        layoutOptionFour.setSafeOnClickListener {
+            layoutOptionFour.isSelected = !layoutOptionFour.isSelected
             checkResponse()
         }
         return root
@@ -104,14 +112,14 @@ class GameFragment : Fragment() {
 
     private fun drawTrainingMode() {
         binding.appBarLayoutGame.toolbarTitle.text = getString(R.string.training)
-        binding.appBarLayoutGame.layoutCounter.visibility = View.GONE
+        binding.appBarLayoutGame.layoutCounter.visibility = View.INVISIBLE
         binding.appBarLayoutGame.layoutLife.visibility = View.VISIBLE
     }
 
     private fun drawCarrerMode() {
-        binding.appBarLayoutGame.toolbarTitle.visibility = View.GONE
+        binding.appBarLayoutGame.toolbarTitle.visibility = View.INVISIBLE
         binding.appBarLayoutGame.layoutCounter.visibility = View.VISIBLE
-        binding.appBarLayoutGame.layoutLife.visibility = View.GONE
+        binding.appBarLayoutGame.layoutLife.visibility = View.INVISIBLE
         gameViewModel.setVerificationSent(System.currentTimeMillis())
         startCountDown()
     }
@@ -146,7 +154,12 @@ class GameFragment : Fragment() {
         log(TAG, "navigate to $navigation")
         when (navigation) {
             is GameViewModel.Navigation.Result -> {
-                val action = GameFragmentDirections.actionNavigationGameToResult(points.toString(), modeGame, typeGame, typeChampionship)
+                val action = GameFragmentDirections.actionNavigationGameToResult(
+                    points.toString(),
+                    modeGame,
+                    typeGame,
+                    typeChampionship
+                )
                 findNavController().navigate(action)
             }
         }
@@ -156,17 +169,17 @@ class GameFragment : Fragment() {
         if (model is GameViewModel.UiModel.Loading && model.show) {
             glideLoadingGif(requireContext(), binding.imageLoading)
             binding.imageLoading.visibility = View.VISIBLE
-            binding.textQuiz.visibility = View.GONE
-            binding.imageQuiz.visibility = View.GONE
+            binding.textQuiz.visibility = View.INVISIBLE
+            binding.imageQuiz.visibility = View.INVISIBLE
 
-            btnOptionOne.isSelected = false
-            btnOptionTwo.isSelected = false
-            btnOptionThree.isSelected = false
-            btnOptionFour.isSelected = false
+            layoutOptionOne.isSelected = false
+            layoutOptionTwo.isSelected = false
+            layoutOptionThree.isSelected = false
+            layoutOptionFour.isSelected = false
 
             enableBtn(false)
         } else {
-            binding.imageLoading.visibility = View.GONE
+            binding.imageLoading.visibility = View.INVISIBLE
             binding.textQuiz.visibility = View.VISIBLE
             binding.imageQuiz.visibility = View.VISIBLE
 
@@ -180,12 +193,29 @@ class GameFragment : Fragment() {
         log(tag, "imageQuiz = " + stadium.stadium_image)
         gameViewModel.setVerificationSent(System.currentTimeMillis())
         when(typeGame) {
-            TypeGame.BY_NAME.name -> binding.textQuiz.text = Locale(getString(R.string.locale), stadium.name!!).displayCountry
-            TypeGame.BY_IMAGE.name -> glideLoadURL(requireContext(), stadium.stadium_image, binding.imageQuiz)
+            TypeGame.BY_NAME.name -> binding.textQuiz.text = Locale(
+                getString(R.string.locale),
+                stadium.name!!
+            ).displayCountry
+            TypeGame.BY_IMAGE.name -> glideLoadURL(
+                requireContext(),
+                stadium.stadium_image,
+                binding.imageQuiz
+            )
+            TypeGame.BY_BUILT.name -> glideLoadURL(
+                requireContext(),
+                stadium.stadium_image,
+                binding.imageQuiz
+            )
+            TypeGame.BY_CAPACITY.name -> glideLoadURL(
+                requireContext(),
+                stadium.stadium_image,
+                binding.imageQuiz
+            )
         }
     }
 
-    private fun drawOptionsResponse(optionsListByPos: MutableList<String>) {
+    private fun drawOptionsResponse(optionsListByPos: MutableList<Stadium>) {
         var delay = 150L
         if(stage == 1) {
             delay = 0L
@@ -196,19 +226,89 @@ class GameFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             delay(TimeUnit.MILLISECONDS.toMillis(delay))
             withContext(Dispatchers.Main) {
-                btnOptionOne.text = optionsListByPos[0]
-                btnOptionTwo.text = optionsListByPos[1]
-                btnOptionThree.text = optionsListByPos[2]
-                btnOptionFour.text = optionsListByPos[3]
+                when(typeGame) {
+                    TypeGame.BY_NAME.name -> drawImageResponse(optionsListByPos)
+                    TypeGame.BY_IMAGE.name -> drawTextResponse(optionsListByPos)
+                    TypeGame.BY_BUILT.name -> drawBuiltResponse(optionsListByPos)
+                    TypeGame.BY_CAPACITY.name -> drawCapacityResponse(optionsListByPos)
+                }
             }
         }
+    }
+
+    private fun drawTextResponse(optionsListByPos: MutableList<Stadium>) {
+        layoutOptionOne.id = optionsListByPos[0].id
+        binding.layoutButtonOne.textOption.text = optionsListByPos[0].name
+        binding.layoutButtonOne.cardOption.visibility = View.GONE
+
+        layoutOptionTwo.id = optionsListByPos[1].id
+        binding.layoutButtonTwo.textOption.text = optionsListByPos[1].name
+        binding.layoutButtonTwo.cardOption.visibility = View.GONE
+
+        layoutOptionThree.id = optionsListByPos[2].id
+        binding.layoutButtonThree.textOption.text = optionsListByPos[2].name
+        binding.layoutButtonThree.cardOption.visibility = View.GONE
+
+        layoutOptionFour.id = optionsListByPos[3].id
+        binding.layoutButtonFour.textOption.text = optionsListByPos[3].name
+        binding.layoutButtonFour.cardOption.visibility = View.GONE
+    }
+
+    private fun drawImageResponse(optionsListByPos: MutableList<Stadium>) {
+        layoutOptionOne.id = optionsListByPos[0].id
+        glideLoadURL(requireContext(), optionsListByPos[0].stadium_image, binding.layoutButtonOne.imageOption)
+
+        layoutOptionTwo.id = optionsListByPos[1].id
+        glideLoadURL(requireContext(), optionsListByPos[1].stadium_image, binding.layoutButtonTwo.imageOption)
+
+        layoutOptionThree.id = optionsListByPos[2].id
+        glideLoadURL(requireContext(), optionsListByPos[2].stadium_image, binding.layoutButtonThree.imageOption)
+
+        layoutOptionFour.id = optionsListByPos[3].id
+        glideLoadURL(requireContext(), optionsListByPos[3].stadium_image, binding.layoutButtonFour.imageOption)
+    }
+
+    private fun drawBuiltResponse(optionsListByPos: MutableList<Stadium>) {
+        layoutOptionOne.id = optionsListByPos[0].id
+        binding.layoutButtonOne.textOption.text = setStringNumberWithThousandSeparator(optionsListByPos[0].build!!)
+        binding.layoutButtonOne.cardOption.visibility = View.GONE
+
+        layoutOptionTwo.id = optionsListByPos[1].id
+        binding.layoutButtonTwo.textOption.text = setStringNumberWithThousandSeparator(optionsListByPos[1].build!!)
+        binding.layoutButtonTwo.cardOption.visibility = View.GONE
+
+        layoutOptionThree.id = optionsListByPos[2].id
+        binding.layoutButtonThree.textOption.text = setStringNumberWithThousandSeparator(optionsListByPos[2].build!!)
+        binding.layoutButtonThree.cardOption.visibility = View.GONE
+
+        layoutOptionFour.id = optionsListByPos[3].id
+        binding.layoutButtonFour.textOption.text = setStringNumberWithThousandSeparator(optionsListByPos[3].build!!)
+        binding.layoutButtonFour.cardOption.visibility = View.GONE
+    }
+
+    private fun drawCapacityResponse(optionsListByPos: MutableList<Stadium>) {
+        layoutOptionOne.id = optionsListByPos[0].id
+        binding.layoutButtonOne.textOption.text = setStringNumberWithThousandSeparator(optionsListByPos[0].capacity!!)
+        binding.layoutButtonOne.cardOption.visibility = View.GONE
+
+        layoutOptionTwo.id = optionsListByPos[1].id
+        binding.layoutButtonTwo.textOption.text = setStringNumberWithThousandSeparator(optionsListByPos[1].capacity!!)
+        binding.layoutButtonTwo.cardOption.visibility = View.GONE
+
+        layoutOptionThree.id = optionsListByPos[2].id
+        binding.layoutButtonThree.textOption.text = setStringNumberWithThousandSeparator(optionsListByPos[2].capacity!!)
+        binding.layoutButtonThree.cardOption.visibility = View.GONE
+
+        layoutOptionFour.id = optionsListByPos[3].id
+        binding.layoutButtonFour.textOption.text = setStringNumberWithThousandSeparator(optionsListByPos[3].capacity!!)
+        binding.layoutButtonFour.cardOption.visibility = View.GONE
     }
 
     private fun checkResponse() {
         enableBtn(false)
         stage += 1
 
-        drawCorrectResponse(gameViewModel.getStadium().name!!)
+        drawCorrectResponse(gameViewModel.getStadium())
         nextScreen()
     }
 
@@ -219,117 +319,51 @@ class GameFragment : Fragment() {
         }
     }
 
-    private fun drawCorrectResponse(capitalNameCorrect: String) {
-        when {
-            btnOptionOne.text == capitalNameCorrect -> {
-                btnOptionOne.background =  ContextCompat.getDrawable(requireContext(), R.drawable.button_radius_correct)
-                when {
-                    btnOptionOne.isSelected -> {
-                        MediaPlayer.create(context, R.raw.success).start()
-                        points += 1
-                    }
-                    btnOptionTwo.isSelected -> {
-                        MediaPlayer.create(context, R.raw.fail).start()
-                        deleteLife()
-                        btnOptionTwo.background = ContextCompat.getDrawable(requireContext(), R.drawable.button_radius_wrong)
-                    }
-                    btnOptionThree.isSelected -> {
-                        MediaPlayer.create(context, R.raw.fail).start()
-                        deleteLife()
-                        btnOptionThree.background = ContextCompat.getDrawable(requireContext(), R.drawable.button_radius_wrong)
-                    }
-                    btnOptionFour.isSelected -> {
-                        MediaPlayer.create(context, R.raw.fail).start()
-                        deleteLife()
-                        btnOptionFour.background = ContextCompat.getDrawable(requireContext(), R.drawable.button_radius_wrong)
-                    }
-                    else -> {
-                        MediaPlayer.create(context, R.raw.fail).start()
-                        deleteLife()
+    private fun drawCorrectItemResponse(itemLayout: ConstraintLayout) {
+        MediaPlayer.create(context, R.raw.success).start()
+        points += 1
+        itemLayout.background =  ContextCompat.getDrawable(requireContext(), R.drawable.button_radius_correct)
+    }
+
+    private fun drawFailItemResponse(itemlayout: ConstraintLayout) {
+        MediaPlayer.create(context, R.raw.fail).start()
+        deleteLife()
+        itemlayout.background = ContextCompat.getDrawable(requireContext(), R.drawable.button_radius_wrong)
+    }
+
+    private fun drawCorrectResponse(stadiumCorrect: Stadium?) {
+        if(stadiumCorrect != null) {
+            when {
+                layoutOptionOne.id == stadiumCorrect.id -> {
+                    when {
+                        layoutOptionOne.isSelected -> drawCorrectItemResponse(layoutOptionOne)
+                        layoutOptionTwo.isSelected -> drawFailItemResponse(layoutOptionTwo)
+                        layoutOptionThree.isSelected -> drawFailItemResponse(layoutOptionThree)
+                        layoutOptionFour.isSelected -> drawFailItemResponse(layoutOptionFour)
                     }
                 }
-            }
-            btnOptionTwo.text == capitalNameCorrect -> {
-                btnOptionTwo.background =  ContextCompat.getDrawable(requireContext(), R.drawable.button_radius_correct)
-                when {
-                    btnOptionOne.isSelected -> {
-                        MediaPlayer.create(context, R.raw.fail).start()
-                        deleteLife()
-                        btnOptionOne.background = ContextCompat.getDrawable(requireContext(), R.drawable.button_radius_wrong)
-                    }
-                    btnOptionTwo.isSelected -> {
-                        MediaPlayer.create(context, R.raw.success).start()
-                        points += 1
-                    }
-                    btnOptionThree.isSelected -> {
-                        MediaPlayer.create(context, R.raw.fail).start()
-                        deleteLife()
-                        btnOptionThree.background = ContextCompat.getDrawable(requireContext(), R.drawable.button_radius_wrong)
-                    }
-                    btnOptionFour.isSelected -> {
-                        MediaPlayer.create(context, R.raw.fail).start()
-                        deleteLife()
-                        btnOptionFour.background = ContextCompat.getDrawable(requireContext(), R.drawable.button_radius_wrong)
-                    }
-                    else -> {
-                        MediaPlayer.create(context, R.raw.fail).start()
-                        deleteLife()
+                layoutOptionTwo.id == stadiumCorrect.id -> {
+                    when {
+                        layoutOptionOne.isSelected -> drawFailItemResponse(layoutOptionOne)
+                        layoutOptionTwo.isSelected -> drawCorrectItemResponse(layoutOptionTwo)
+                        layoutOptionThree.isSelected -> drawFailItemResponse(layoutOptionThree)
+                        layoutOptionFour.isSelected -> drawFailItemResponse(layoutOptionFour)
                     }
                 }
-            }
-            btnOptionThree.text == capitalNameCorrect -> {
-                btnOptionThree.background =  ContextCompat.getDrawable(requireContext(), R.drawable.button_radius_correct)
-                when {
-                    btnOptionOne.isSelected -> {
-                        MediaPlayer.create(context, R.raw.fail).start()
-                        deleteLife()
-                        btnOptionOne.background = ContextCompat.getDrawable(requireContext(), R.drawable.button_radius_wrong)
-                    }
-                    btnOptionTwo.isSelected -> {
-                        MediaPlayer.create(context, R.raw.fail).start()
-                        deleteLife()
-                        btnOptionTwo.background = ContextCompat.getDrawable(requireContext(), R.drawable.button_radius_wrong)
-                    }
-                    btnOptionThree.isSelected -> {
-                        MediaPlayer.create(context, R.raw.success).start()
-                        points += 1
-                    }
-                    btnOptionFour.isSelected -> {
-                        MediaPlayer.create(context, R.raw.fail).start()
-                        deleteLife()
-                        btnOptionFour.background = ContextCompat.getDrawable(requireContext(), R.drawable.button_radius_wrong)
-                    }
-                    else -> {
-                        MediaPlayer.create(context, R.raw.fail).start()
-                        deleteLife()
+                layoutOptionThree.id == stadiumCorrect.id -> {
+                    when {
+                        layoutOptionOne.isSelected -> drawFailItemResponse(layoutOptionOne)
+                        layoutOptionTwo.isSelected -> drawFailItemResponse(layoutOptionTwo)
+                        layoutOptionThree.isSelected -> drawCorrectItemResponse(layoutOptionThree)
+                        layoutOptionFour.isSelected -> drawFailItemResponse(layoutOptionFour)
                     }
                 }
-            }
-            btnOptionFour.text == capitalNameCorrect -> {
-                btnOptionFour.background =  ContextCompat.getDrawable(requireContext(), R.drawable.button_radius_correct)
-                when {
-                    btnOptionOne.isSelected -> {
-                        MediaPlayer.create(context, R.raw.fail).start()
-                        deleteLife()
-                        btnOptionOne.background = ContextCompat.getDrawable(requireContext(), R.drawable.button_radius_wrong)
-                    }
-                    btnOptionTwo.isSelected -> {
-                        MediaPlayer.create(context, R.raw.fail).start()
-                        deleteLife()
-                        btnOptionTwo.background = ContextCompat.getDrawable(requireContext(), R.drawable.button_radius_wrong)
-                    }
-                    btnOptionThree.isSelected -> {
-                        MediaPlayer.create(context, R.raw.fail).start()
-                        deleteLife()
-                        btnOptionThree.background = ContextCompat.getDrawable(requireContext(), R.drawable.button_radius_wrong)
-                    }
-                    btnOptionFour.isSelected -> {
-                        MediaPlayer.create(context, R.raw.success).start()
-                        points += 1
-                    }
-                    else -> {
-                        MediaPlayer.create(context, R.raw.fail).start()
-                        deleteLife()
+                layoutOptionFour.id == stadiumCorrect.id -> {
+                    when {
+                        layoutOptionOne.isSelected -> drawFailItemResponse(layoutOptionOne)
+                        layoutOptionTwo.isSelected -> drawFailItemResponse(layoutOptionTwo)
+                        layoutOptionThree.isSelected -> drawFailItemResponse(layoutOptionThree)
+                        layoutOptionFour.isSelected -> drawCorrectItemResponse(layoutOptionFour)
                     }
                 }
             }
@@ -337,16 +371,16 @@ class GameFragment : Fragment() {
     }
 
     private fun enableBtn(isEnable: Boolean) {
-        btnOptionOne.isClickable = isEnable
-        btnOptionTwo.isClickable = isEnable
-        btnOptionThree.isClickable = isEnable
-        btnOptionFour.isClickable = isEnable
+        layoutOptionOne.isClickable = isEnable
+        layoutOptionTwo.isClickable = isEnable
+        layoutOptionThree.isClickable = isEnable
+        layoutOptionFour.isClickable = isEnable
 
         if(isEnable) {
-            btnOptionOne.background = ContextCompat.getDrawable(requireContext(), R.drawable.selector_with_radius_button)
-            btnOptionTwo.background = ContextCompat.getDrawable(requireContext(), R.drawable.selector_with_radius_button)
-            btnOptionThree.background = ContextCompat.getDrawable(requireContext(), R.drawable.selector_with_radius_button)
-            btnOptionFour.background = ContextCompat.getDrawable(requireContext(), R.drawable.selector_with_radius_button)
+            layoutOptionOne.background = ContextCompat.getDrawable(requireContext(), R.drawable.selector_with_radius_button)
+            layoutOptionTwo.background = ContextCompat.getDrawable(requireContext(), R.drawable.selector_with_radius_button)
+            layoutOptionThree.background = ContextCompat.getDrawable(requireContext(), R.drawable.selector_with_radius_button)
+            layoutOptionFour.background = ContextCompat.getDrawable(requireContext(), R.drawable.selector_with_radius_button)
         }
     }
 
@@ -368,20 +402,16 @@ class GameFragment : Fragment() {
             }
             1 -> {
                 binding.appBarLayoutGame.lifeSecond.startAnimation(AnimationUtils.loadAnimation(context, R.anim.scale_xy_collapse))
-
                 binding.appBarLayoutGame.lifeSecond.setImageDrawable(context?.getDrawable(R.drawable.ic_life_off))
                 binding.appBarLayoutGame.lifeFirst.setImageDrawable(context?.getDrawable(R.drawable.ic_life_on))
             }
             0 -> {
                 binding.appBarLayoutGame.lifeFirst.startAnimation(AnimationUtils.loadAnimation(context, R.anim.scale_xy_collapse))
-
-                // GAME OVER
                 binding.appBarLayoutGame.lifeSecond.setImageDrawable(context?.getDrawable(R.drawable.ic_life_off))
                 binding.appBarLayoutGame.lifeFirst.setImageDrawable(context?.getDrawable(R.drawable.ic_life_off))
             }
         }
     }
-
 
     companion object {
         private val TAG = GameFragment::class.java.simpleName

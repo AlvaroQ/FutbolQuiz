@@ -21,8 +21,8 @@ class GameViewModel(private val getStadiumById: GetStadiumById,
     private val _question = MutableLiveData<Stadium>()
     val question: LiveData<Stadium> = _question
 
-    private val _responseOptions = MutableLiveData<MutableList<String>>()
-    val responseOptions: LiveData<MutableList<String>> = _responseOptions
+    private val _responseOptions = MutableLiveData<MutableList<Stadium>>()
+    val responseOptions: LiveData<MutableList<Stadium>> = _responseOptions
 
     private val _progress = MutableLiveData<UiModel>()
     val progress: LiveData<UiModel> = _progress
@@ -61,11 +61,11 @@ class GameViewModel(private val getStadiumById: GetStadiumById,
             val numRandomPosition3 = generateRandomWithExcusion(0, 3, numRandomMainPosition, numRandomPosition1, numRandomPosition2)
 
             /** Save value */
-            val optionList = mutableListOf("", "", "", "")
-            optionList[numRandomMainPosition] = stadium.name!!
-            optionList[numRandomPosition1] = option1.name!!
-            optionList[numRandomPosition2] = option2.name!!
-            optionList[numRandomPosition3] = option3.name!!
+            val optionList: MutableList<Stadium> = mutableListOf(Stadium(), Stadium(), Stadium(), Stadium())
+            optionList[numRandomMainPosition] = stadium
+            optionList[numRandomPosition1] = option1
+            optionList[numRandomPosition2] = option2
+            optionList[numRandomPosition3] = option3
 
             _responseOptions.value = optionList
             _question.value = stadium
@@ -74,7 +74,9 @@ class GameViewModel(private val getStadiumById: GetStadiumById,
     }
 
     private suspend fun getStadium(id: Int): Stadium {
-        return getStadiumById.invoke(id)
+        val stadium = getStadiumById.invoke(id)
+        stadium.id = id
+        return stadium
     }
 
     fun navigateToResult(points: String) {
@@ -82,8 +84,9 @@ class GameViewModel(private val getStadiumById: GetStadiumById,
         _navigation.value = Navigation.Result
     }
 
-    fun getStadium() : Stadium {
-        return stadium
+    fun getStadium() : Stadium? {
+        return if(this::stadium.isInitialized) stadium
+        else null
     }
 
     private fun generateRandomWithExcusion(start: Int, end: Int, vararg exclude: Int): Int {

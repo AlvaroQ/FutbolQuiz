@@ -23,6 +23,9 @@ import com.quiz.futbol.R
 import com.quiz.futbol.ui.helpers.ImagePreviewer
 import java.io.ByteArrayOutputStream
 import java.net.URL
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.text.NumberFormat
 import java.util.*
 
 
@@ -166,4 +169,13 @@ fun Context.getRelationTime(time: Long): String {
 
 fun Activity.expandImage(imageView: ImageView, icon: String) {
     ImagePreviewer().show(this, imageView, icon)
+}
+
+fun setStringNumberWithThousandSeparator(number: Int): String {
+    val formatter: DecimalFormat = NumberFormat.getInstance(Locale.US) as DecimalFormat
+    val symbols: DecimalFormatSymbols = formatter.decimalFormatSymbols
+
+    symbols.groupingSeparator = '.'
+    formatter.decimalFormatSymbols = symbols
+    return formatter.format(number)
 }
