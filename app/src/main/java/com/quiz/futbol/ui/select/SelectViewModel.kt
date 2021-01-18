@@ -68,8 +68,8 @@ class SelectViewModel(private val getResources: GetResources,
         listOf.addAll(loadSelectItems(SPAIN_FIRST_DIVISION))
         listOf.addAll(loadSelectItems(ENGLAND_FIRST_DIVISION))
         listOf.addAll(loadSelectItems(ITALY_FIRST_DIVISION))
-        listOf.addAll(loadSelectItems(GERMAIN_FIRST_DIVISION))
-        listOf.addAll(loadSelectItems(FRENCH_FIRST_DIVISION))
+        //listOf.addAll(loadSelectItems(GERMAIN_FIRST_DIVISION))
+        //listOf.addAll(loadSelectItems(FRENCH_FIRST_DIVISION))
         return listOf
     }
 

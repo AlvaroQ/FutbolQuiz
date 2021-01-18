@@ -5,6 +5,6 @@ import com.quiz.domain.Stadium
 
 class StadiumByIdRepository(private val dataBaseSource: DataBaseSource) {
 
-    suspend fun getStadiumById(id: Int): Stadium = dataBaseSource.getStadiumById(id)
+    suspend fun getStadiumById(id: Int, championship: String): Stadium = dataBaseSource.getStadiumById(id, championship)
 
 }

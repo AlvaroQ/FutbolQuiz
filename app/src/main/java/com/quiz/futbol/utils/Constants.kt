@@ -12,15 +12,16 @@ object Constants {
     const val POINTS = "points"
     const val STAGE_COMPLETED = "STAGE_COMPLETED"
     const val TOTAL_TEAMS_SPAIN_FIRST_DIVISION = 19
+    const val TOTAL_TEAMS_ENGLAND_FIRST_DIVISION = 19
+    const val TOTAL_TEAMS_ITALY_FIRST_DIVISION = 19
 
     const val PATH_REFERENCE_TEAMS = "stadiums/"
     const val PATH_REFERENCE_SPAIN = "spain/"
+    const val PATH_REFERENCE_ITALY = "italy/"
+    const val PATH_REFERENCE_ENGLAND = "england/"
     const val PATH_REFERENCE_FIRST_DIVISION = "first_division/"
     const val PATH_REFERENCE_APPS = "country/apps"
 
-    const val MODE_GAME = "ModeGame"
-    const val TYPE_GAME = "TypeGame"
-    const val TYPE_CHAMPIONSHIP = "TypeChampionship"
     enum class FollowTypes { FOLLOWING, FOLLOWER }
     enum class ModeGame { CARRER, TRAINNIG }
     enum class TypeGame { BY_NAME, BY_IMAGE, BY_CAPACITY, BY_BUILT }

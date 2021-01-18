@@ -20,8 +20,11 @@ import com.quiz.futbol.databinding.FragmentGameBinding
 import com.quiz.futbol.utils.*
 import com.quiz.futbol.utils.Constants.COUNTER_DOWN_DEFAULT
 import com.quiz.futbol.utils.Constants.ModeGame
+import com.quiz.futbol.utils.Constants.TOTAL_TEAMS_ENGLAND_FIRST_DIVISION
+import com.quiz.futbol.utils.Constants.TOTAL_TEAMS_ITALY_FIRST_DIVISION
 import com.quiz.futbol.utils.Constants.TOTAL_TEAMS_SPAIN_FIRST_DIVISION
 import com.quiz.futbol.utils.Constants.TypeGame
+import com.quiz.futbol.utils.Constants.TypeChampionship
 import kotlinx.coroutines.*
 import org.koin.android.scope.lifecycleScope
 import org.koin.android.viewmodel.scope.viewModel
@@ -65,6 +68,8 @@ class GameFragment : Fragment() {
             ModeGame.TRAINNIG.name -> drawTrainingMode()
             ModeGame.CARRER.name -> drawCarrerMode()
         }
+
+        gameViewModel.generateNewStage(typeChampionship)
 
         binding.textTitle.text = when(typeGame) {
             TypeGame.BY_NAME.name -> getString(R.string.stadium_by_name)
@@ -388,8 +393,20 @@ class GameFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             delay(TimeUnit.MILLISECONDS.toMillis(1000))
             withContext(Dispatchers.Main) {
-                if(stage > TOTAL_TEAMS_SPAIN_FIRST_DIVISION || life < 1) gameViewModel.navigateToResult(points.toString())
-                else gameViewModel.generateNewStage()
+                when(typeChampionship) {
+                    TypeChampionship.SPAIN_FIRST_DIVISION.name -> {
+                        if(stage > TOTAL_TEAMS_SPAIN_FIRST_DIVISION || life < 1) gameViewModel.navigateToResult(points.toString())
+                        else gameViewModel.generateNewStage(typeChampionship)
+                    }
+                    TypeChampionship.ENGLAND_FIRST_DIVISION.name -> {
+                        if(stage > TOTAL_TEAMS_ENGLAND_FIRST_DIVISION || life < 1) gameViewModel.navigateToResult(points.toString())
+                        else gameViewModel.generateNewStage(typeChampionship)
+                    }
+                    TypeChampionship.ITALY_FIRST_DIVISION.name -> {
+                        if(stage > TOTAL_TEAMS_ITALY_FIRST_DIVISION || life < 1) gameViewModel.navigateToResult(points.toString())
+                        else gameViewModel.generateNewStage(typeChampionship)
+                    }
+                }
             }
         }
     }

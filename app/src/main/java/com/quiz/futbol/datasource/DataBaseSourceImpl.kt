@@ -19,10 +19,10 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 
 class DataBaseSourceImpl : DataBaseSource {
 
-    override suspend fun getStadiumById(id: Int): Stadium {
-        log("GET STADIUM ID", PATH_REFERENCE_TEAMS + PATH_REFERENCE_SPAIN + PATH_REFERENCE_FIRST_DIVISION + id)
+    override suspend fun getStadiumById(id: Int, path_reference_championship: String): Stadium {
+        log("GET STADIUM ID", PATH_REFERENCE_TEAMS + path_reference_championship + PATH_REFERENCE_FIRST_DIVISION + id)
         return suspendCancellableCoroutine { continuation ->
-            FirebaseDatabase.getInstance().getReference(PATH_REFERENCE_TEAMS + PATH_REFERENCE_SPAIN + PATH_REFERENCE_FIRST_DIVISION + id)
+            FirebaseDatabase.getInstance().getReference(PATH_REFERENCE_TEAMS + path_reference_championship + PATH_REFERENCE_FIRST_DIVISION + id)
                 .addValueEventListener(object : ValueEventListener {
 
                     override fun onDataChange(dataSnapshot: DataSnapshot) {

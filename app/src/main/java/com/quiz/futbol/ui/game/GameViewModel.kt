@@ -5,7 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import com.quiz.domain.Stadium
 import com.quiz.futbol.common.ScopedViewModel
 import com.quiz.futbol.managers.AnalyticsManager
+import com.quiz.futbol.utils.Constants.PATH_REFERENCE_ENGLAND
+import com.quiz.futbol.utils.Constants.PATH_REFERENCE_ITALY
+import com.quiz.futbol.utils.Constants.PATH_REFERENCE_SPAIN
+import com.quiz.futbol.utils.Constants.TypeChampionship
 import com.quiz.futbol.utils.Constants.TOTAL_TEAMS_SPAIN_FIRST_DIVISION
+import com.quiz.futbol.utils.Constants.TOTAL_TEAMS_ENGLAND_FIRST_DIVISION
+import com.quiz.futbol.utils.Constants.TOTAL_TEAMS_ITALY_FIRST_DIVISION
 import com.quiz.usecases.GetStadiumById
 import com.quiz.usecases.GetTimestampGame
 import com.quiz.usecases.SetTimestampGame
@@ -30,34 +36,37 @@ class GameViewModel(private val getStadiumById: GetStadiumById,
     private val _navigation = MutableLiveData<Navigation>()
     val navigation: LiveData<Navigation> = _navigation
 
-    init {
-        AnalyticsManager.analyticsScreenViewed(AnalyticsManager.SCREEN_GAME)
-        generateNewStage()
-    }
+    init { AnalyticsManager.analyticsScreenViewed(AnalyticsManager.SCREEN_GAME) }
 
-    fun generateNewStage() {
+    fun generateNewStage(typeChampionship: String) {
         launch {
             _progress.value = UiModel.Loading(true)
 
             /** Generate question */
-            val numRandomMain = generateRandomWithExcusion(0, TOTAL_TEAMS_SPAIN_FIRST_DIVISION, *randomCountries.toIntArray())
+            val totalTeams = when(typeChampionship) {
+                TypeChampionship.SPAIN_FIRST_DIVISION.name -> TOTAL_TEAMS_SPAIN_FIRST_DIVISION
+                TypeChampionship.ENGLAND_FIRST_DIVISION.name -> TOTAL_TEAMS_ENGLAND_FIRST_DIVISION
+                TypeChampionship.ITALY_FIRST_DIVISION.name -> TOTAL_TEAMS_ITALY_FIRST_DIVISION
+                else -> TOTAL_TEAMS_SPAIN_FIRST_DIVISION
+            }
+            val numRandomMain = generateRandomWithExcusion(0, totalTeams, *randomCountries.toIntArray())
             randomCountries.add(numRandomMain)
 
-            stadium = getStadium(numRandomMain)
+            stadium = getStadium(numRandomMain, typeChampionship)
 
             /** Generate responses */
             val numRandomMainPosition = generateRandomWithExcusion(0, 3)
 
             val numRandomOption1 = generateRandomWithExcusion(1, TOTAL_TEAMS_SPAIN_FIRST_DIVISION, numRandomMain)
-            val option1: Stadium = getStadium(numRandomOption1)
+            val option1: Stadium = getStadium(numRandomOption1, typeChampionship)
             val numRandomPosition1 = generateRandomWithExcusion(0, 3, numRandomMainPosition)
 
             val numRandomOption2 = generateRandomWithExcusion(1, TOTAL_TEAMS_SPAIN_FIRST_DIVISION, numRandomMain, numRandomOption1)
-            val option2: Stadium = getStadium(numRandomOption2)
+            val option2: Stadium = getStadium(numRandomOption2, typeChampionship)
             val numRandomPosition2 = generateRandomWithExcusion(0, 3, numRandomMainPosition, numRandomPosition1)
 
             val numRandomOption3 = generateRandomWithExcusion(1, TOTAL_TEAMS_SPAIN_FIRST_DIVISION, numRandomMain, numRandomOption1, numRandomOption2)
-            val option3: Stadium = getStadium(numRandomOption3)
+            val option3: Stadium = getStadium(numRandomOption3, typeChampionship)
             val numRandomPosition3 = generateRandomWithExcusion(0, 3, numRandomMainPosition, numRandomPosition1, numRandomPosition2)
 
             /** Save value */
@@ -73,8 +82,14 @@ class GameViewModel(private val getStadiumById: GetStadiumById,
         }
     }
 
-    private suspend fun getStadium(id: Int): Stadium {
-        val stadium = getStadiumById.invoke(id)
+    private suspend fun getStadium(id: Int, typeChampionship: String): Stadium {
+        val championship = when(typeChampionship) {
+            TypeChampionship.SPAIN_FIRST_DIVISION.name -> PATH_REFERENCE_SPAIN
+            TypeChampionship.ENGLAND_FIRST_DIVISION.name -> PATH_REFERENCE_ENGLAND
+            TypeChampionship.ITALY_FIRST_DIVISION.name -> PATH_REFERENCE_ITALY
+            else -> PATH_REFERENCE_SPAIN
+        }
+        val stadium = getStadiumById.invoke(id, championship)
         stadium.id = id
         return stadium
     }
