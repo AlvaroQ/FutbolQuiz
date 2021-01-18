@@ -49,7 +49,11 @@
     <string name="hint_description">Biography</string>
     <string name="hint_location">Location</string>
     <string name="hint_name">Name and surname</string>
-    <string name="level_unlocked">¡Enhorabuena!\nNuevo nivel desbloqueado</string>
+    <string name="level_unlocked">Congratulations!\nNew level unlocked</string>
+
+    <string name="no_following">You are being following to none</string>
+    <string name="no_followers">You have not followers</string>
+    <string name="no_items">You have not levels passed</string>
 
     <!-- content description image -->
     <string translatable="false" name="flag">flag</string>

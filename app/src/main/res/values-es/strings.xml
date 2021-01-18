@@ -53,6 +53,10 @@
     <string name="follow">Seguir</string>
     <string name="level_unlocked">¡Congratulation!\nUnlocked new level</string>
 
+    <string name="no_following">No está siguiendo a nadie</string>
+    <string name="no_followers">No tiene ningún seguidor</string>
+    <string name="no_items">No tienes hitos superados</string>
+
     <plurals name="weeks_ago">
         <item quantity="one">Hace %s semana</item>
         <item quantity="other">Hace %s semanas</item>

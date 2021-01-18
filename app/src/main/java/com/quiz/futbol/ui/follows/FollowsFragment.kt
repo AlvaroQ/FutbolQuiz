@@ -39,9 +39,16 @@ class FollowsFragment : Fragment() {
     private fun updateUi(model: FollowsViewModel.UiModel) {
         when (model) {
             is FollowsViewModel.UiModel.FilledUserList -> {
-                binding.recyclerFollows.adapter = FollowsItemsAdapter(requireContext(), model.userList, followsViewModel::unfollow)
-                binding.recyclerFollows.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.HORIZONTAL))
-                binding.recyclerFollows.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+                if(model.userList.size > 0) {
+                    binding.recyclerFollows.adapter = FollowsItemsAdapter(requireContext(), model.userList, followsViewModel::unfollow)
+                    binding.recyclerFollows.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.HORIZONTAL))
+                    binding.recyclerFollows.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+                } else {
+                    when(FollowsFragmentArgs.fromBundle(requireArguments()).typeFollow) {
+                        FollowTypes.FOLLOWING.name -> binding.textNoItems.text = getString(R.string.no_following)
+                        FollowTypes.FOLLOWER.name -> binding.textNoItems.text = getString(R.string.no_followers)
+                    }
+                }
             }
             is FollowsViewModel.UiModel.FollowerResult -> {
                 if(model.isSuccess) Toast.makeText(requireContext(), getString(R.string.follower_to_user), Toast.LENGTH_SHORT).show()

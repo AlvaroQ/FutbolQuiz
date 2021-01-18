@@ -81,8 +81,7 @@ class ProfileFragment : Fragment() {
                 findNavController().navigate(action)
             }
             is ProfileViewModel.Navigation.Follows -> {
-                val action =
-                    ProfileFragmentDirections.actionNavigationProfileToFollow(navigation.screenFollow)
+                val action = ProfileFragmentDirections.actionNavigationProfileToFollow(navigation.screenFollow)
                 findNavController().navigate(action)
             }
             is ProfileViewModel.Navigation.Expand -> {
@@ -100,9 +99,7 @@ class ProfileFragment : Fragment() {
         binding.imageEditProfile.visibility = View.GONE
         binding.layoutGlobal.visibility = View.GONE
         setFollowButton(binding.buttonFollow.isSelected)
-        binding.buttonFollow.setSafeOnClickListener {
-            setFollowButton(!binding.buttonFollow.isSelected)
-        }
+        binding.buttonFollow.setSafeOnClickListener { setFollowButton(!binding.buttonFollow.isSelected) }
     }
 
     private fun setFollowButton(isSelected: Boolean) {
@@ -169,17 +166,24 @@ class ProfileFragment : Fragment() {
                 }
             }
             is ProfileViewModel.UiModel.MainArchievements -> {
-                binding.bottomSheet.textTitle.text = getString(R.string.last_global_archievements)
-                binding.bottomSheet.recyclerEvents.adapter =
-                    ProfileBottomSheetItemsAdapter(model.items.toMutableList())
-                binding.bottomSheet.recyclerEvents.layoutManager = LinearLayoutManager(
-                    requireContext(),
-                    RecyclerView.VERTICAL,
-                    false
-                )
-                bottomSheetBehavior.isDraggable = true
-                bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
-                binding.bottomSheet.imageClose.setSafeOnClickListener { bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED }
+                if(model.items.size > 0) {
+                    binding.bottomSheet.textTitle.text =
+                        getString(R.string.last_global_archievements)
+                    binding.bottomSheet.recyclerEvents.adapter =
+                        ProfileBottomSheetItemsAdapter(model.items.toMutableList())
+                    binding.bottomSheet.recyclerEvents.layoutManager = LinearLayoutManager(
+                        requireContext(),
+                        RecyclerView.VERTICAL,
+                        false
+                    )
+                    bottomSheetBehavior.isDraggable = true
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+                    binding.bottomSheet.imageClose.setSafeOnClickListener {
+                        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                    }
+                } else {
+                    binding.bottomSheet.textNoItems.text = getString(R.string.no_items)
+                }
             }
             is ProfileViewModel.UiModel.PersonalArchievements -> {
                 binding.bottomSheet.textTitle.text = getString(R.string.last_personal_archievements)

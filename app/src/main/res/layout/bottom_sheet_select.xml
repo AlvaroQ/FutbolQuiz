@@ -8,6 +8,7 @@
     android:id="@+id/constraintBottomSheet"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
     tools:visibility="gone"
+    android:layout_marginTop="@dimen/height_status_bar"
     app:behavior_hideable="true"
     app:behavior_peekHeight="512dp">
 

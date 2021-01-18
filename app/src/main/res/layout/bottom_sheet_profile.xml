@@ -72,6 +72,17 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <TextView
+            android:id="@+id/textNoItems"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="No tienes hitos superados"
+            android:layout_marginTop="80dp"
+            android:textAppearance="@style/Bold.TextColorLight.Large"
+            app:layout_constraintTop_toBottomOf="@+id/layoutHeader"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerEvents"
             android:layout_width="match_parent"
