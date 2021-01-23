@@ -10,6 +10,7 @@
     <string name="german_league">Liga alemana</string>
     <string name="french_league">Liga francesa</string>
     <string name="by_image">Por imagen</string>
+    <string name="by_shield">Por escudo</string>
     <string name="by_name">Por nombre</string>
     <string name="by_capacity">Por capacidad</string>
     <string name="by_built">Por año de construcción</string>
@@ -41,6 +42,7 @@
     <string name="archieve">Nivel completado</string>
     <string name="stadium_by_image">Estadios por imagen</string>
     <string name="stadium_by_name">Estadios por nombre</string>
+    <string name="shield_by_image">Escudos por imagen</string>
     <string name="stadium_by_capacity">Estadios por capacidad</string>
     <string name="stadium_by_built">Estadios por año de construcción</string>
     <string name="profile">Perfil</string>
@@ -51,7 +53,7 @@
     <string name="hint_name">Nombre y apellido</string>
     <string name="unfollow">Dejar de seguir</string>
     <string name="follow">Seguir</string>
-    <string name="level_unlocked">¡Congratulation!\nUnlocked new level</string>
+    <string name="level_unlocked">¡Enhorabuena!\nTu puntuación permite desbloquear nuevo nivel</string>
 
     <string name="no_following">No está siguiendo a nadie</string>
     <string name="no_followers">No tiene ningún seguidor</string>

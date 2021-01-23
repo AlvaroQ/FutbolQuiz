@@ -61,6 +61,7 @@ class SelectItemsAdapter(private var context: Context,
                     when (item.type) {
                         BY_NAME -> R.drawable.stadium_name
                         BY_IMAGE -> R.drawable.stadium_images
+                        BY_SHIELD -> R.drawable.stadium_shield
                         BY_BUILT -> R.drawable.stadium_built
                         else -> R.drawable.stadium_capacity
                     })

@@ -74,6 +74,7 @@ class GameFragment : Fragment() {
         binding.textTitle.text = when(typeGame) {
             TypeGame.BY_NAME.name -> getString(R.string.stadium_by_name)
             TypeGame.BY_IMAGE.name -> getString(R.string.stadium_by_image)
+            TypeGame.BY_SHIELD.name -> getString(R.string.shield_by_image)
             TypeGame.BY_BUILT.name -> getString(R.string.stadium_by_built)
             else -> getString(R.string.stadium_by_capacity)
         }
@@ -207,6 +208,11 @@ class GameFragment : Fragment() {
                 stadium.stadium_image,
                 binding.imageQuiz
             )
+            TypeGame.BY_SHIELD.name -> glideLoadURL(
+                requireContext(),
+                stadium.shield,
+                binding.imageQuiz
+            )
             TypeGame.BY_BUILT.name -> glideLoadURL(
                 requireContext(),
                 stadium.stadium_image,
@@ -234,6 +240,7 @@ class GameFragment : Fragment() {
                 when(typeGame) {
                     TypeGame.BY_NAME.name -> drawImageResponse(optionsListByPos)
                     TypeGame.BY_IMAGE.name -> drawTextResponse(optionsListByPos)
+                    TypeGame.BY_SHIELD.name -> drawTextResponse(optionsListByPos)
                     TypeGame.BY_BUILT.name -> drawBuiltResponse(optionsListByPos)
                     TypeGame.BY_CAPACITY.name -> drawCapacityResponse(optionsListByPos)
                 }
@@ -279,15 +286,34 @@ class GameFragment : Fragment() {
         binding.layoutButtonOne.cardOption.visibility = View.GONE
 
         layoutOptionTwo.id = optionsListByPos[1].id
-        binding.layoutButtonTwo.textOption.text = setStringNumberWithThousandSeparator(optionsListByPos[1].build!!)
+        val optionTwo = if(optionsListByPos[0].build!! == optionsListByPos[1].build!!) {
+            optionsListByPos[1].build!! + 10000
+        } else {
+            optionsListByPos[1].build!!
+        }
+
+        binding.layoutButtonTwo.textOption.text = setStringNumberWithThousandSeparator(optionTwo)
         binding.layoutButtonTwo.cardOption.visibility = View.GONE
 
         layoutOptionThree.id = optionsListByPos[2].id
-        binding.layoutButtonThree.textOption.text = setStringNumberWithThousandSeparator(optionsListByPos[2].build!!)
+        val optionThree = if(optionsListByPos[0].build!! == optionsListByPos[2].build!!
+                || optionsListByPos[1].build!! == optionsListByPos[2].build!!) {
+            optionsListByPos[2].build!! + 10000
+        } else {
+            optionsListByPos[2].build!!
+        }
+        binding.layoutButtonThree.textOption.text = setStringNumberWithThousandSeparator(optionThree)
         binding.layoutButtonThree.cardOption.visibility = View.GONE
 
         layoutOptionFour.id = optionsListByPos[3].id
-        binding.layoutButtonFour.textOption.text = setStringNumberWithThousandSeparator(optionsListByPos[3].build!!)
+        val optionFour = if(optionsListByPos[0].build!! == optionsListByPos[3].build!!
+                || optionsListByPos[1].build!! == optionsListByPos[3].build!!
+                || optionsListByPos[2].build!! == optionsListByPos[3].build!!) {
+            optionsListByPos[3].build!! + 10000
+        } else {
+            optionsListByPos[3].build!!
+        }
+        binding.layoutButtonFour.textOption.text = setStringNumberWithThousandSeparator(optionFour)
         binding.layoutButtonFour.cardOption.visibility = View.GONE
     }
 
@@ -297,15 +323,33 @@ class GameFragment : Fragment() {
         binding.layoutButtonOne.cardOption.visibility = View.GONE
 
         layoutOptionTwo.id = optionsListByPos[1].id
-        binding.layoutButtonTwo.textOption.text = setStringNumberWithThousandSeparator(optionsListByPos[1].capacity!!)
+        val optionTwo = if(optionsListByPos[0].capacity!! == optionsListByPos[1].capacity!!) {
+            optionsListByPos[1].capacity!! + 10000
+        } else {
+            optionsListByPos[1].capacity!!
+        }
+        binding.layoutButtonTwo.textOption.text = setStringNumberWithThousandSeparator(optionTwo)
         binding.layoutButtonTwo.cardOption.visibility = View.GONE
 
         layoutOptionThree.id = optionsListByPos[2].id
-        binding.layoutButtonThree.textOption.text = setStringNumberWithThousandSeparator(optionsListByPos[2].capacity!!)
+        val optionThree = if(optionsListByPos[0].capacity!! == optionsListByPos[2].capacity!!
+                || optionsListByPos[1].capacity!! == optionsListByPos[2].capacity!!) {
+            optionsListByPos[2].capacity!! + 10000
+        } else {
+            optionsListByPos[2].capacity!!
+        }
+        binding.layoutButtonThree.textOption.text = setStringNumberWithThousandSeparator(optionThree)
         binding.layoutButtonThree.cardOption.visibility = View.GONE
 
         layoutOptionFour.id = optionsListByPos[3].id
-        binding.layoutButtonFour.textOption.text = setStringNumberWithThousandSeparator(optionsListByPos[3].capacity!!)
+        val optionFour = if(optionsListByPos[0].capacity!! == optionsListByPos[3].capacity!!
+                || optionsListByPos[1].capacity!! == optionsListByPos[3].capacity!!
+                || optionsListByPos[2].capacity!! == optionsListByPos[3].capacity!!) {
+            optionsListByPos[3].capacity!! + 10000
+        } else {
+            optionsListByPos[3].capacity!!
+        }
+        binding.layoutButtonFour.textOption.text = setStringNumberWithThousandSeparator(optionFour)
         binding.layoutButtonFour.cardOption.visibility = View.GONE
     }
 

@@ -24,7 +24,7 @@ object Constants {
 
     enum class FollowTypes { FOLLOWING, FOLLOWER }
     enum class ModeGame { CARRER, TRAINNIG }
-    enum class TypeGame { BY_NAME, BY_IMAGE, BY_CAPACITY, BY_BUILT }
+    enum class TypeGame { BY_NAME, BY_IMAGE, BY_CAPACITY, BY_BUILT, BY_SHIELD }
     enum class TypeChampionship {
         SPAIN_FIRST_DIVISION,
         ENGLAND_FIRST_DIVISION,

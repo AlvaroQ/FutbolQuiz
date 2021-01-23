@@ -97,6 +97,12 @@ class SelectViewModel(private val getResources: GetResources,
                 else -> _navigation.value = Navigation.GameByName(typeChampionship)
             }
         }
+        val itemSelectShieldItem = SelectItem(getResources.getString(R.string.by_shield), isBlocked(typeChampionship, BY_SHIELD), BY_SHIELD) {
+            when {
+                isBlocked(typeChampionship, BY_SHIELD) -> _dialog.value = Dialog.DialogLevelLock
+                else -> _navigation.value = Navigation.GameByShield(typeChampionship)
+            }
+        }
         val itemSelectCapacityItem = SelectItem(getResources.getString(R.string.by_capacity), isBlocked(typeChampionship, BY_CAPACITY), BY_CAPACITY) {
             when {
                 isBlocked(typeChampionship, BY_CAPACITY) -> _dialog.value = Dialog.DialogLevelLock
@@ -112,6 +118,7 @@ class SelectViewModel(private val getResources: GetResources,
         listOf.add(itemHeader)
         listOf.add(itemSelectImageItem)
         listOf.add(itemSelectNameItem)
+        listOf.add(itemSelectShieldItem)
         listOf.add(itemSelectCapacityItem)
         listOf.add(itemSelectBuiltItem)
 
@@ -123,32 +130,37 @@ class SelectViewModel(private val getResources: GetResources,
             SPAIN_FIRST_DIVISION -> when(typeGame) {
                 BY_IMAGE -> 0
                 BY_NAME -> 1
-                BY_CAPACITY -> 2
-                BY_BUILT -> 3
+                BY_SHIELD -> 2
+                BY_CAPACITY -> 3
+                BY_BUILT -> 4
             }
             ENGLAND_FIRST_DIVISION -> when(typeGame) {
-                BY_IMAGE -> 4
-                BY_NAME -> 5
-                BY_CAPACITY -> 6
-                BY_BUILT -> 7
+                BY_IMAGE -> 5
+                BY_NAME -> 6
+                BY_SHIELD -> 7
+                BY_CAPACITY -> 8
+                BY_BUILT -> 9
             }
             ITALY_FIRST_DIVISION -> when(typeGame) {
-                BY_IMAGE -> 8
-                BY_NAME -> 9
-                BY_CAPACITY -> 10
-                BY_BUILT -> 11
+                BY_IMAGE -> 10
+                BY_NAME -> 11
+                BY_SHIELD -> 12
+                BY_CAPACITY -> 13
+                BY_BUILT -> 14
             }
             GERMAIN_FIRST_DIVISION -> when(typeGame) {
-                BY_IMAGE -> 12
-                BY_NAME -> 13
-                BY_CAPACITY -> 14
-                BY_BUILT -> 15
-            }
-            FRENCH_FIRST_DIVISION -> when(typeGame) {
-                BY_IMAGE -> 16
-                BY_NAME -> 17
+                BY_IMAGE -> 15
+                BY_NAME -> 16
+                BY_SHIELD -> 17
                 BY_CAPACITY -> 18
                 BY_BUILT -> 19
+            }
+            FRENCH_FIRST_DIVISION -> when(typeGame) {
+                BY_IMAGE -> 20
+                BY_NAME -> 21
+                BY_SHIELD -> 22
+                BY_CAPACITY -> 23
+                BY_BUILT -> 24
             }
         }
         return progressionGame > progressUser
@@ -164,6 +176,7 @@ class SelectViewModel(private val getResources: GetResources,
     sealed class Navigation {
         data class GameByImage(val championship: TypeChampionship) : Navigation()
         data class GameByName(val championship: TypeChampionship) : Navigation()
+        data class GameByShield(val championship: TypeChampionship) : Navigation()
         data class GameByCapacity(val championship: TypeChampionship) : Navigation()
         data class GameByBuilt(val championship: TypeChampionship) : Navigation()
         object Profile : Navigation()

@@ -70,7 +70,7 @@ class SelectFragment : Fragment() {
                 val glm = GridLayoutManager(context, 2)
                 glm.spanSizeLookup = object : SpanSizeLookup() {
                     override fun getSpanSize(position: Int): Int {
-                        return if (position % 5 == 0) 2 else 1
+                        return if (position % 6 == 0) 2 else 1
                     }
                 }
                 binding.bottomSheet.recyclerCategory.layoutManager = glm
@@ -95,6 +95,7 @@ class SelectFragment : Fragment() {
         val action = when (navigation) {
             is SelectViewModel.Navigation.GameByImage -> SelectFragmentDirections.actionNavigationSelectToGame(BY_IMAGE.name, navigation.championship.name, modeGame.name)
             is SelectViewModel.Navigation.GameByName -> SelectFragmentDirections.actionNavigationSelectToGame(BY_NAME.name, navigation.championship.name, modeGame.name)
+            is SelectViewModel.Navigation.GameByShield -> SelectFragmentDirections.actionNavigationSelectToGame(BY_SHIELD.name, navigation.championship.name, modeGame.name)
             is SelectViewModel.Navigation.GameByCapacity -> SelectFragmentDirections.actionNavigationSelectToGame(BY_CAPACITY.name, navigation.championship.name, modeGame.name)
             is SelectViewModel.Navigation.GameByBuilt -> SelectFragmentDirections.actionNavigationSelectToGame(BY_BUILT.name, navigation.championship.name, modeGame.name)
             else -> SelectFragmentDirections.actionNavigationSelectToProfile()

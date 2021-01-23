@@ -11,6 +11,7 @@
     <string name="french_league">French league</string>
     <string name="by_image">By image</string>
     <string name="by_name">By name</string>
+    <string name="by_shield">By shield</string>
     <string name="by_capacity">By capacity</string>
     <string name="by_built">By built</string>
     <string name="share_message_general">\nThis is a great app and it\'s free!.\n\n</string>
@@ -40,6 +41,7 @@
     <string name="last_global_archievements">Last global archievement</string>
     <string name="last_personal_archievements">Last personal archievement</string>
     <string name="stadium_by_image">Stadiums by image</string>
+    <string name="shield_by_image">Shields by image</string>
     <string name="stadium_by_name">Stadiums by name</string>
     <string name="stadium_by_capacity">Stadiums by capacity</string>
     <string name="stadium_by_built">Stadiums by year</string>
@@ -49,7 +51,7 @@
     <string name="hint_description">Biography</string>
     <string name="hint_location">Location</string>
     <string name="hint_name">Name and surname</string>
-    <string name="level_unlocked">Congratulations!\nNew level unlocked</string>
+    <string name="level_unlocked">Congratulations!\nYour score allow unlocked new level</string>
 
     <string name="no_following">You are being following to none</string>
     <string name="no_followers">You have not followers</string>
