@@ -51,6 +51,10 @@ class SelectViewModel(private val getResources: GetResources,
         _loadBottomSheetData.value = UiModel.ContentCareerMode(loadSelectAllItems(), CARRER)
     }
 
+    fun goToMoreApps() {
+        _navigation.value = Navigation.MoreApps
+    }
+
     private fun loadUserData() {
         launch {
             when (val userResult = getUser.invoke(uuid.invoke())) {
@@ -180,6 +184,7 @@ class SelectViewModel(private val getResources: GetResources,
         data class GameByCapacity(val championship: TypeChampionship) : Navigation()
         data class GameByBuilt(val championship: TypeChampionship) : Navigation()
         object Profile : Navigation()
+        object MoreApps : Navigation()
     }
 
     sealed class UiModel {

@@ -20,8 +20,8 @@ buildscript {
             'buildtoolsVersion'     : '30.0.2',
     ]
     ext.libsversions = [
-            'kotlin_version'         : '1.4.10',
-            'gradle_version'         : '4.1.1',
+            'kotlin_version'         : '1.4.21',
+            'gradle_version'         : '4.1.2',
             'koin_version'           : '2.1.5',
             'preference_version'     : '1.1.1',
             'google_services_version': '4.3.4'

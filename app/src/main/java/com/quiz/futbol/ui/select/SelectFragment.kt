@@ -1,5 +1,6 @@
 package com.quiz.futbol.ui.select
 
+import android.graphics.Paint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -41,10 +42,15 @@ class SelectFragment : Fragment() {
 
         binding.btnStartCareerMode.setSafeOnClickListener { selectViewModel.loadCareerMode() }
         binding.btnStartTrainingMode.setSafeOnClickListener { selectViewModel.loadTrainingMode() }
+        binding.btnMoreApps.setSafeOnClickListener { selectViewModel.goToMoreApps() }
         binding.layoutUser.setSafeOnClickListener { selectViewModel.goToProfile() }
+
+        binding.btnMoreApps.underline()
         binding.helloText.underline()
+
         return root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -98,6 +104,7 @@ class SelectFragment : Fragment() {
             is SelectViewModel.Navigation.GameByShield -> SelectFragmentDirections.actionNavigationSelectToGame(BY_SHIELD.name, navigation.championship.name, modeGame.name)
             is SelectViewModel.Navigation.GameByCapacity -> SelectFragmentDirections.actionNavigationSelectToGame(BY_CAPACITY.name, navigation.championship.name, modeGame.name)
             is SelectViewModel.Navigation.GameByBuilt -> SelectFragmentDirections.actionNavigationSelectToGame(BY_BUILT.name, navigation.championship.name, modeGame.name)
+            SelectViewModel.Navigation.MoreApps -> SelectFragmentDirections.actionNavigationSelectToMoreApps()
             else -> SelectFragmentDirections.actionNavigationSelectToProfile()
         }
         findNavController().navigate(action)

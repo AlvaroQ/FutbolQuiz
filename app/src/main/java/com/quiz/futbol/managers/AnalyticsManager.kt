@@ -70,6 +70,7 @@ object AnalyticsManager {
     const val SCREEN_PROFILE = "screen_profile"
     const val SCREEN_EDIT_PROFILE = "screen_edit_profile"
     const val SCREEN_FOLLOWS = "screen_follows"
+    const val SCREEN_MORE_APPS = "screen_more_apps"
 
     // CLICKED
     const val BTN_PLAY_AGAIN = "btn_play_again"

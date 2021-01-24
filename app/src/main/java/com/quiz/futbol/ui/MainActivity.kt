@@ -28,6 +28,7 @@ class MainActivity : BaseActivity() {
             R.id.navigation_profile -> findNavController(R.id.nav_host_fragment).navigate(R.id.action_navigation_profile_to_select)
             R.id.navigation_profile_edit -> findNavController(R.id.nav_host_fragment).navigate(R.id.action_navigation_edit_profile_to_profile)
             R.id.navigation_follows -> findNavController(R.id.nav_host_fragment).navigate(R.id.action_navigation_follow_to_profile)
+            R.id.navigation_more_apps -> findNavController(R.id.nav_host_fragment).navigate(R.id.action_navigation_more_apps_to_select)
             else -> finish()
         }
     }

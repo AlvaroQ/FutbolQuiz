@@ -21,6 +21,8 @@ import com.quiz.futbol.ui.game.GameFragment
 import com.quiz.futbol.ui.game.GameViewModel
 import com.quiz.futbol.ui.login.LoginFragment
 import com.quiz.futbol.ui.login.LoginViewModel
+import com.quiz.futbol.ui.moreApps.MoreAppsFragment
+import com.quiz.futbol.ui.moreApps.MoreAppsViewModel
 import com.quiz.futbol.ui.profile.ProfileFragment
 import com.quiz.futbol.ui.profile.ProfileViewModel
 import com.quiz.futbol.ui.profileEdit.ProfileEditFragment
@@ -123,5 +125,9 @@ private val scopesModule = module {
         scoped { GetLevelLocal(get()) }
         scoped { SetLevelLocal(get()) }
         scoped { SetUserLevel(get()) }
+    }
+    scope(named<MoreAppsFragment>()) {
+        viewModel { MoreAppsViewModel(get()) }
+        scoped { GetAppsRecommended(get()) }
     }
 }

@@ -20,7 +20,7 @@ object Constants {
     const val PATH_REFERENCE_ITALY = "italy/"
     const val PATH_REFERENCE_ENGLAND = "england/"
     const val PATH_REFERENCE_FIRST_DIVISION = "first_division/"
-    const val PATH_REFERENCE_APPS = "country/apps"
+    const val PATH_REFERENCE_APPS = "recommended_apps"
 
     enum class FollowTypes { FOLLOWING, FOLLOWER }
     enum class ModeGame { CARRER, TRAINNIG }

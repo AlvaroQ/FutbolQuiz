@@ -30,6 +30,11 @@
             app:destination="@id/navigation_game"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"  />
+        <action
+            android:id="@+id/action_navigation_select_to_more_apps"
+            app:destination="@id/navigation_more_apps"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"  />
         <argument
             android:name="typeMode"
             app:argType="string"
@@ -154,5 +159,16 @@
             android:name="typeFollow"
             app:argType="string"
             android:defaultValue="FOLLOWING" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_more_apps"
+        android:name="com.quiz.futbol.ui.moreApps.MoreAppsFragment"
+        tools:layout="@layout/fragment_more_apps" >
+        <action
+            android:id="@+id/action_navigation_more_apps_to_select"
+            app:destination="@id/navigation_select"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"  />
     </fragment>
 </navigation>
