@@ -72,6 +72,8 @@ object AnalyticsManager {
     const val SCREEN_FOLLOWS = "screen_follows"
     const val SCREEN_MORE_APPS = "screen_more_apps"
 
+    const val SHOW_AD_INTERSTICIAL = "show_intersticial_ad"
+
     // CLICKED
     const val BTN_PLAY_AGAIN = "btn_play_again"
     const val BTN_RATE = "btn_rate"

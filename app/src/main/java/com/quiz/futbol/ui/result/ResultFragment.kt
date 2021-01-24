@@ -12,6 +12,7 @@ import androidx.preference.PreferenceManager
 import com.quiz.data.models.ArchievementsBack
 import com.quiz.futbol.R
 import com.quiz.futbol.databinding.FragmentResultBinding
+import com.quiz.futbol.ui.MainActivity
 import com.quiz.futbol.utils.*
 import org.koin.android.scope.lifecycleScope
 import org.koin.android.viewmodel.scope.viewModel
@@ -84,7 +85,10 @@ class ResultFragment : Fragment() {
         log(TAG, "navigate to $navigation")
         when (navigation) {
             ResultViewModel.Navigation.Rate -> rateApp(requireContext())
-            ResultViewModel.Navigation.Game -> findNavController().navigate(R.id.action_navigation_result_to_select)
+            ResultViewModel.Navigation.Game -> {
+                findNavController().navigate(R.id.action_navigation_result_to_select)
+                (activity as MainActivity).showInstersticialAd()
+            }
             is ResultViewModel.Navigation.Share -> shareApp(navigation.points, requireContext())
             is ResultViewModel.Navigation.Open -> openAppOnPlayStore(requireContext(), navigation.url)
         }

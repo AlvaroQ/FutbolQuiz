@@ -16,9 +16,6 @@ class MoreAppsViewModel(private val getAppsRecommended: GetAppsRecommended) : Sc
     private val _list = MutableLiveData<MutableList<App>>()
     val list: LiveData<MutableList<App>> = _list
 
-    private val _showingAds = MutableLiveData<UiModel>()
-    val showingAds: LiveData<UiModel> = _showingAds
-
     init {
         AnalyticsManager.analyticsScreenViewed(AnalyticsManager.SCREEN_MORE_APPS)
         launch {

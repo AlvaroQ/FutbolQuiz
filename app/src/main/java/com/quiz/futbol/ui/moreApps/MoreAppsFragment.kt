@@ -31,15 +31,10 @@ class MoreAppsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         moreAppsViewModel.list.observe(viewLifecycleOwner, Observer(::fillList))
         moreAppsViewModel.progress.observe(viewLifecycleOwner, Observer(::updateProgress))
-        moreAppsViewModel.showingAds.observe(viewLifecycleOwner, Observer(::loadAd))
     }
 
     private fun fillList(appList: MutableList<App>) {
         binding.recyclerviewMoreApps.adapter = MoreAppsListAdapter(requireContext(), appList)
-    }
-
-    private fun loadAd(model: MoreAppsViewModel.UiModel) {
-        //if (model is MoreAppsViewModel.UiModel.ShowAd) (activity as MainActivity).showAd(model.show)
     }
 
     private fun updateProgress(model: MoreAppsViewModel.UiModel?) {

@@ -42,6 +42,7 @@ android {
                 mappingFileUploadEnabled false
             }
             resValue 'string', 'BANNER_GAME', getAdmobBannerTestId()
+            resValue 'string', 'INTERSTICIAL_GAME', getAdmobIntersticialTest()
         }
         release {
             signingConfig signingConfigs.config
@@ -52,6 +53,7 @@ android {
                 mappingFileUploadEnabled true
             }
             resValue 'string', 'BANNER_GAME', getAdmobBannerGameId()
+            resValue 'string', 'INTERSTICIAL_GAME', getAdmobIntersticial()
         }
     }
     compileOptions {
@@ -97,6 +99,27 @@ def getAdmobBannerTestId() {
     try {
         def stringsFile = file("./src/main/res/values/secrets.xml")
         return new XmlParser().parse(stringsFile).string.find { it.@name.equals 'admob_banner_test_id' }.text()
+    } catch(e) {
+        println(e)
+        return ""
+    }
+}
+// Intersticial ad
+def getAdmobIntersticial() {
+    try {
+        def stringsFile = file("./src/main/res/values/secrets.xml")
+        return new XmlParser().parse(stringsFile).string.find { it.@name.equals 'admob_intersticial_game' }.text()
+    } catch(e) {
+        println(e)
+        return ""
+    }
+}
+
+// KEYS ADMOB TEST
+def getAdmobIntersticialTest() {
+    try {
+        def stringsFile = file("./src/main/res/values/secrets.xml")
+        return new XmlParser().parse(stringsFile).string.find { it.@name.equals 'admob_intersticial_test_id' }.text()
     } catch(e) {
         println(e)
         return ""
