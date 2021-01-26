@@ -42,7 +42,7 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    fun showBannerAd() {
+    private fun showBannerAd() {
         MobileAds.initialize(this)
         val adRequest = AdRequest.Builder().build()
         binding.adView.loadAd(adRequest)
