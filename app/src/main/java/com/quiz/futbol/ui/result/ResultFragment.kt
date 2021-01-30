@@ -63,6 +63,7 @@ class ResultFragment : Fragment() {
                 // Show STAGE_COMPLETED
 
             }
+            (activity as MainActivity).loadInstersticialAd()
         }
 
         binding.appBarLayoutResult.toolbarTitle.text = getString(R.string.result)

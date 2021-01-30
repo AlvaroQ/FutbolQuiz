@@ -57,7 +57,7 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private fun loadInstersticialAd() {
+    fun loadInstersticialAd() {
         mInterstitialAd = InterstitialAd(this)
         mInterstitialAd.adUnitId = getString(R.string.INTERSTICIAL_GAME)
         mInterstitialAd.loadAd(AdRequest.Builder().build())
