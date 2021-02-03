@@ -4,6 +4,8 @@
     <img src="https://github.com/AlvaroQ/FutbolQuiz/blob/main/capture/landing_page.png" width="800">
 </p>
 
+Promo-Video: https://youtu.be/PyhQ-PNkswQ
+
 Android Single-Activity MVVM Architecture with Navigation Component and KOTLIN
  - Follow SOLID principles
  - Koin dependency injector
